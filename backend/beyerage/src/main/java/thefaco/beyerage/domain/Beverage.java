@@ -28,6 +28,8 @@ public class Beverage {
     private BottleType type;
 
     private int size;
+    
+    private Long frequency;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "beverage_location_id")
