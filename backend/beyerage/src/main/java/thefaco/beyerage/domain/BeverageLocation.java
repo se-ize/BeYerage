@@ -7,6 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * BeverageLocation Entity
+ * 음료 위치정보를 담은 엔티티
+ */
 @Entity
 @Getter @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,4 +31,12 @@ public class BeverageLocation {
     @OneToOne(mappedBy = "beverageLocation")
     private Beverage beverage;
 
+    public static BeverageLocation createBeverageLocation(String name, int row, int column){
+        BeverageLocation beverageLocation = new BeverageLocation();
+        beverageLocation.setName(name);
+        beverageLocation.setRow(row);
+        beverageLocation.setColumn(column);
+
+        return beverageLocation;
+    }
 }
