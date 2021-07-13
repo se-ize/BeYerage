@@ -11,5 +11,5 @@ public interface BeverageRepository {
     Beverage findByName(String name);
     List<Beverage> findAll();
     void delete(Beverage beverage);
-
+    Beverage findMostFreq();
 }

@@ -51,4 +51,9 @@ public class BeverageServiceImpl implements BeverageService {
     public void deleteBeverage(Beverage beverage) {
         beverageRepository.delete(beverage);
     }
+
+    @Override
+    public Beverage findMostFreqOne() {
+        return beverageRepository.findMostFreq();
+    }
 }

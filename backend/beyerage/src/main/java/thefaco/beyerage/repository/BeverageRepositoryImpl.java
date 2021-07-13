@@ -31,11 +31,9 @@ public class BeverageRepositoryImpl implements BeverageRepository {
     public Beverage findByName(String name) {
 
         try{
-            Beverage findBeverage = em.createQuery("select b from Beverage b where b.name = :name", Beverage.class)
+            return em.createQuery("select b from Beverage b where b.name = :name", Beverage.class)
                     .setParameter("name", name)
                     .getSingleResult();
-
-            return findBeverage;
         } catch(Exception e) {
             throw e;
         }
@@ -51,5 +49,16 @@ public class BeverageRepositoryImpl implements BeverageRepository {
     @Override
     public void delete(Beverage beverage) {
         em.remove(beverage);
+    }
+
+    @Override
+    public Beverage findMostFreq() {
+
+        try{
+            return em.createQuery("select b from Beverage b where b.frequency = (select max(b.frequency) from Beverage b)", Beverage.class)
+                    .getSingleResult();
+        } catch (Exception e){
+            throw e;
+        }
     }
 }
