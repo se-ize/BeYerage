@@ -29,5 +29,6 @@ class BeverageServiceImplTest {
         Beverage findBeverage = beverageRepository.findById(id);
         //then
         Assertions.assertThat(beverage).isEqualTo(findBeverage);
+        Assertions.assertThat(beverage.getBeverageLocation().getRow()).isEqualTo(findBeverage.getBeverageLocation().getRow());
     }
 }
