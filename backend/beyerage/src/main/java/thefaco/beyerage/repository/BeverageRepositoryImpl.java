@@ -13,6 +13,7 @@ public class BeverageRepositoryImpl implements BeverageRepository {
 
     private final EntityManager em;
 
+    //음료 저장 메서드
     @Override
     public void save(Beverage beverage) {
         if(beverage.getId() == null){
@@ -22,11 +23,13 @@ public class BeverageRepositoryImpl implements BeverageRepository {
         }
     }
 
+    //PK로 음료 한개를 찾는 메서드
     @Override
     public Beverage findById(Long id) {
         return em.find(Beverage.class, id);
     }
 
+    //음료 이름으로 음료 한개를 찾는 메서드
     @Override
     public Beverage findByName(String name) {
 
@@ -40,22 +43,26 @@ public class BeverageRepositoryImpl implements BeverageRepository {
 
     }
 
+    //음료 전체를 조회하는 메서드
     @Override
     public List<Beverage> findAll() {
         return em.createQuery("select b from Beverage b", Beverage.class)
                 .getResultList();
     }
 
+    //음료 한개를 삭제하는 메서드
     @Override
     public void delete(Beverage beverage) {
         em.remove(beverage);
     }
 
+    //사람들이 가장 많이 찾는 음료를 가져오는 메서드
     @Override
     public Beverage findMostFreq() {
 
         try{
-            return em.createQuery("select b from Beverage b where b.frequency = (select max(b.frequency) from Beverage b)", Beverage.class)
+            return em.createQuery("select b from Beverage b where b.frequency = (select max(b.frequency) from Beverage b)"
+                    , Beverage.class)
                     .getSingleResult();
         } catch (Exception e){
             throw e;
