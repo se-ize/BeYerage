@@ -20,8 +20,6 @@ public class BeverageLocation {
     @Column(name = "beverage_location_id")
     private Long id;
 
-    private String name;
-
     @Column(name = "beverage_row")
     private int row;
 
@@ -31,9 +29,8 @@ public class BeverageLocation {
     @OneToOne(mappedBy = "beverageLocation")
     private Beverage beverage;
 
-    public static BeverageLocation createBeverageLocation(String name, int row, int column){
+    public static BeverageLocation createBeverageLocation(int row, int column){
         BeverageLocation beverageLocation = new BeverageLocation();
-        beverageLocation.setName(name);
         beverageLocation.setRow(row);
         beverageLocation.setColumn(column);
 
