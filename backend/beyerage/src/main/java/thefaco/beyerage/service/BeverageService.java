@@ -10,9 +10,10 @@ public interface BeverageService {
 
     Long addBeverage(Beverage beverage);
     List<Beverage> findBeverages();
+    List<Beverage> findBeveragesWithLoc();
     Beverage findOneById(Long id);
     Beverage findOneByName(String name);
-    void updateBeverage(Long id, String name, int price, BottleType type, int size, Long frequency, BeverageLocation beverageLocation);
+    void updateBeverage(Long id, String name, int price, BottleType type, int size, int row, int column);
     void deleteBeverage(Beverage beverage);
     Beverage findMostFreqOne();
 }

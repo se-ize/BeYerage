@@ -29,6 +29,18 @@ public class BeverageRepositoryImpl implements BeverageRepository {
         return em.find(Beverage.class, id);
     }
 
+    @Override
+    public Beverage findByIdWithLoc(Long id) {
+
+        try{
+            return em.createQuery("select b from Beverage b join fetch b.beverageLocation where b.id = :id", Beverage.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     //음료 이름으로 음료 한개를 찾는 메서드
     @Override
     public Beverage findByName(String name) {
@@ -43,10 +55,17 @@ public class BeverageRepositoryImpl implements BeverageRepository {
 
     }
 
-    //음료 전체를 조회하는 메서드
+    //음료 상세정보 전체를 조회하는 메서드
     @Override
     public List<Beverage> findAll() {
         return em.createQuery("select b from Beverage b", Beverage.class)
+                .getResultList();
+    }
+
+    //음료 상세정보와 위치정보를 같이 조회하는 메서드
+    @Override
+    public List<Beverage> findAllWithLoc() {
+        return em.createQuery("select b from Beverage b join fetch b.beverageLocation", Beverage.class)
                 .getResultList();
     }
 

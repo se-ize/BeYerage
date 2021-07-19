@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Beverage Edit</title>
+</head>
+<body>
+<div class="position-absolute top-50 start-50 translate-middle">
+    <form role="form" th:object="${beverageUpdateDto}" method="post">
+        <!-- id -->
+        <input type="hidden" th:field="*{id}" />
+        <div class="input-group flex-nowrap">
+            <label class="input-group-text" th:for="name">음료명</label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="음료명을 입력하세요"
+                   th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect name</p>
+        </div>
+        <div class="input-group flex-nowrap">
+            <label class="input-group-text" th:for="price">가격</label>
+            <input type="text" th:field="*{price}" class="form-control" placeholder="이메일을 입력하세요"
+                   th:class="${#fields.hasErrors('price')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Incorrect price</p>
+        </div>
+        <div class="input-group flex-nowrap">
+            <select th:field="*{bottleType}" class="form-select">
+                <option value="">종류</option>
+                <option th:each="type : ${T(thefaco.beyerage.domain.BottleType).values()}"
+                        th:value="${type}"
+                        th:text="${type}">option
+                </option>
+            </select>
+        </div>
+        <div class="input-group flex-nowrap">
+            <label class="input-group-text" th:for="size">크기</label>
+            <input type="number" th:field="*{size}" class="form-control" placeholder="크기를 입력하세요"
+                   th:class="${#fields.hasErrors('size')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('size')}" th:errors="*{size}">Incorrect size</p>
+        </div>
+        <div class="input-group flex-nowrap">
+            <label class="input-group-text" th:for="row">행</label>
+            <input type="number" th:field="*{row}" class="form-control" placeholder="행을 입력하세요">
+        </div>
+        <div class="input-group flex-nowrap">
+            <label class="input-group-text" th:for="column">열</label>
+            <input type="number" th:field="*{column}" class="form-control" placeholder="열을 입력하세요">
+        </div>
+        <button type="submit" class="btn btn-warning">수정</button>
+    </form>
+    <br/>
+</div> <!-- /container -->
+</body>
+</html>

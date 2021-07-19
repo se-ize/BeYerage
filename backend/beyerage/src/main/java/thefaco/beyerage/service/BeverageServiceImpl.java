@@ -30,6 +30,11 @@ public class BeverageServiceImpl implements BeverageService {
     }
 
     @Override
+    public List<Beverage> findBeveragesWithLoc() {
+        return beverageRepository.findAllWithLoc();
+    }
+
+    @Override
     public Beverage findOneById(Long id) {
         return beverageRepository.findById(id);
     }
@@ -41,9 +46,10 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Override
     @Transactional
-    public void updateBeverage(Long id, String name, int price, BottleType type, int size, Long frequency, BeverageLocation beverageLocation) {
-        Beverage findBeverage = beverageRepository.findById(id);
-        findBeverage.updateBeverage(findBeverage, name, price, type, size, frequency, beverageLocation);
+    public void updateBeverage(Long id, String name, int price, BottleType type, int size, int row, int column) {
+        Beverage findBeverage = beverageRepository.findByIdWithLoc(id);
+        findBeverage.updateBeverage(
+                findBeverage, name, price, type, size, row, column);
     }
 
     @Override

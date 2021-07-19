@@ -29,6 +29,9 @@ public class BeverageLocation {
     @OneToOne(mappedBy = "beverageLocation")
     private Beverage beverage;
 
+    /**
+     * 음료 위치정보 생성 메서드
+     */
     public static BeverageLocation createBeverageLocation(int row, int column){
         BeverageLocation beverageLocation = new BeverageLocation();
         beverageLocation.setRow(row);
@@ -36,4 +39,5 @@ public class BeverageLocation {
 
         return beverageLocation;
     }
+
 }

@@ -62,12 +62,12 @@ public class Beverage {
     /**
      * 음료 수정 메서드
      */
-    public void updateBeverage(Beverage prevBeverage, String name, int price, BottleType type, int size, Long frequency, BeverageLocation beverageLocation){
+    public void updateBeverage(Beverage prevBeverage, String name, int price, BottleType type, int size, int row, int column){
         prevBeverage.setName(name);
         prevBeverage.setPrice(price);
         prevBeverage.setType(type);
         prevBeverage.setSize(size);
-        prevBeverage.setFrequency(frequency);
-        prevBeverage.setBeverageLocation(beverageLocation);
+        prevBeverage.getBeverageLocation().setRow(row);
+        prevBeverage.getBeverageLocation().setColumn(column);
     }
 }

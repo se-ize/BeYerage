@@ -10,6 +10,8 @@ import thefaco.beyerage.domain.BeverageLocation;
 import thefaco.beyerage.domain.BottleType;
 import thefaco.beyerage.repository.BeverageRepository;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,7 +42,7 @@ class BeverageServiceImplTest {
         Beverage beverage = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 250, 0L, beverageLocation);
         //when
         Long id = beverageService.addBeverage(beverage);
-        beverageService.updateBeverage(id, "사이다", 2000, BottleType.CAN, 380, 0L, beverageLocation);
+        beverageService.updateBeverage(id, "사이다", 2000, BottleType.CAN, 380, 1, 2);
         //then
         assertThat(beverage.getName()).isEqualTo("사이다");
     }
@@ -72,5 +74,17 @@ class BeverageServiceImplTest {
         Beverage mostFreqBeverage = beverageService.findMostFreqOne();
         //then
         assertThat(mostFreqBeverage.getName()).isEqualTo("콜라");
+    }
+
+    @Test
+    public void findBeveragesWithLoc() throws Exception {
+        //given
+        BeverageLocation beverageLocation = BeverageLocation.createBeverageLocation(1, 1);
+        Beverage beverage = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 250, 10L, beverageLocation);
+        Long id = beverageService.addBeverage(beverage);
+        //when
+        List<Beverage> beveragesWithLoc = beverageService.findBeveragesWithLoc();
+        //then
+        assertThat(beveragesWithLoc.get(0).getBeverageLocation().getRow()).isEqualTo(1);
     }
 }

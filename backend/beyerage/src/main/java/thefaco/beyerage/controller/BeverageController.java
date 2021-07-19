@@ -6,13 +6,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import thefaco.beyerage.domain.Beverage;
 import thefaco.beyerage.domain.BeverageLocation;
 import thefaco.beyerage.dto.beverage.BeverageCreateDto;
+import thefaco.beyerage.dto.beverage.BeverageListDto;
+import thefaco.beyerage.dto.beverage.BeverageUpdateDto;
 import thefaco.beyerage.service.BeverageService;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -60,4 +66,84 @@ public class BeverageController {
         return "redirect:/";
     }
 
+    /**
+     * 음료 조회
+     */
+    @GetMapping("/beverages")
+    public String beverageInfo(Model model){
+        List<Beverage> beverages = beverageService.findBeveragesWithLoc();
+        List<BeverageListDto> beverageListDtos = beverages.stream()
+                .map(b -> new BeverageListDto(b.getId(),b.getName(), b.getPrice(), b.getType(), b.getSize(), b.getBeverageLocation()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("beverages", beverageListDtos);
+
+        log.info("음료조회 form access");
+        return "beverage/beverageList";
+    }
+
+    /**
+     * 음료 수정 Form
+     */
+    @GetMapping("/beverages/{id}/edit")
+    public String updateBeverageForm(@PathVariable("id") Long id, Model model){
+        Beverage beverage = beverageService.findOneById(id);
+        BeverageUpdateDto beverageUpdateDto = new BeverageUpdateDto(
+                beverage.getId(),
+                beverage.getName(),
+                beverage.getPrice(),
+                beverage.getType(),
+                beverage.getSize(),
+                beverage.getBeverageLocation().getRow(),
+                beverage.getBeverageLocation().getColumn()
+        );
+
+        model.addAttribute("beverageUpdateDto", beverageUpdateDto);
+
+        log.info("음료수정 form access");
+
+        return "beverage/updateBeverageForm";
+    }
+
+    /**
+     * 음료 수정
+     */
+    @PostMapping("/beverages/{id}/edit")
+    public String updateBeverage(
+            @PathVariable("id") Long id,
+            @Valid @ModelAttribute("beverageUpdateDto") BeverageUpdateDto beverageUpdateDto,
+            BindingResult result){
+
+        //오류가 나면 오류메시지 출력
+        if(result.hasErrors()){
+            return "beverage/updateBeverageForm";
+        }
+
+        beverageService.updateBeverage(
+                id,
+                beverageUpdateDto.getName(),
+                beverageUpdateDto.getPrice(),
+                beverageUpdateDto.getBottleType(),
+                beverageUpdateDto.getSize(),
+                beverageUpdateDto.getRow(),
+                beverageUpdateDto.getColumn()
+                );
+
+        log.info("음료수정: id={} name={}", beverageUpdateDto.getId(), beverageUpdateDto.getName());
+
+        return "redirect:/beverages";
+    }
+
+    /**
+     * 음료 삭제
+     */
+    @GetMapping("/beverages/{id}/delete")
+    public String delete(@PathVariable("id") Long id){
+        Beverage beverage = beverageService.findOneById(id);
+        beverageService.deleteBeverage(beverage);
+
+        log.info("음료삭제: id={} name={}", id, beverage.getName());
+
+        return "redirect:/beverages";
+    }
 }
