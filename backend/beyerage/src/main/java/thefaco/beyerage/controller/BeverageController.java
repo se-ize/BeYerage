@@ -79,6 +79,7 @@ public class BeverageController {
         model.addAttribute("beverages", beverageListDtos);
 
         log.info("음료조회 form access");
+
         return "beverage/beverageList";
     }
 

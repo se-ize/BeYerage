@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import thefaco.beyerage.domain.BottleType;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -25,6 +26,11 @@ public class BeverageCreateDto {
     @Positive(message = "음료 크기는 양수입니다")
     private int size;
 
+    @Positive(message = "행은 양수입니다")
+    @Max(value = 4, message = "행은 4행까지 존재합니다")
     private int row;
+
+    @Positive(message = "열은 양수입니다")
+    @Max(value = 4, message = "열은 4열까지 존재합니다")
     private int column;
 }
