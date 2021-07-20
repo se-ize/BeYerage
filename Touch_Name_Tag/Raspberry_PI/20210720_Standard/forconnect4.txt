@@ -1,0 +1,1 @@
+{"id":4,"name":"펩시","price":1000,"type":"CAN","size":250},{"id":5,"name":"사이다","price":1200,"type":"BOTTLE","size":500},{"id":6,"name":"웰치스","price":1200,"type":"CAN","size":250},{"id":10,"name":"콜라","price":1200,"type":"CAN","size":250},{"id":27,"name":"환타","price":1200,"type":"CAN","size":250}
