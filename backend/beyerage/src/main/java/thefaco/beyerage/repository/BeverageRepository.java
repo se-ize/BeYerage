@@ -8,10 +8,12 @@ public interface BeverageRepository {
 
     void save(Beverage beverage);
     Beverage findById(Long id);
-    Beverage findByIdWithLoc(Long id);
-    Beverage findByName(String name);
+    List<Beverage> findByIdWithLoc(Long id);
+    List<Beverage> findByName(String name);
+    List<Beverage> findByNameWithLoc(String name);
     List<Beverage> findAll();
     List<Beverage> findAllWithLoc();
     void delete(Beverage beverage);
-    Beverage findMostFreq();
+    List<Beverage> findMostFreq();
+    List<Beverage> findMostFreqWithLoc();
 }

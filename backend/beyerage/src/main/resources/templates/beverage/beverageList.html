@@ -51,8 +51,8 @@
       </thead>
       <tbody>
       <!-- 수정중 -->
+      <span th:each="num : ${#numbers.sequence(1,4)}" th:remove="none">
         <tr th:each="beverage: ${beverages}">
-          <block th:each="num : ${#numbers.sequence(1,4)}">
             <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}" th:text="${beverage.name}"></td>
             <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}">o</td>
             <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 2}" th:text="${beverage.name}"></td>
@@ -61,10 +61,15 @@
             <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 3}">o</td>
             <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}" th:text="${beverage.name}"></td>
             <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}">o</td>
-          </block>
         </tr>
+      </span>
       </tbody>
     </table>
+
+    <p>
+      <a href="/beverage/new" class="btn btn-lg btn-info">음료 추가</a>
+    </p>
+
   </div>
 </div>
 </body>

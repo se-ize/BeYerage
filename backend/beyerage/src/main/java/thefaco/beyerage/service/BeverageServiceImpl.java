@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import thefaco.beyerage.domain.Beverage;
-import thefaco.beyerage.domain.BeverageLocation;
 import thefaco.beyerage.domain.BottleType;
 import thefaco.beyerage.repository.BeverageRepository;
 
@@ -40,14 +39,19 @@ public class BeverageServiceImpl implements BeverageService {
     }
 
     @Override
-    public Beverage findOneByName(String name) {
+    public List<Beverage> findOneByName(String name) {
         return beverageRepository.findByName(name);
+    }
+
+    @Override
+    public List<Beverage> findOneByNameWithLoc(String name) {
+        return beverageRepository.findByNameWithLoc(name);
     }
 
     @Override
     @Transactional
     public void updateBeverage(Long id, String name, int price, BottleType type, int size, int row, int column) {
-        Beverage findBeverage = beverageRepository.findByIdWithLoc(id);
+        Beverage findBeverage = beverageRepository.findByIdWithLoc(id).get(0);
         findBeverage.updateBeverage(
                 findBeverage, name, price, type, size, row, column);
     }
@@ -59,7 +63,12 @@ public class BeverageServiceImpl implements BeverageService {
     }
 
     @Override
-    public Beverage findMostFreqOne() {
+    public List<Beverage> findMostFreqOne() {
         return beverageRepository.findMostFreq();
+    }
+
+    @Override
+    public List<Beverage> findMostFreqOneWithLoc() {
+        return beverageRepository.findMostFreqWithLoc();
     }
 }

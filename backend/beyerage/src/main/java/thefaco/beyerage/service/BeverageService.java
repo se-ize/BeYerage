@@ -12,8 +12,10 @@ public interface BeverageService {
     List<Beverage> findBeverages();
     List<Beverage> findBeveragesWithLoc();
     Beverage findOneById(Long id);
-    Beverage findOneByName(String name);
+    List<Beverage> findOneByName(String name);
+    List<Beverage> findOneByNameWithLoc(String name);
     void updateBeverage(Long id, String name, int price, BottleType type, int size, int row, int column);
     void deleteBeverage(Beverage beverage);
-    Beverage findMostFreqOne();
+    List<Beverage> findMostFreqOne();
+    List<Beverage> findMostFreqOneWithLoc();
 }

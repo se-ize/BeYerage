@@ -29,30 +29,27 @@ public class BeverageRepositoryImpl implements BeverageRepository {
         return em.find(Beverage.class, id);
     }
 
+    //음료 상세정보와 위치정보를 동시에 찾는 메서드
     @Override
-    public Beverage findByIdWithLoc(Long id) {
-
-        try{
-            return em.createQuery("select b from Beverage b join fetch b.beverageLocation where b.id = :id", Beverage.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        } catch (Exception e) {
-            throw e;
-        }
+    public List<Beverage> findByIdWithLoc(Long id) {
+        return em.createQuery("select b from Beverage b join fetch b.beverageLocation where b.id = :id", Beverage.class)
+                .setParameter("id", id)
+                .getResultList();
     }
 
     //음료 이름으로 음료 한개를 찾는 메서드
     @Override
-    public Beverage findByName(String name) {
+    public List<Beverage> findByName(String name) {
+        return em.createQuery("select b from Beverage b where b.name = :name", Beverage.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
 
-        try{
-            return em.createQuery("select b from Beverage b where b.name = :name", Beverage.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
-        } catch(Exception e) {
-            throw e;
-        }
-
+    @Override
+    public List<Beverage> findByNameWithLoc(String name) {
+        return em.createQuery("select b from Beverage b join fetch b.beverageLocation where b.name = :name", Beverage.class)
+                .setParameter("name", name)
+                .getResultList();
     }
 
     //음료 상세정보 전체를 조회하는 메서드
@@ -77,14 +74,16 @@ public class BeverageRepositoryImpl implements BeverageRepository {
 
     //사람들이 가장 많이 찾는 음료를 가져오는 메서드
     @Override
-    public Beverage findMostFreq() {
+    public List<Beverage> findMostFreq() {
+        return em.createQuery("select b from Beverage b where b.frequency = (select max(b.frequency) from Beverage b)"
+                , Beverage.class)
+                .getResultList();
+    }
 
-        try{
-            return em.createQuery("select b from Beverage b where b.frequency = (select max(b.frequency) from Beverage b)"
-                    , Beverage.class)
-                    .getSingleResult();
-        } catch (Exception e){
-            throw e;
-        }
+    @Override
+    public List<Beverage> findMostFreqWithLoc() {
+        return em.createQuery("select b from Beverage b join fetch b.beverageLocation where b.frequency = (select max(b.frequency) from Beverage b)"
+                , Beverage.class)
+                .getResultList();
     }
 }

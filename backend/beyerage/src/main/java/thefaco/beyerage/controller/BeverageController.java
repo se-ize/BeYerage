@@ -35,6 +35,7 @@ public class BeverageController {
         log.info("음료 상세정보 추가 form access");
 
         model.addAttribute("beverageCreateDto", new BeverageCreateDto());
+
         return "beverage/createBeverageForm";
     }
 
@@ -63,7 +64,7 @@ public class BeverageController {
 
         log.info("음료 추가: id={} name={}", id, beverage.getName());
 
-        return "redirect:/";
+        return "redirect:/beverages";
     }
 
     /**
