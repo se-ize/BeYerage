@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class HomeController {
 
+    /**
+     * 홈 화면
+     */
     @RequestMapping("/")
     public String home(){
         log.info("Home access");

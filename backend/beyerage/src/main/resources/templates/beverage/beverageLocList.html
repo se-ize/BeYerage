@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Beverage List</title>
+</head>
+<body>
+<div class="container">
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+        <table class="table table-striped">
+            <thead class="table-light">
+            <tr>
+                <th>1열</th>
+                <th>2열</th>
+                <th>3열</th>
+                <th>4열</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 수정중 -->
+            <span th:each="num : ${#numbers.sequence(1,4)}" th:remove="none">
+                <tr th:each="beverage: ${beveragesLoc}">
+                    <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}" th:text="${beverage.name}"></td>
+                    <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}">o</td>
+                    <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 2}" th:text="${beverage.name}"></td>
+                    <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 2}">o</td>
+                    <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 3}" th:text="${beverage.name}"></td>
+                    <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 3}">o</td>
+                    <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}" th:text="${beverage.name}"></td>
+                    <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}">o</td>
+                </tr>
+      </span>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+

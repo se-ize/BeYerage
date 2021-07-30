@@ -1,14 +1,42 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Beverage List</title>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>BeYerage 편의점 관리</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Font Awesome icons (free version)-->
+  <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/styles.css" rel="stylesheet" />
 </head>
-<body>
-<div class="container">
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <!-- 기본 URL 설정 -->
+    <a class="navbar-brand" href="/#page-top"><img src="assets/img/navbar.png" alt="..." /></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars ms-1"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#team">Team</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<header class="masthead">
   <div class="position-absolute top-50 start-50 translate-middle">
-    <div th:replace="fragments/bodyHeader :: bodyHeader" />
-
     <table class="table table-striped">
       <thead class="table-light">
       <tr>
@@ -39,38 +67,7 @@
       </tr>
       </tbody>
     </table>
-
-    <table class="table table-striped">
-      <thead class="table-light">
-      <tr>
-        <th>1열</th>
-        <th>2열</th>
-        <th>3열</th>
-        <th>4열</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!-- 수정중 -->
-      <span th:each="num : ${#numbers.sequence(1,4)}" th:remove="none">
-        <tr th:each="beverage: ${beverages}">
-            <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}" th:text="${beverage.name}"></td>
-            <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}">o</td>
-            <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 2}" th:text="${beverage.name}"></td>
-            <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 2}">o</td>
-            <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 3}" th:text="${beverage.name}"></td>
-            <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 3}">o</td>
-            <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}" th:text="${beverage.name}"></td>
-            <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}">o</td>
-        </tr>
-      </span>
-      </tbody>
-    </table>
-
-    <p>
-      <a href="/beverage/new" class="btn btn-lg btn-info">음료 추가</a>
-    </p>
-
   </div>
-</div>
+</header>
 </body>
 </html>
