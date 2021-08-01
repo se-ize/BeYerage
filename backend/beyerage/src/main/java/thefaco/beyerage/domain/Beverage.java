@@ -17,6 +17,7 @@ public class Beverage {
     @Column(name = "beverage_id")
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private int price;

@@ -2,6 +2,7 @@ package thefaco.beyerage.dto.beverage;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 import thefaco.beyerage.domain.BottleType;
 
 import javax.validation.constraints.Max;

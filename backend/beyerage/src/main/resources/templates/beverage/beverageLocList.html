@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>BeYerage 편의점 관리</title>
+    <title>BeYerage Location List</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
@@ -34,7 +34,7 @@
         </div>
     </div>
 </nav>
-<div class="container" th:object="${beveragesLoc}">
+<div class="container">
     <div class="position-absolute top-50 start-50 translate-middle">
         <table class="table table-primary table-striped table-bordered">
             <thead>
@@ -46,19 +46,16 @@
             </tr>
             </thead>
             <tbody>
-            <!-- 수정중 -->
-                <span th:each="num : ${#numbers.sequence(1,4)}">
-                    <tr th:each="beverage: ${beveragesLoc}">
-                        <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}" th:text="${beverage.name}"></td>
-                        <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 1}">o</td>
-                        <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 2}" th:text="${beverage.name}"></td>
-                        <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 2}">o</td>
-                        <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 3}" th:text="${beverage.name}"></td>
-                        <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 3}">o</td>
-                        <td th:if="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}" th:text="${beverage.name}"></td>
-                        <td th:unless="${beverage.beverageLocation?.row == num and beverage.beverageLocation?.column == 4}">o</td>
-                    </tr>
-                </span>
+                <tr th:each="location : ${locations}">
+                    <td th:if="${!#strings.equals(location.get(0), '')}" th:text="${location.get(0)}"></td>
+                    <td th:unless="${!#strings.equals(location.get(0), '')}">ooo</td>
+                    <td th:if="${!#strings.equals(location.get(1), '')}" th:text="${location.get(1)}"></td>
+                    <td th:unless="${!#strings.equals(location.get(1), '')}">ooo</td>
+                    <td th:if="${!#strings.equals(location.get(2), '')}" th:text="${location.get(2)}"></td>
+                    <td th:unless="${!#strings.equals(location.get(2), '')}">ooo</td>
+                    <td th:if="${!#strings.equals(location.get(3), '')}" th:text="${location.get(3)}"></td>
+                    <td th:unless="${!#strings.equals(location.get(3), '')}">ooo</td>
+                </tr>
             </tbody>
         </table>
     </div>

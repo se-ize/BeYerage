@@ -18,6 +18,7 @@ import thefaco.beyerage.dto.beverage.BeverageUpdateDto;
 import thefaco.beyerage.service.BeverageService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,12 +102,38 @@ public class BeverageController {
                 .map(b -> new BeverageLocListDto(b.getId(), b.getName(), b.getBeverageLocation()))
                 .collect(Collectors.toList());
 
+        List<List<String>> locations = switchLocationList(beverageLocListDtos);
+
         //model에 DTO를 담아서 View로 전송
         model.addAttribute("beveragesLoc", beverageLocListDtos);
+        //model에 DTO를 담아서 View로 전송
+        model.addAttribute("locations", locations);
 
         log.info("음료위치조회 form access");
 
         return "beverage/beverageLocList";
+    }
+
+    //각 위치에 음료 이름 담는 알고리즘
+    private List<List<String>> switchLocationList(List<BeverageLocListDto> beverageLocListDtos) {
+
+        List<List<String>> locations = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            locations.add(new ArrayList<>());
+            for(int j = 0; j < 4; j++){
+                locations.get(i).add("");
+            }
+        }
+        for (BeverageLocListDto beverageLocListDto : beverageLocListDtos) {
+            for(int i = 0; i < 4; i++){
+                for(int j = 0; j < 4; j++){
+                    int row = beverageLocListDto.getBeverageLocation().getRow();
+                    int column = beverageLocListDto.getBeverageLocation().getColumn();
+                    if(row-1 == i && column-1 == j) locations.get(i).set(j, beverageLocListDto.getName());
+                }
+            }
+        }
+        return locations;
     }
 
     /**

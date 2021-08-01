@@ -12,6 +12,7 @@ import javax.persistence.*;
  * 음료 위치정보를 담은 엔티티
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"beverage_row", "beverage_column"}))
 @Getter @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BeverageLocation {
