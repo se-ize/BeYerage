@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BeYerage</string>
+
+    <string name="default_question">
+        근처 편의점에 대한 정보를 안내받으시려면 1번,
+        편의점 냉장고 내 음료수의 위치를 안내받으시려면 2번,
+        음료수를 추천받으시려면 3번을 말씀해주세요.
+    </string>
 </resources>
