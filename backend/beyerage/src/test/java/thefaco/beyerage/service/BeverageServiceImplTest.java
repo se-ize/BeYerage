@@ -71,9 +71,9 @@ class BeverageServiceImplTest {
         Beverage beverage2 = Beverage.createBeverage("사이다", 1000, BottleType.CAN, 250, 5L, beverageLocation2);
         Long id2 = beverageService.addBeverage(beverage2);
         //when
-        Beverage mostFreqBeverage = beverageService.findMostFreqOne();
+        List<Beverage> mostFreqOnes = beverageService.findMostFreqOne();
         //then
-        assertThat(mostFreqBeverage.getName()).isEqualTo("콜라");
+        assertThat(mostFreqOnes.get(0).getName()).isEqualTo("콜라");
     }
 
     @Test
