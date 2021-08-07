@@ -1,5 +1,6 @@
 package com.mobileapp.beyerage;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,9 +20,17 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.network.BeverageAPI;
 import com.mobileapp.beyerage.shop.ShopService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +60,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /**
+         * http connect
+         */
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ec2-3-36-89-34.ap-northeast-2.compute.amazonaws.com:3333")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        BeverageAPI beverageAPI = retrofit.create(BeverageAPI.class);
+        beverageAPI.getBeverageData("콜라").enqueue(new Callback<List<Beverage>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Beverage>> call, @NonNull Response<List<Beverage>> response) {
+                List<Beverage> data = response.body();
+                Log.d("data", data.get(0).getName());
+            }
+
+            @Override
+            public void onFailure(Call<List<Beverage>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
         /* TTS, STT */
 
