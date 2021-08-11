@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.mobileapp.beyerage.dto.Beverage;
 import com.mobileapp.beyerage.network.BeverageAPI;
+import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,26 +63,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /**
-         * http connect
+         * http connection
          */
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-3-36-89-34.ap-northeast-2.compute.amazonaws.com:3333")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        BeverageAPI beverageAPI = retrofit.create(BeverageAPI.class);
-        beverageAPI.getBeverageData("콜라").enqueue(new Callback<List<Beverage>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Beverage>> call, @NonNull Response<List<Beverage>> response) {
-                List<Beverage> data = response.body();
-                Log.d("data", data.get(0).getName());
-            }
-
-            @Override
-            public void onFailure(Call<List<Beverage>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        Server server = new Server();
+        server.getUserWantBeverage("콜라");
 
         /* TTS, STT */
 

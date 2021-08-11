@@ -10,8 +10,8 @@ import java.util.List;
 public interface BeverageAPI {
 
     @GET("/beverageWithLocInfo")
-    Call<List<Beverage>> getBeverageData(@Query("beverageName") String beverageName);
+    Call<Beverage> getBeverageData(@Query("beverageName") String beverageName);
 
     @GET("/mostFreqBeverageInfo")
-    Call<List<Beverage>> getFreqBeverageData();
+    Call<Beverage> getFreqBeverageData();
 }
