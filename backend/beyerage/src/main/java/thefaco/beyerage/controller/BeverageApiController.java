@@ -44,6 +44,7 @@ public class BeverageApiController {
      * 음료 이름에 따른 상세, 위치정보 API
      * @param beverageName :음료 이름
      * @return : 음료 엔티티
+     * 아직 frequency++ 구현 X
      */
     @GetMapping(value = "/beverageWithLocInfo", produces = MediaType.APPLICATION_JSON_VALUE)
     public BeverageWithLocApiDto beverageWithLocInfo(@RequestParam("beverageName") String beverageName) {

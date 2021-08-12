@@ -1,5 +1,6 @@
 package com.mobileapp.beyerage;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,9 +20,18 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.network.BeverageAPI;
+import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /**
+         * http connection
+         */
+        Server server = new Server();
+        server.getUserWantBeverage("콜라");
 
         /* TTS, STT */
 
