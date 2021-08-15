@@ -6,20 +6,26 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="260dp"
+        android:layout_height="230dp"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="음성 인식"
-        android:textSize="34sp" />
+        android:layout_marginTop="20dp"
+        android:text="1" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button2"
         android:layout_width="260dp"
-        android:layout_height="380dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="230dp"
         android:layout_gravity="center"
-        android:text="Button" />
+        android:text="2" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="260dp"
+        android:layout_height="230dp"
+        android:layout_gravity="center"
+        android:text="3" />
 
 </LinearLayout>
