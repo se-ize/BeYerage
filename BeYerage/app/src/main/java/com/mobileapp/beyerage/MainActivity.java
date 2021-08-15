@@ -1,6 +1,5 @@
 package com.mobileapp.beyerage;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,18 +19,10 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.mobileapp.beyerage.dto.Beverage;
-import com.mobileapp.beyerage.network.BeverageAPI;
 import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -75,10 +66,49 @@ public class MainActivity extends AppCompatActivity {
         //TTS 환경설정
         checkTTS();
 
-        Button button = (Button)findViewById(R.id.button);
+        Button findBeverageButton = (Button)findViewById(R.id.findBeverageButton);
+        Button mostFreqBeverageButton = (Button)findViewById(R.id.mostFreqBeverageButton);
+        Button closeConvStoreButton = (Button)findViewById(R.id.closeConvenienceStoreButton);
 
+        /**
+         * 원하는 음료 안내
+         */
         //버튼 클릭시 음성 안내 서비스 호출
-        button.setOnClickListener(view -> {
+        findBeverageButton.setOnClickListener(view -> {
+            //음성안내 시작
+            shopService.voiceGuidance(tts);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //음성인식 시작
+                    startSTT();
+                }
+            }, 10000);
+            // 10초 딜레이 첨부
+        });
+
+        /**
+         * 추천 음료 안내
+         */
+        //버튼 클릭시 음성 안내 서비스 호출
+        mostFreqBeverageButton.setOnClickListener(view -> {
+            //음성안내 시작
+            shopService.voiceGuidance(tts);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //음성인식 시작
+                    startSTT();
+                }
+            }, 10000);
+            // 10초 딜레이 첨부
+        });
+
+        /**
+         * 근처 편의점 안내
+         */
+        //버튼 클릭시 음성 안내 서비스 호출
+        closeConvStoreButton.setOnClickListener(view -> {
             //음성안내 시작
             shopService.voiceGuidance(tts);
             new Handler().postDelayed(new Runnable() {
