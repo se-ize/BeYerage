@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private static final AppConfig appConfig = new AppConfig();
     //음성 서비스
     private static final ShopService shopService = appConfig.shopService();
+    //HTTP API 호출 클래스
+    private static final Server server = new Server();
     //TTS 변수 선언
     private TextToSpeech tts, tts2;
     //STT를 사용할 intent 와 SpeechRecognizer 초기화
@@ -65,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         /**
          * http connection
          */
-        Server server = new Server();
-        server.getUserWantBeverage("콜라");
+//        Beverage findBeverage = server.getUserWantBeverage("콜라");
+//        Beverage findBeverage2 = server.getUserWantBeverage("사이다");
 
         /* TTS, STT */
 
