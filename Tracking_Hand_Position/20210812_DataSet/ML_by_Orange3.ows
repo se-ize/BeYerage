@@ -2,11 +2,12 @@
 <scheme version="2.0" title="" description="">
 	<nodes>
 		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="train_set" position="(119.22222222222223, 204.66666666666666)" />
-		<node id="1" name="Data Table" qualified_name="Orange.widgets.data.owtable.OWDataTable" project_name="Orange3" version="" title="Data Table" position="(306.5079365079365, 336.3492063492062)" />
+		<node id="1" name="Data Table" qualified_name="Orange.widgets.data.owtable.OWDataTable" project_name="Orange3" version="" title="Data Table" position="(266.5079365079365, 322.06349206349194)" />
 		<node id="2" name="Predictions" qualified_name="Orange.widgets.evaluate.owpredictions.OWPredictions" project_name="Orange3" version="" title="Predictions" position="(709.5238095238095, 61.26984126984124)" />
 		<node id="3" name="kNN" qualified_name="Orange.widgets.model.owknn.OWKNNLearner" project_name="Orange3" version="" title="kNN" position="(461.26984126984115, 162.0634920634921)" />
 		<node id="4" name="Neural Network" qualified_name="Orange.widgets.model.owneuralnetwork.OWNNLearner" project_name="Orange3" version="" title="Neural Network" position="(457.46031746031747, 265.3968253968253)" />
 		<node id="5" name="Select Columns" qualified_name="Orange.widgets.data.owselectcolumns.OWSelectAttributes" project_name="Orange3" version="" title="Select Columns" position="(295.7142857142858, 58.571428571428555)" />
+		<node id="6" name="AdaBoost" qualified_name="Orange.widgets.model.owadaboost.OWAdaBoost" project_name="Orange3" version="" title="AdaBoost" position="(461.4285714285714, 412.857142857143)" />
 	</nodes>
 	<links>
 		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" />
@@ -16,6 +17,8 @@
 		<link id="4" source_node_id="5" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" />
 		<link id="5" source_node_id="5" sink_node_id="3" source_channel="Data" sink_channel="Data" enabled="true" />
 		<link id="6" source_node_id="5" sink_node_id="4" source_channel="Data" sink_channel="Data" enabled="true" />
+		<link id="7" source_node_id="5" sink_node_id="6" source_channel="Data" sink_channel="Data" enabled="true" />
+		<link id="8" source_node_id="6" sink_node_id="2" source_channel="Model" sink_channel="Predictors" enabled="true" />
 	</links>
 	<annotations />
 	<thumbnail />
@@ -65,10 +68,10 @@ ZXUu
 </properties>
 		<properties node_id="1" format="literal">{'auto_commit': True, 'color_by_class': True, 'controlAreaVisible': True, 'dist_color_RGB': (220, 220, 220, 255), 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x00\x94\x00\x00\x00[\x00\x00\x03R\x00\x00\x01\xcd\x00\x00\x00\x94\x00\x00\x00[\x00\x00\x03R\x00\x00\x01\xcd\x00\x00\x00\x00\x00\x00\x00\x00\x03\xc0\x00\x00\x00\x94\x00\x00\x00[\x00\x00\x03R\x00\x00\x01\xcd', 'select_rows': True, 'selected_cols': [], 'selected_rows': [], 'show_attribute_labels': True, 'show_distributions': True, '__version__': 2}</properties>
 		<properties node_id="2" format="pickle">gASVDQEAAAAAAAB9lCiMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBNzYXZlZFdpZGdldEdlb21ldHJ5
-lENCAdnQywADAAAAAAChAAAAJgAAA3wAAAIFAAAAoQAAACYAAAN8AAACBQAAAAAAAAAAA8AAAACh
-AAAAJgAAA3wAAAIFlIwJc2VsZWN0aW9ulF2USwBhjAtzY29yZV90YWJsZZR9lIwMc2hvd25fc2Nv
-cmVzlI+UKIwGUmVjYWxslIwDQVVDlIwCQ0GUjANNU0WUjAJSMpSMCVByZWNpc2lvbpSMAkYxlIwE
-Uk1TRZSMA01BRZSQc4wLX192ZXJzaW9uX1+USwGMEGNvbnRleHRfc2V0dGluZ3OUXZR1Lg==
+lENCAdnQywADAAAAAAByAAAADwAAA08AAAIGAAAAcwAAACYAAANOAAACBQAAAAAAAAAAA8AAAABz
+AAAAJgAAA04AAAIFlIwJc2VsZWN0aW9ulF2USwBhjAtzY29yZV90YWJsZZR9lIwMc2hvd25fc2Nv
+cmVzlI+UKIwEUk1TRZSMA01BRZSMA01TRZSMAlIylIwDQVVDlIwCRjGUjAlQcmVjaXNpb26UjAJD
+QZSMBlJlY2FsbJSQc4wLX192ZXJzaW9uX1+USwGMEGNvbnRleHRfc2V0dGluZ3OUXZR1Lg==
 </properties>
 		<properties node_id="3" format="literal">{'auto_apply': True, 'controlAreaVisible': True, 'learner_name': 'kNN', 'metric_index': 0, 'n_neighbors': 5, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01|\x00\x00\x00\x8a\x00\x00\x02C\x00\x00\x01]\x00\x00\x01}\x00\x00\x00\xa1\x00\x00\x02B\x00\x00\x01\\\x00\x00\x00\x00\x00\x00\x00\x00\x03\xc0\x00\x00\x01}\x00\x00\x00\xa1\x00\x00\x02B\x00\x00\x01\\', 'weight_index': 0, '__version__': 1}</properties>
 		<properties node_id="4" format="literal">{'activation_index': 3, 'alpha_index': 10, 'auto_apply': True, 'controlAreaVisible': True, 'hidden_layers_input': '10', 'learner_name': 'Neural Network', 'max_iterations': 500, 'replicable': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01[\x00\x00\x00\x8a\x00\x00\x02e\x00\x00\x01\x8b\x00\x00\x01\\\x00\x00\x00\xa1\x00\x00\x02d\x00\x00\x01\x8a\x00\x00\x00\x00\x00\x00\x00\x00\x03\xc0\x00\x00\x01\\\x00\x00\x00\xa1\x00\x00\x02d\x00\x00\x01\x8a', 'solver_index': 0, '__version__': 1}</properties>
@@ -85,6 +88,7 @@ lHViaAwpgZR9lChoD32UKGgRfZQoaBNLAoaUaBVLAIaUaBdLAoaUaBVLAYaUaBpLAoaUaBVLAoaU
 aB1LAoaUaBVLA4aUaCBLAoaUaBVLBIaUjAlGZWF0dXJlIDaUSwGGlGglSwCGlHVK/v///4aUaAdL
 AXVoKH2UKGgTSwJoF0sCaBpLAmgdSwJoIEsCaDpLAXVoKn2UdWJldS4=
 </properties>
+		<properties node_id="6" format="literal">{'algorithm_index': 1, 'auto_apply': True, 'controlAreaVisible': True, 'learner_name': '', 'learning_rate': 1.0, 'loss_index': 0, 'n_estimators': 50, 'random_seed': 0, 'savedWidgetGeometry': None, 'use_random_seed': False, '__version__': 1}</properties>
 	</node_properties>
 	<session_state>
 		<window_groups />
