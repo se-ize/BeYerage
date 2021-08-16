@@ -23,6 +23,7 @@ import com.mobileapp.beyerage.dto.Beverage;
 import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -114,13 +115,9 @@ public class MainActivity extends AppCompatActivity{
                 public void run() {
                     //음성인식 시작
                     startSTT();
-                    Beverage findBeverage = server.getUserWantBeverage(result);
-                    Log.d(tag, "☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆1번☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
-                    shopService.findUserWantBeverage(tts, findBeverage);
-                    Log.d(tag, "★★★★★★★★★★★★★★★★★★2번★★★★★★★★★★★★★★★★★★");
                 }
-            }, 1000);
-            // 1초 딜레이 첨부
+            }, 2200);
+            // 2.2초 딜레이 첨부
         });
     }
 
@@ -156,6 +153,27 @@ public class MainActivity extends AppCompatActivity{
             } catch (Exception e) {
                 Log.d("onActivityResult", "getImageURL exception");
             }
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            ArrayList<String> results = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+            //말한 음료 값
+            String str = results.get(0);
+            Thread findThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Beverage findBeverage = server.getUserWantBeverage(str);
+                    Log.d(tag, "★★★★★★★★★음성 인식 결과★★★★★★★★★\n"+ str);
+                    shopService.findUserWantBeverage(tts, findBeverage);
+                }
+            });
+            findThread.start();
         }
     }
 
@@ -244,6 +262,7 @@ public class MainActivity extends AppCompatActivity{
         public void onResults(Bundle results) {
             ArrayList<String> matches = results
                     .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            Log.d(tag, String.valueOf(matches));
         }
         @Override
         public void onPartialResults(Bundle partialResults) {}
