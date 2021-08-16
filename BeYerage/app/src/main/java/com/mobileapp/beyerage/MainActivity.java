@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity{
     //음성 허용 확인
     private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
 
+    //로그 확인용
+    String tag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,20 +75,10 @@ public class MainActivity extends AppCompatActivity{
 
         /**
          * 원하는 음료 안내
+         * 수정중...
          */
         //버튼 클릭시 음성 안내 서비스 호출
-        findBeverageButton.setOnClickListener(view -> {
-            //음성안내 시작
-            shopService.voiceGuidance(tts);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //음성인식 시작
-                    startSTT();
-                }
-            }, 10000);
-            // 10초 딜레이 첨부
-        });
+        findBevButtonEvent(findBeverageButton);
 
         /**
          * 추천 음료 안내
@@ -99,7 +92,7 @@ public class MainActivity extends AppCompatActivity{
         //버튼 클릭시 음성 안내 서비스 호출
         closeConvStoreButton.setOnClickListener(view -> {
             //음성안내 시작
-            shopService.voiceGuidance(tts);
+            shopService.voiceGuidance3(tts);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -108,6 +101,26 @@ public class MainActivity extends AppCompatActivity{
                 }
             }, 10000);
             // 10초 딜레이 첨부
+        });
+    }
+
+    private void findBevButtonEvent(Button findBeverageButton) {
+
+        //버튼 클릭시 원하는 음료 안내 서비스 호출
+        findBeverageButton.setOnClickListener(view -> {
+            shopService.voiceGuidance(tts);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //음성인식 시작
+                    startSTT();
+                    Beverage findBeverage = server.getUserWantBeverage(result);
+                    Log.d(tag, "☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆1번☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
+                    shopService.findUserWantBeverage(tts, findBeverage);
+                    Log.d(tag, "★★★★★★★★★★★★★★★★★★2번★★★★★★★★★★★★★★★★★★");
+                }
+            }, 1000);
+            // 1초 딜레이 첨부
         });
     }
 
