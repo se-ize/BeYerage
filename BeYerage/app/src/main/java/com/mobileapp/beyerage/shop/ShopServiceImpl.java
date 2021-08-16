@@ -5,6 +5,8 @@ import android.speech.tts.TextToSpeech;
 
 import com.mobileapp.beyerage.MainActivity;
 import com.mobileapp.beyerage.R;
+import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.network.Server;
 
 public class ShopServiceImpl extends MainActivity implements ShopService{
 
@@ -21,12 +23,14 @@ public class ShopServiceImpl extends MainActivity implements ShopService{
     }
 
     @Override
-    public void voiceGuidance2(TextToSpeech tts, String result) {
+    public void recommendBeverage(TextToSpeech tts, Beverage beverage) {
+
+        String msg = "사람들이 가장 많이 찾는 음료는 " + beverage;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
-            tts.speak(result, TextToSpeech.QUEUE_FLUSH, null, null);
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
-            tts.speak(result, TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 

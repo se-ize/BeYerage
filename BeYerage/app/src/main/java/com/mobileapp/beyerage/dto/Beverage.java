@@ -74,4 +74,14 @@ public class Beverage {
     public void setColumn(int column) {
         this.column = column;
     }
+
+    @Override
+    public String toString() {
+        return "" + name + '\'' +
+                ", 가격은" + price +
+                "원, 종류는" + type +
+                ", 크기는" + size +
+                "ml,위치는" + row +
+                "행" + column + "열에 위치합니다";
+    }
 }

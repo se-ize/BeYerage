@@ -71,4 +71,11 @@ public class Beverage {
         prevBeverage.getBeverageLocation().setRow(row);
         prevBeverage.getBeverageLocation().setColumn(column);
     }
+
+    /**
+     * 모바일 앱에서 음료 검색시 Frequency 애트리뷰트를 1 증가해주는 메서드
+     */
+    public void addFrequency(Beverage prevBeverage, Long frequency){
+        prevBeverage.setFrequency(frequency + 1);
+    }
 }

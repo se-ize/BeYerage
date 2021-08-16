@@ -58,6 +58,13 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Override
     @Transactional
+    public void addFrequency(String name) {
+        Beverage findBeverage = beverageRepository.findByName(name).get(0);
+        findBeverage.addFrequency(findBeverage, findBeverage.getFrequency());
+    }
+
+    @Override
+    @Transactional
     public void deleteBeverage(Beverage beverage) {
         beverageRepository.delete(beverage);
     }

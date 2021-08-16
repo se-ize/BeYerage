@@ -15,6 +15,7 @@ public interface BeverageService {
     List<Beverage> findOneByName(String name);
     List<Beverage> findOneByNameWithLoc(String name);
     void updateBeverage(Long id, String name, int price, BottleType type, int size, int row, int column);
+    void addFrequency(String name);
     void deleteBeverage(Beverage beverage);
     List<Beverage> findMostFreqOne();
     List<Beverage> findMostFreqOneWithLoc();

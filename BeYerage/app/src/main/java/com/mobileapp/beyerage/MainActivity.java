@@ -19,13 +19,14 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.mobileapp.beyerage.dto.Beverage;
 import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     //컨트롤러
     private static final AppConfig appConfig = new AppConfig();
     //음성 서비스
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     //음성 허용 확인
     private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         /* TTS, STT */
 
         //TTS 환경설정
-        checkTTS();
+        setTTS();
 
         Button findBeverageButton = (Button)findViewById(R.id.findBeverageButton);
         Button mostFreqBeverageButton = (Button)findViewById(R.id.mostFreqBeverageButton);
@@ -89,20 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 추천 음료 안내
+         * 수정중...
          */
-        //버튼 클릭시 음성 안내 서비스 호출
-        mostFreqBeverageButton.setOnClickListener(view -> {
-            //음성안내 시작
-            shopService.voiceGuidance(tts);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //음성인식 시작
-                    startSTT();
-                }
-            }, 10000);
-            // 10초 딜레이 첨부
-        });
+        mostFreqButtonEvent(mostFreqBeverageButton);
 
         /**
          * 근처 편의점 안내
@@ -119,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, 10000);
             // 10초 딜레이 첨부
+        });
+    }
+
+    private void mostFreqButtonEvent(Button mostFreqBeverageButton) {
+
+        //버튼 클릭시 음성 안내 서비스 호출
+        mostFreqBeverageButton.setOnClickListener(view -> {
+            Beverage mostFreqBeverage = server.getMostFreqBeverage();
+
+            shopService.recommendBeverage(tts, mostFreqBeverage);
         });
     }
 
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-    private void checkTTS(){
+    private void setTTS(){
         //TTS를 생성하고 OnInitListener로 초기화
         tts = new TextToSpeech(this, status -> {
             if(status == TextToSpeech.SUCCESS) {

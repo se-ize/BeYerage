@@ -18,7 +18,6 @@ public class Server {
             .build();
 
     private BeverageAPI getBeverageAPI() {
-        beverage = new Beverage();
         return retrofit.create(BeverageAPI.class);
     }
 
