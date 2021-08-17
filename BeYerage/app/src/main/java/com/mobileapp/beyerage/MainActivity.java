@@ -23,7 +23,6 @@ import com.mobileapp.beyerage.dto.Beverage;
 import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -51,9 +50,6 @@ public class MainActivity extends AppCompatActivity{
     //음성 허용 확인
     private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
 
-    //로그 확인용
-    String tag;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +72,20 @@ public class MainActivity extends AppCompatActivity{
 
         /**
          * 원하는 음료 안내
-         * 수정중...
          */
         //버튼 클릭시 음성 안내 서비스 호출
-        findBevButtonEvent(findBeverageButton);
+        findBeverageButton.setOnClickListener(view -> {
+            //음성안내 시작
+            shopService.voiceGuidance(tts);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //음성인식 시작
+                    startSTT();
+                }
+            }, 10000);
+            // 10초 딜레이 첨부
+        });
 
         /**
          * 추천 음료 안내
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity{
         //버튼 클릭시 음성 안내 서비스 호출
         closeConvStoreButton.setOnClickListener(view -> {
             //음성안내 시작
-            shopService.voiceGuidance3(tts);
+            shopService.voiceGuidance(tts);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -102,22 +108,6 @@ public class MainActivity extends AppCompatActivity{
                 }
             }, 10000);
             // 10초 딜레이 첨부
-        });
-    }
-
-    private void findBevButtonEvent(Button findBeverageButton) {
-
-        //버튼 클릭시 원하는 음료 안내 서비스 호출
-        findBeverageButton.setOnClickListener(view -> {
-            shopService.voiceGuidance(tts);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //음성인식 시작
-                    startSTT();
-                }
-            }, 2200);
-            // 2.2초 딜레이 첨부
         });
     }
 
@@ -153,27 +143,6 @@ public class MainActivity extends AppCompatActivity{
             } catch (Exception e) {
                 Log.d("onActivityResult", "getImageURL exception");
             }
-        }
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            ArrayList<String> results = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-            //말한 음료 값
-            String str = results.get(0);
-            Thread findThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Beverage findBeverage = server.getUserWantBeverage(str);
-                    Log.d(tag, "★★★★★★★★★음성 인식 결과★★★★★★★★★\n"+ str);
-                    shopService.findUserWantBeverage(tts, findBeverage);
-                }
-            });
-            findThread.start();
         }
     }
 
@@ -262,7 +231,6 @@ public class MainActivity extends AppCompatActivity{
         public void onResults(Bundle results) {
             ArrayList<String> matches = results
                     .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            Log.d(tag, String.valueOf(matches));
         }
         @Override
         public void onPartialResults(Bundle partialResults) {}

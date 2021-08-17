@@ -28,7 +28,7 @@ public class Server {
             @Override
             public void onResponse(Call<Beverage> call, Response<Beverage> response) {
                 beverage = response.body();
-                if(beverage != null) Log.d("getBeverage name= ",beverage.getName());
+                if(beverage != null) Log.d("getBeverage name= ", beverage.getName());
                 else Log.d("getBeverage name= ",null);
             }
 
