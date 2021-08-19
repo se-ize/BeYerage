@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">BeYerage</string>
-
     <string name="default_question">
-        근처 편의점에 대한 정보를 안내받으시려면 1번,
-        편의점 냉장고 내 음료수의 위치를 안내받으시려면 2번,
-        음료수를 추천받으시려면 3번을 말씀해주세요.
+        음료 위치 안내는 첫번째 버튼,
+        인기있는 음료 추천은 두번째 버튼,
+        근처 편의점 안내는 세번째 버튼을 터치해주세요.
+        다시 듣고 싶으시면 화면을 아래로 당겨주세요.
     </string>
 </resources>

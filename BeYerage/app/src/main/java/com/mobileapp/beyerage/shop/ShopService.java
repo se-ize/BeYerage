@@ -4,6 +4,8 @@ import android.speech.tts.TextToSpeech;
 import com.mobileapp.beyerage.dto.Beverage;
 
 public interface ShopService {
+    //디폴트 문장
+    void defaultGuidance(TextToSpeech tts);
     //사용자가 원하는 음료를 말하도록 유도
     void voiceGuidance(TextToSpeech tts);
     //원하는 음료 안내
