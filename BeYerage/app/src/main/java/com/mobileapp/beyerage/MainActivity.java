@@ -3,6 +3,7 @@ package com.mobileapp.beyerage;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.content.Intent;
@@ -20,8 +21,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.network.BeverageAPI;
 import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
+import retrofit2.Call;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -68,10 +71,20 @@ public class MainActivity extends AppCompatActivity{
 
         //TTS 환경설정
         setTTS();
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
 
-        Button findBeverageButton = (Button)findViewById(R.id.findBeverageButton);
-        Button mostFreqBeverageButton = (Button)findViewById(R.id.mostFreqBeverageButton);
-        Button closeConvStoreButton = (Button)findViewById(R.id.closeConvenienceStoreButton);
+        Button findBeverageButton = (Button) findViewById(R.id.findBeverageButton);
+        Button mostFreqBeverageButton = (Button) findViewById(R.id.mostFreqBeverageButton);
+        Button closeConvStoreButton = (Button) findViewById(R.id.closeConvenienceStoreButton);
+
+        //당겨서 메뉴 안내
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                                               @Override
+                                               public void onRefresh() {
+                                                   shopService.defaultGuidance(tts);
+                                                   refreshLayout.setRefreshing(false);
+                                               }
+                                           });
 
         /**
          * 원하는 음료 안내
@@ -82,7 +95,6 @@ public class MainActivity extends AppCompatActivity{
 
         /**
          * 추천 음료 안내
-         * 수정중...
          */
         mostFreqButtonEvent(mostFreqBeverageButton);
 
@@ -92,7 +104,7 @@ public class MainActivity extends AppCompatActivity{
         //버튼 클릭시 음성 안내 서비스 호출
         closeConvStoreButton.setOnClickListener(view -> {
             //음성안내 시작
-            shopService.voiceGuidance3(tts);
+            shopService.voiceGuidance(tts);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -116,11 +128,11 @@ public class MainActivity extends AppCompatActivity{
                     startSTT();
                     Beverage findBeverage = server.getUserWantBeverage(result);
                     Log.d(tag, "☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆1번☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
-                    shopService.findUserWantBeverage(tts, findBeverage);
-                    Log.d(tag, "★★★★★★★★★★★★★★★★★★2번★★★★★★★★★★★★★★★★★★");
+                    //shopService.findUserWantBeverage(tts, findBeverage);
+                    //Log.d(tag, "★★★★★★★★★★★★★★★★★★2번★★★★★★★★★★★★★★★★★★");
                 }
-            }, 1000);
-            // 1초 딜레이 첨부
+            }, 2200);
+            // 2.2초 딜레이 첨부
         });
     }
 
@@ -128,11 +140,37 @@ public class MainActivity extends AppCompatActivity{
 
         //버튼 클릭시 음성 안내 서비스 호출
         mostFreqBeverageButton.setOnClickListener(view -> {
-            Beverage mostFreqBeverage = server.getMostFreqBeverage();
-
-            shopService.recommendBeverage(tts, mostFreqBeverage);
+            new NetworkAsyncTask().execute();
         });
     }
+
+    /**
+     * 동기식 방식 HTTP CONNECTION
+     */
+    public class NetworkAsyncTask extends AsyncTask<Void, Void, Beverage>{
+
+        @Override
+        protected Beverage doInBackground(Void... params) {
+            BeverageAPI beverageAPI = server.getBeverageAPI();
+            Call<Beverage> freqBeverageData = beverageAPI.getFreqBeverageData();
+            try{
+                return freqBeverageData.execute().body();
+            } catch (Exception e){
+                e.printStackTrace();
+                Log.d(tag,"Network IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Beverage beverage) {
+            super.onPostExecute(beverage);
+            if(beverage != null) Log.d("getFreqBeverage name= ", beverage.getName());
+            else Log.d("getFreqBeverage name= ", null);
+            shopService.recommendBeverage(tts, beverage);
+        }
+    }
+
 
     public class VoiceTask extends AsyncTask<String, Integer, String> {
         //AsyncTask < 보낼 내용이 string, 진행상황 업데이트할 때 integer로 전달, AsyncTask가 끝난 뒤 결과값은 String >
@@ -171,6 +209,26 @@ public class MainActivity extends AppCompatActivity{
         startActivityForResult(intent, 2);
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            ArrayList<String> results = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+            //말한 음료 값
+            String str = results.get(0);
+            Thread findThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Beverage findBeverage = server.getUserWantBeverage(str);
+                    Log.d(tag, "★★★★★★★★★음성 인식 결과★★★★★★★★★\n"+ str);
+                    shopService.findUserWantBeverage(tts, findBeverage);
+                }
+            });
+            findThread.start();
+        }
+    }
     //음성인식 환경설정
     private void startSTT() {
         //STT 퍼미션 체크
