@@ -1,7 +1,6 @@
 package com.mobileapp.beyerage;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,14 +16,15 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
-import android.text.Layout;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.network.BeverageAPI;
 import com.mobileapp.beyerage.network.Server;
 import com.mobileapp.beyerage.shop.ShopService;
+import retrofit2.Call;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity{
 
         /**
          * 추천 음료 안내
-         * 수정중...
          */
         mostFreqButtonEvent(mostFreqBeverageButton);
 
@@ -141,10 +140,35 @@ public class MainActivity extends AppCompatActivity{
 
         //버튼 클릭시 음성 안내 서비스 호출
         mostFreqBeverageButton.setOnClickListener(view -> {
-            Beverage mostFreqBeverage = server.getMostFreqBeverage();
-
-            shopService.recommendBeverage(tts, mostFreqBeverage);
+            new NetworkAsyncTask().execute();
         });
+    }
+
+    /**
+     * 동기식 방식 HTTP CONNECTION
+     */
+    public class NetworkAsyncTask extends AsyncTask<Void, Void, Beverage>{
+
+        @Override
+        protected Beverage doInBackground(Void... params) {
+            BeverageAPI beverageAPI = server.getBeverageAPI();
+            Call<Beverage> freqBeverageData = beverageAPI.getFreqBeverageData();
+            try{
+                return freqBeverageData.execute().body();
+            } catch (Exception e){
+                e.printStackTrace();
+                Log.d(tag,"Network IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Beverage beverage) {
+            super.onPostExecute(beverage);
+            if(beverage != null) Log.d("getFreqBeverage name= ", beverage.getName());
+            else Log.d("getFreqBeverage name= ", null);
+            shopService.recommendBeverage(tts, beverage);
+        }
     }
 
 
