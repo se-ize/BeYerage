@@ -1,0 +1,103 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="net.daum.android.map.openapi.sampleapp"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="8"
+8-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:6:5-67
+11-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:6:22-64
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:7:5-79
+12-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:7:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:8:5-81
+13-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:8:22-78
+14
+15    <application
+15-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:10:5-55:19
+16        android:allowBackup="true"
+16-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:11:9-35
+17        android:debuggable="true"
+18        android:icon="@drawable/ic_launcher"
+18-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:12:9-45
+19        android:label="@string/app_name"
+19-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:13:9-41
+20        android:testOnly="true"
+21        android:usesCleartextTraffic="true" >
+21-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:14:9-44
+22        <activity
+22-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:17:9-25:20
+23            android:name="net.daum.android.map.openapi.sampleapp.MainActivity"
+23-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:18:13-41
+24            android:label="@string/app_name" >
+24-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:19:13-45
+25            <intent-filter>
+25-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:20:13-24:29
+26                <action android:name="android.intent.action.MAIN" />
+26-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:21:17-69
+26-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:21:25-66
+27
+28                <category android:name="android.intent.category.LAUNCHER" />
+28-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:23:17-77
+28-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:23:27-74
+29            </intent-filter>
+30        </activity>
+31        <activity
+31-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:27:9-29:59
+32            android:name="net.daum.android.map.openapi.sampleapp.demos.MapViewDemoActivity"
+32-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:28:13-54
+33            android:label="@string/map_view_demo_title" />
+33-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:29:13-56
+34        <activity
+34-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:30:9-32:57
+35            android:name="net.daum.android.map.openapi.sampleapp.demos.MarkerDemoActivity"
+35-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:31:13-53
+36            android:label="@string/marker_demo_title" />
+36-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:32:13-54
+37        <activity
+37-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:33:9-35:58
+38            android:name="net.daum.android.map.openapi.sampleapp.demos.PolygonDemoActivity"
+38-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:34:13-54
+39            android:label="@string/polygon_demo_title" />
+39-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:35:13-55
+40        <activity
+40-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:38:9-40:59
+41            android:name="net.daum.android.map.openapi.sampleapp.demos.LocationDemoActivity"
+41-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:39:13-55
+42            android:label="@string/location_demo_title" />
+42-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:40:13-56
+43        <activity
+43-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:41:9-43:57
+44            android:name="net.daum.android.map.openapi.sampleapp.demos.CameraDemoActivity"
+44-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:42:13-53
+45            android:label="@string/camera_demo_title" />
+45-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:43:13-54
+46        <activity
+46-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:44:9-46:57
+47            android:name="net.daum.android.map.openapi.sampleapp.demos.EventsDemoActivity"
+47-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:45:13-53
+48            android:label="@string/events_demo_title" />
+48-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:46:13-54
+49        <activity
+49-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:47:9-49:57
+50            android:name="net.daum.android.map.openapi.sampleapp.demos.runtimePermissions.AppPermissionHandlerActivity"
+50-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:48:13-82
+51            android:label="@string/search_demo_title" />
+51-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:49:13-54
+52
+53        <meta-data
+53-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:51:9-53:63
+54            android:name="com.kakao.sdk.AppKey"
+54-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:52:13-48
+55            android:value="6f504f9b73ad280372b2aff0036b6f32" />
+55-->C:\Users\Woojin\Desktop\21_PF057\API_test\Android_DaumMap_Sample_1.4.1.0\app\src\main\AndroidManifest.xml:53:13-61
+56    </application>
+57
+58</manifest>

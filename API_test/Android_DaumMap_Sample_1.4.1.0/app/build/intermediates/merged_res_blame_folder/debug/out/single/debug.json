@@ -1,0 +1,114 @@
+[
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_map_pin_yellow.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xhdpi\\map_pin_yellow.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_demo_nested_mapview.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\demo_nested_mapview.xml"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_main.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_map_present.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_map_present.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_poi_marker_selected.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_poi_marker_selected.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_map_pin_red.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xhdpi\\map_pin_red.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_demo_camera.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\demo_camera.xml"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_poi_marker_start.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_poi_marker_start.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_custom_marker_star.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xhdpi\\custom_marker_star.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_map_present_direction.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_map_present_direction.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_callout_balloon_left_side_button.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_callout_balloon_left_side_button.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_map_pin_blue.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xhdpi\\map_pin_blue.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_custom_callout_balloon.9.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xhdpi\\custom_callout_balloon.9.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_map_present_tracking.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_map_present_tracking.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_demo_list_item_view.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\demo_list_item_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_demo_events.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\demo_events.xml"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_custom_callout_balloon.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\custom_callout_balloon.xml"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_demo_search.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\demo_search.xml"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_callout_balloon_right_side_button.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_callout_balloon_right_side_button.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_poi_marker.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_poi_marker.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_arrow_map_present_tracking.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_arrow_map_present_tracking.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_poi_marker_end.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable\\custom_poi_marker_end.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_custom_marker_red.png.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\drawable-xhdpi\\custom_marker_red.png"
+    },
+    {
+        "merged": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_demo_mapview.xml.flat",
+        "source": "C:\\Users\\Woojin\\Desktop\\21_PF057\\API_test\\Android_DaumMap_Sample_1.4.1.0\\app\\src\\main\\res\\layout\\demo_mapview.xml"
+    }
+]
