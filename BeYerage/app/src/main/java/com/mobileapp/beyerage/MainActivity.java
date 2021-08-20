@@ -135,7 +135,8 @@ public class MainActivity extends AppCompatActivity{
         //버튼 클릭시 음성 안내 서비스 호출
         closeConvStoreButton.setOnClickListener(view -> {
             //음성안내 시작
-            shopService.voiceGuidance(tts);
+            shopService.voiceGuidance3(tts);
+            /*
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -143,6 +144,7 @@ public class MainActivity extends AppCompatActivity{
                     startSTT();
                 }
             }, 10000);
+             */
             // 10초 딜레이 첨부
         });
     }
