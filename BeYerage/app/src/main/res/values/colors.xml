@@ -2,9 +2,9 @@
 <resources>
     <color name="colorMain">#3F51B5</color>
     <color name="colorMainDark">#303F9F</color>
-    <color name="colorAccent">#CC7090</color>
-    <color name="colorAccent2">#FFA6C5</color>
-    <color name="colorAccentLight">#FFD9E6</color>
+    <color name="colorAccent">#cc0276f9</color>
+    <color name="colorAccent2">#0276f9</color>
+    <color name="colorAccentLight">#E1F5FE</color>
     <color name="color1">#3164d7</color>
     <color name="color2">#d92d29</color>
     <color name="color3">#eeaa10</color>

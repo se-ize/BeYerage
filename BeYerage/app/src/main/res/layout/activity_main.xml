@@ -10,28 +10,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <!--android:background="@color/colorAccent">-->
 
         <Button
             android:id="@+id/findBeverageButton"
-            android:layout_width="260dp"
-            android:layout_height="230dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="원하는 음료 안내" />
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/font_koddi"
+            android:text="원하는 음료 안내"
+            android:textColor="@drawable/textcolor_selector"
+            android:textSize="36sp" />
 
         <Button
             android:id="@+id/mostFreqBeverageButton"
-            android:layout_width="260dp"
-            android:layout_height="230dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:text="추천 음료 안내" />
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/font_koddi"
+            android:text="추천 음료 안내"
+            android:textColor="@drawable/textcolor_selector"
+            android:textSize="36sp" />
 
         <Button
             android:id="@+id/closeConvenienceStoreButton"
-            android:layout_width="260dp"
-            android:layout_height="230dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:text="근처 편의점 안내" />
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:fontFamily="@font/font_koddi"
+            android:text="근처 편의점 안내"
+            android:textColor="@drawable/textcolor_selector"
+            android:textSize="36sp" />
     </LinearLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
