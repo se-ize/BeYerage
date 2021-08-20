@@ -4,7 +4,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_can_foreground"
@@ -13,6 +14,8 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="e850514a0a7924efa80a58862dbf0460"/> //카카오 네이티브 키
 
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
