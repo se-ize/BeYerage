@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+        android:name="com.kakao.sdk.AppKey"
+        android:value="bb3d52359045c2151849b3c5892af066"/>
 
         <activity android:name=".MainActivity">
 
@@ -22,9 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="	bb3d52359045c2151849b3c5892af066"/>
+
     </application>
 
 </manifest>

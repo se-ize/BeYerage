@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
@@ -32,12 +35,35 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
+    private void getHashKey(){
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo == null)
+            Log.e("KeyHash", "KeyHash:null");
+
+        for (Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        getHashKey();
+
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -52,13 +78,22 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         }
 
 
+
         //지도를 띄우자
         // java code
         mapView = new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
+
+
         mapView.setMapViewEventListener(this);
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        // 현위치 찾기
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+        // 나침반 모드 & 현위치 찾기
+        //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+
+        public MapPoint getMapPoint()
+
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         }else {
@@ -66,11 +101,13 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         }
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mapViewContainer.removeAllViews();
     }
+
 
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
@@ -89,6 +126,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
     }
 
+
+    public void MapCircle(MapPoint center, int radius, int strokeColor, int fillColor){
+
+    }
 
     private void onFinishReverseGeoCoding(String result) {
 //        Toast.makeText(LocationDemoActivity.this, "Reverse Geo-coding : " + result, Toast.LENGTH_SHORT).show();
