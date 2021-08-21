@@ -5,49 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="437ce1a1-df7c-4d5b-8527-dcb9abe07550" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/kakao_testt/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/androidTest/java/com/example/kakao_test/ExampleInstrumentedTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/java/com/example/kakao_test/MainActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/java/com/example/kakao_test/ui/main/MainFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/java/com/example/kakao_test/ui/main/MainViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/layout/main_activity.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/layout/main_fragment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/app/src/test/java/com/example/kakao_test/ExampleUnitTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kakao_testt/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BeYerage/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BeYerage/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BeYerage/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BeYerage/app/src/main/java/com/mobileapp/beyerage/SubActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BeYerage/app/src/main/res/layout/activitiy_sub.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MaptestApp/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/MaptestApp/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BeYerage/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BeYerage/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BeYerage/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../BeYerage/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BeYerage/app/src/main/java/com/mobileapp/beyerage/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BeYerage/app/src/main/java/com/mobileapp/beyerage/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BeYerage/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BeYerage/app/src/main/res/layout/activity_main.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -61,6 +45,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="SDK Location" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
