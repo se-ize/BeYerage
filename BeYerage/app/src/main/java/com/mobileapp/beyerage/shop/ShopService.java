@@ -14,4 +14,6 @@ public interface ShopService {
     void recommendBeverage(TextToSpeech tts, Beverage beverage);
     //지원 편의점 안내
     void voiceGuidance3(TextToSpeech tts);
+
+    void voiceGuidance_map(TextToSpeech tts);
 }

@@ -136,6 +136,14 @@ new Handler().postDelayed(new Runnable() {
         closeConvStoreButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SubActivity.class);
             startActivity(intent);
+            shopService.voiceGuidance_map(tts);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //음성인식 시작
+                    shopService.voiceGuidance3(tts);
+                }
+            }, 70000);
         });
     }
 
