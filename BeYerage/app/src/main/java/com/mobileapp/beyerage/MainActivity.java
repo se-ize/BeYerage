@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity{
                     startSTT();
                     Beverage findBeverage = server.getUserWantBeverage(result);
                     Log.d(tag, "☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆1번☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
-                    //shopService.findUserWantBeverage(tts, findBeverage);
+                    shopService.findUserWantBeverage(tts, findBeverage);
                     //Log.d(tag, "★★★★★★★★★★★★★★★★★★2번★★★★★★★★★★★★★★★★★★");
                 }
             }, 2200);
