@@ -62,6 +62,17 @@ public class ShopServiceImpl extends MainActivity implements ShopService{
         }
     }
 
+
+    public void voiceGuidance_map(TextToSpeech tts) {
+        //지원 편의점에서 버튼을 클릭했을 때 음성안내
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
+            tts.speak("현재 위치를 파악중입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            tts.speak("현재 위치를 파악중입니다.", TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
     @Override
     public void defaultGuidance(TextToSpeech tts) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
