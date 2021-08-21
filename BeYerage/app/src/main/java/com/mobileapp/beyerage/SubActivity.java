@@ -18,10 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
 import java.security.MessageDigest;
@@ -63,6 +65,12 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        }else {
+            checkRunTimePermission();
+        }
+
         setContentView(R.layout.activitiy_sub);
         getHashKey();
 
@@ -81,10 +89,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //지도를 띄우자
         // java code
-//        mapView = new MapView(this);
+        mapView = new MapView(this);
         mapView = findViewById(R.id.map_view);
 
-        mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+        RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
 
@@ -94,11 +102,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         // 나침반 모드 & 현위치 찾기
         //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
 
-        if (!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting();
-        }else {
-            checkRunTimePermission();
-        }
     }
 
 
@@ -111,8 +114,11 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
+
+        //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
         Log.i(LOG_TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
+
     }
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
