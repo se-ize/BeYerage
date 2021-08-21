@@ -26,7 +26,9 @@ public class ShopServiceImpl extends MainActivity implements ShopService{
     @Override
     public void findUserWantBeverage(TextToSpeech tts, Beverage beverage) {
 
-        String msg = "검색결과 " + beverage;
+        String msg = "검색결과 ";
+        if(beverage == null) msg += "해당 음료는 존재하지 않습니다.";
+        else msg += beverage;
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.

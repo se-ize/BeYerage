@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity{
 
     /**
      * 동기식 방식 HTTP CONNECTION
+     * 가장 많이 찾는 음료를 가져옴
      */
     public class findFreqBeverageAsyncTask extends AsyncTask<Void, Void, Beverage>{
 
@@ -184,13 +185,21 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(Beverage beverage) {
             super.onPostExecute(beverage);
-            if(beverage != null) Log.d("getFreqBeverage name= ", beverage.getName());
-            else Log.d("getFreqBeverage name= ", null);
-            shopService.recommendBeverage(tts, beverage);
+            if(beverage != null){
+                Log.d("getFreqBeverage name= ", beverage.getName());
+                shopService.recommendBeverage(tts, beverage);
+            } else {
+                Log.d("getFreqBeverage name= ", null);
+                shopService.recommendBeverage(tts, null);
+            }
+
         }
     }
 
-
+    /**
+     * 동기식 방식 HTTP CONNECTION
+     * 사용자가 원하는 음료를 가져옴
+     */
     public class findBeverageAsyncTask extends AsyncTask<Void, Void, Beverage> {
 
         @Override
@@ -209,9 +218,14 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(Beverage beverage) {
             super.onPostExecute(beverage);
-            if(beverage != null) Log.d("getWantBeverage name=", beverage.getName());
-            else Log.d("getWantBeverage name=", null);
-            shopService.findUserWantBeverage(tts, beverage);
+            if(beverage != null){
+                Log.d("getWantBeverage name=", beverage.getName());
+                shopService.findUserWantBeverage(tts, beverage);
+            } else {
+                Log.d(tag, "없는 음료 검색");
+                shopService.findUserWantBeverage(tts, null);
+            }
+
         }
     }
 
