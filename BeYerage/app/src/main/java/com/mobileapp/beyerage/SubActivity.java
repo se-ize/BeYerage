@@ -3,6 +3,7 @@ package com.mobileapp.beyerage;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -10,6 +11,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.location.LocationManager;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+
+
 import android.speech.tts.TextToSpeech;
 import android.util.Base64;
 import android.util.Log;
@@ -23,15 +31,25 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.mobileapp.beyerage.shop.ShopService;
-
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Scanner;
 
 public class SubActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener{
 
@@ -49,6 +67,46 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     ArrayList<Document> convenienceList = new ArrayList<>(); //편의점
+
+    @Override
+    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+
+    }
+
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+
+    }
+
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+
+    }
+
+    @Override
+    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
+
+    }
+
+    //item 클래스
+    public static class Item {
+        public String place_name;
+        public String place_url;
+        public String address_name;
+        public String road_address_name;
+        public String phone;
+        public double x;
+        public double y;
+        public double distance;
+        public String category_group_name;
+        public String category_group_code;
+        public String id;
+        public String placeUrl;
+    }
+
+    public class MapApiConst {
+        public static final String DAUM_MAPS_ANDROID_APP_API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
+    }
 
     private void getHashKey(){
         PackageInfo packageInfo = null;
@@ -71,6 +129,77 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         }
     }
 
+    //API 콜백 URL
+    public static final String LOCAL_KEYWORD_SEARCH_API_FORMAT = "https://dapi.kakao.com/v2/local/search/keyword.json?query=%s&y=%s&x=%s&radius=%d&page=%d&apikey=%s";
+    private OnFinishSearchListener onFinishSearchListener;
+
+    public void searchKeyword(Context applicationContext, String query, double latitude, double longitude, int radius, int page, String apikey, OnFinishSearchListener onFinishSearchListener) {
+        this.onFinishSearchListener = onFinishSearchListener;
+//        SearchTask searchTask = new SearchTask();
+//        if (searchTask != null) {
+//            searchTask.cancel(true);
+//            searchTask = null;
+//        }
+        String url = buildKeywordSearchApiUrlString(query, latitude, longitude, radius, page, apikey);
+//        searchTask = new SearchTask();
+//        searchTask.execute(url);
+    }
+    //UTF-8로 키워드 인코딩 필요.
+    private String buildKeywordSearchApiUrlString(String query, double latitude, double longitude, int radius, int page, String apikey) {
+        String encodedQuery = "";
+        try {
+            encodedQuery = URLEncoder.encode(query, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return String.format(Locale.ENGLISH, LOCAL_KEYWORD_SEARCH_API_FORMAT, encodedQuery, latitude, longitude, radius, page, apikey);
+    }
+
+    //API 호출을 위한 메서드
+    private String fetchData(String urlString, Map<String, String> header) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(4000 /* milliseconds */);
+            conn.setConnectTimeout(7000 /* milliseconds */);
+            conn.setRequestMethod("GET"); // GET 방식으로  API 요청
+            conn.setRequestProperty("Authorization", "KakaoAK "+ SubActivity.MapApiConst.DAUM_MAPS_ANDROID_APP_API_KEY); // header 부분에 앱키 작성
+            conn.setDoInput(true);
+            conn.connect();
+
+            InputStream is = conn.getInputStream();
+            @SuppressWarnings("resource")
+            Scanner s = new Scanner(is);
+            s.useDelimiter("\\A");
+            String data = s.hasNext() ? s.next() : "";
+
+            Log.w("data : ", data);
+
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    //JSON 파싱용 메서드
+    private List<Item> parse(String jsonString) {
+        List<SubActivity.Item> itemList = new ArrayList<SubActivity.Item>();
+        try {
+            JSONObject reader = new JSONObject(jsonString);
+            JSONArray objects = reader.getJSONArray("documents");
+            for (int i = 0; i < objects.length(); i++) {
+                JSONObject object = objects.getJSONObject(i);
+                //item 클래스에 json 데이터 할당.
+                SubActivity.Item item = new SubActivity.Item();
+                item.place_name = object.getString("place_name");
+                //...중략
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return itemList;
+    }
 
     @SuppressLint({"WrongViewCast", "CutPasteId"})
     @Override

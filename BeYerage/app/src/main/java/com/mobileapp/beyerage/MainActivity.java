@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity{
          */
         //버튼 클릭시 음성 안내 서비스 호출
         //음성안내 시작
-//            shopService.voiceGuidance3(tts);
+
 /*
 new Handler().postDelayed(new Runnable() {
     @Override
@@ -136,14 +136,15 @@ new Handler().postDelayed(new Runnable() {
         closeConvStoreButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SubActivity.class);
             startActivity(intent);
-            shopService.voiceGuidance_map(tts);
+            
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     //음성인식 시작
                     shopService.voiceGuidance3(tts);
                 }
-            }, 70000);
+            }, 10000);
+
         });
     }
 
