@@ -20,6 +20,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -133,9 +134,16 @@ public class MainActivity extends AppCompatActivity{
          * 근처 편의점 안내
          */
         //버튼 클릭시 음성 안내 서비스 호출
-        closeConvStoreButton.setOnClickListener(view -> {
+        closeConvStoreButton.setOnClickListener(new View.OnClickListener() {
             //음성안내 시작
-            shopService.voiceGuidance3(tts);
+//            shopService.voiceGuidance3(tts);
+
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, SubActivity.class);
+                startActivity(intent);
+            }
+
             /*
             new Handler().postDelayed(new Runnable() {
                 @Override
