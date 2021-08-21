@@ -130,7 +130,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mapViewContainer.removeAllViews();
+        if(mapViewContainer != null) mapViewContainer.removeAllViews();
     }
 
 
