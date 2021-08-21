@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity{
     //로그 확인용
     String tag;
 
+    //REST API 키
+    String BASE_URL= "https://dapi.kakao.com/";
+    String API_KEY = "KakaoAK " + "ac630fe1cb94f321ea8304474e644b3b";
+
     //해시키 발급
     public static String getKeyHash(final Context context) {
         PackageManager pm = context.getPackageManager();
@@ -176,8 +180,7 @@ public class MainActivity extends AppCompatActivity{
             Call<Beverage> freqBeverageData = beverageAPI.getFreqBeverageData();
             try{
                 return freqBeverageData.execute().body();
-            } catch (Exception e){
-                e.printStackTrace();
+            } catch (Exception e){                e.printStackTrace();
                 Log.d(tag,"Network IOException");
             }
             return null;

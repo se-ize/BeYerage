@@ -53,6 +53,21 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+
+
 public class SubActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener{
 
     private static final AppConfig appConfig = new AppConfig();
@@ -60,6 +75,9 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final ShopService shopService = appConfig.shopService();
     //TTS 변수 선언
     private TextToSpeech tts;
+
+    String BASE_URL= "https://dapi.kakao.com/";
+    String API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
 
     private static final String LOG_TAG = "SubActivity";
     private MapView mapView;
@@ -161,18 +179,47 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-
         mapView.setMapViewEventListener(this);
         // 현위치 찾기
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         // 나침반 모드 & 현위치 찾기
         //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
 
-        //shopService.voiceGuidance_map(tts);
-
+        //원하는 키워드 입력
+        //ex)사당동 맛집, 사당동 카페으로도 검색 가능합니다.
+//        searchKeyword("편의점");
 
     }
 
+    private void searchKeyword(String keyword){
+
+        KakaoAPIInterface spotInterface =  ApiClient.getApiClient().create(KakaoAPIInterface.class);
+        Call<ResultSearchKeyword> call = spotInterface.getSearchKeyword(API_KEY, keyword);
+
+        call.enqueue(new Callback<ResultSearchKeyword>()
+        {
+            //연결 성공 시에 싱행되는 부분
+            @Override
+            public void onResponse(@NonNull Call<ResultSearchKeyword> call, @NonNull Response<ResultSearchKeyword> response)
+            {
+
+                Log.e("onSuccess", String.valueOf(response.raw()));
+
+                System.out.println(response.body());
+                System.out.println(response.body().getDocuments());
+
+//                String status = response.body().getStatus();
+//
+//                System.out.println("안녕"+response.body().getMessage());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResultSearchKeyword> call, @NonNull Throwable t)
+            {
+                Log.e("onfail", "에러 = " + t.getMessage());
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {
@@ -206,9 +253,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
     }
 
-    private void onFinishReverseGeoCoding(String result) {
-//        Toast.makeText(LocationDemoActivity.this, "Reverse Geo-coding : " + result, Toast.LENGTH_SHORT).show();
-    }
 
     // ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드
     @Override
