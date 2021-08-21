@@ -1,4 +1,5 @@
 package com.mobileapp.beyerage;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -74,6 +75,12 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         setContentView(R.layout.activitiy_sub);
         getHashKey();
 
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        }else {
+            checkRunTimePermission();
+        }
+
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -90,7 +97,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //지도를 띄우자
         // java code
         mapView = new MapView(this);
-        mapView = findViewById(R.id.map_view);
+        //mapView = findViewById(R.id.map_view);
 
         RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
@@ -100,7 +107,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         // 현위치 찾기
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         // 나침반 모드 & 현위치 찾기
-        //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
 
     }
 

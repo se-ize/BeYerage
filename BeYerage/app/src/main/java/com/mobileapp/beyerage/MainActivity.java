@@ -122,26 +122,20 @@ public class MainActivity extends AppCompatActivity{
          * 근처 편의점 안내
          */
         //버튼 클릭시 음성 안내 서비스 호출
-        closeConvStoreButton.setOnClickListener(new View.OnClickListener() {
-            //음성안내 시작
+        //음성안내 시작
 //            shopService.voiceGuidance3(tts);
-
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(MainActivity.this, SubActivity.class);
-                startActivity(intent);
-            }
-
-            /*
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //음성인식 시작
-                    startSTT();
-                }
-            }, 10000);
-             */
-            // 10초 딜레이 첨부
+/*
+new Handler().postDelayed(new Runnable() {
+    @Override
+    public void run() {
+        //음성인식 시작
+        startSTT();
+    }
+}, 10000);
+ */// 10초 딜레이 첨부
+        closeConvStoreButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SubActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -242,10 +236,9 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
         //음석을 번역할 언어 설정
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
-
         return intent;
     }
 
@@ -347,6 +340,7 @@ public class MainActivity extends AppCompatActivity{
             if(status == TextToSpeech.SUCCESS) {
                 //언어 선택
                 tts.setLanguage(Locale.KOREAN);
+                shopService.defaultGuidance(tts);
             }
         });
     }
