@@ -27,8 +27,11 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
+import org.w3c.dom.Document;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class SubActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener{
 
@@ -38,6 +41,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+
+    ArrayList<Document> convenienceList = new ArrayList<>(); //편의점
 
     private void getHashKey(){
         PackageInfo packageInfo = null;
@@ -94,6 +99,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             e.printStackTrace();
         }
 
+        Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_SHORT).show();
+        
         //지도를 띄우자
         // java code
         mapView = new MapView(this);
