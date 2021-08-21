@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -18,16 +17,21 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+
+import android.speech.tts.TextToSpeech;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import net.daum.mf.map.api.MapCircle;
-import net.daum.mf.map.api.MapPOIItem;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.mobileapp.beyerage.shop.ShopService;
 import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
 import org.json.JSONArray;
@@ -47,7 +51,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class SubActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener, MapView.POIItemEventListener {
+public class SubActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener{
+
+    private static final AppConfig appConfig = new AppConfig();
+    //음성 서비스
+    private static final ShopService shopService = appConfig.shopService();
+    //TTS 변수 선언
+    private TextToSpeech tts;
+
     private static final String LOG_TAG = "SubActivity";
     private MapView mapView;
     private ViewGroup mapViewContainer;
@@ -204,12 +215,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         setContentView(R.layout.activitiy_sub);
         getHashKey();
 
-        if (!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting();
-        }else {
-            checkRunTimePermission();
-        }
-
+        /*
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -222,8 +228,11 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        */
+
 
         Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
+
 
         //지도를 띄우자
         // java code
@@ -238,7 +247,11 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         // 현위치 찾기
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         // 나침반 모드 & 현위치 찾기
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+
+        //shopService.voiceGuidance_map(tts);
+
+
 
     }
 

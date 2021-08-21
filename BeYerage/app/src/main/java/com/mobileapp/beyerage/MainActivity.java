@@ -136,7 +136,7 @@ new Handler().postDelayed(new Runnable() {
         closeConvStoreButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SubActivity.class);
             startActivity(intent);
-
+            
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -144,6 +144,7 @@ new Handler().postDelayed(new Runnable() {
                     shopService.voiceGuidance3(tts);
                 }
             }, 10000);
+
         });
     }
 
