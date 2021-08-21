@@ -43,19 +43,14 @@ public class MainActivity extends AppCompatActivity{
     //HTTP API 호출 클래스
     private static final Server server = new Server();
     //TTS 변수 선언
-    private TextToSpeech tts, tts2;
+    private TextToSpeech tts;
     //STT를 사용할 intent 와 SpeechRecognizer 초기화
     private SpeechRecognizer sRecognizer;
-    private Intent intent;
-    //음성인식 결과를 담을 변수
-    private String result = new String();
-    //DB에 담을 변수
-    private String httpResponse = new String();
-    private String param = new String();
     //퍼미션 체크를 위한 변수
     private final int PERMISSION = 1;
+    //음성인식 결과를 담는 변수
+    private String userVoice = "";
 
-    private SpeechRecognizer speechRecognizer;
     //음성 허용 확인
     private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
 
@@ -93,12 +88,6 @@ public class MainActivity extends AppCompatActivity{
         //해시키 로그에 출력
         Log.e("GR_KeyHash",getKeyHash(MainActivity.this));
 
-        /**
-         * http connection
-         */
-//        Beverage findBeverage = server.getUserWantBeverage("콜라");
-//        Beverage findBeverage2 = server.getUserWantBeverage("사이다");
-
         /* TTS, STT */
 
         //TTS 환경설정
@@ -120,7 +109,6 @@ public class MainActivity extends AppCompatActivity{
 
         /**
          * 원하는 음료 안내
-         * 수정중...
          */
         //버튼 클릭시 음성 안내 서비스 호출
         findBevButtonEvent(findBeverageButton);
@@ -162,18 +150,16 @@ public class MainActivity extends AppCompatActivity{
         //버튼 클릭시 원하는 음료 안내 서비스 호출
         findBeverageButton.setOnClickListener(view -> {
             shopService.voiceGuidance(tts);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //음성인식 시작
-                    startSTT();
-                    Beverage findBeverage = server.getUserWantBeverage(result);
-                    Log.d(tag, "☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆1번☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
-                    //shopService.findUserWantBeverage(tts, findBeverage);
-                    //Log.d(tag, "★★★★★★★★★★★★★★★★★★2번★★★★★★★★★★★★★★★★★★");
-                }
+            new Handler().postDelayed(() -> {
+                //음성인식 시작
+                Intent intent = setSTTPermission();
+                sRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+                sRecognizer.setRecognitionListener(listener);
+                sRecognizer.startListening(intent);
+
             }, 2200);
             // 2.2초 딜레이 첨부
+
         });
     }
 
@@ -181,14 +167,14 @@ public class MainActivity extends AppCompatActivity{
 
         //버튼 클릭시 음성 안내 서비스 호출
         mostFreqBeverageButton.setOnClickListener(view -> {
-            new NetworkAsyncTask().execute();
+            new findFreqBeverageAsyncTask().execute();
         });
     }
 
     /**
      * 동기식 방식 HTTP CONNECTION
      */
-    public class NetworkAsyncTask extends AsyncTask<Void, Void, Beverage>{
+    public class findFreqBeverageAsyncTask extends AsyncTask<Void, Void, Beverage>{
 
         @Override
         protected Beverage doInBackground(Void... params) {
@@ -213,76 +199,57 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    public class VoiceTask extends AsyncTask<String, Integer, String> {
-        //AsyncTask < 보낼 내용이 string, 진행상황 업데이트할 때 integer로 전달, AsyncTask가 끝난 뒤 결과값은 String >
-        String str = null;
+    public class findBeverageAsyncTask extends AsyncTask<Void, Void, Beverage> {
 
         @Override
-        protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
+        protected Beverage doInBackground(Void... params) {
+            BeverageAPI beverageAPI = server.getBeverageAPI();
+            Call<Beverage> findBeverageData = beverageAPI.getBeverageData(userVoice);
             try {
-                getVoice();
+                return findBeverageData.execute().body();
             } catch (Exception e) {
-                // TODO: handle exception
+                e.printStackTrace();
+                Log.d(tag,"Network IOException");
             }
-            result = str;
-            return str;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            try {
-            } catch (Exception e) {
-                Log.d("onActivityResult", "getImageURL exception");
-            }
+        protected void onPostExecute(Beverage beverage) {
+            super.onPostExecute(beverage);
+            if(beverage != null) Log.d("getWantBeverage name=", beverage.getName());
+            else Log.d("getWantBeverage name=", null);
+            shopService.findUserWantBeverage(tts, beverage);
         }
     }
 
-    private void getVoice() {
-        Intent intent = new Intent();
-        intent.setAction(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+    private Intent setIntentForVoiceRec() {
+        //사용자에게 음성을 요구하고 음성 인식기를 통해 전송하는 활동 시작
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 
-        String language = "ko-KR";
+        //음석을 번역할 언어 설정
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
 
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
-        startActivityForResult(intent, 2);
+        return intent;
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            ArrayList<String> results = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-            //말한 음료 값
-            String str = results.get(0);
-            Thread findThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Beverage findBeverage = server.getUserWantBeverage(str);
-                    Log.d(tag, "★★★★★★★★★음성 인식 결과★★★★★★★★★\n"+ str);
-                    shopService.findUserWantBeverage(tts, findBeverage);
-                }
-            });
-            findThread.start();
-        }
-    }
     //음성인식 환경설정
-    private void startSTT() {
+    private Intent setSTTPermission() {
         //STT 퍼미션 체크
         if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this,
                 Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,
                     Manifest.permission.RECORD_AUDIO}, PERMISSION);
         }
-        VoiceTask voiceTask = new VoiceTask();
-        voiceTask.execute();
+        // STT intent 설정
+        Intent intent = setIntentForVoiceRec();
+        return intent;
     }
 
     private RecognitionListener listener = new RecognitionListener() {
+
         @Override
         public void onReadyForSpeech(Bundle params) {
             Toast.makeText(getApplicationContext(),"음성인식을 시작합니다.",Toast.LENGTH_SHORT).show();
@@ -341,8 +308,17 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         public void onResults(Bundle results) {
+            userVoice = "";
+
             ArrayList<String> matches = results
                     .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            for (String match : matches) {
+                userVoice += match;
+            }
+
+            findBeverageAsyncTask voiceTask = new findBeverageAsyncTask();
+            voiceTask.execute();
+
         }
         @Override
         public void onPartialResults(Bundle partialResults) {}
@@ -367,10 +343,6 @@ public class MainActivity extends AppCompatActivity{
         if (tts != null) {
             tts.stop();
             tts.shutdown();
-        }
-        if (tts2 != null) {
-            tts2.stop();
-            tts2.shutdown();
         }
         super.onDestroy();
     }

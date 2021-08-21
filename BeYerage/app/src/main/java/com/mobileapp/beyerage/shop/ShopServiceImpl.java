@@ -12,7 +12,6 @@ import org.w3c.dom.Text;
 
 public class ShopServiceImpl extends MainActivity implements ShopService{
     String tag;
-    private Beverage beverage1 = new Beverage();
 
     @Override
     public void voiceGuidance(TextToSpeech tts) {
@@ -26,17 +25,14 @@ public class ShopServiceImpl extends MainActivity implements ShopService{
 
     @Override
     public void findUserWantBeverage(TextToSpeech tts, Beverage beverage) {
-        Log.d(tag, "◎◎◎◎◎◎◎◎◎◎◎◎3번◎◎◎◎◎◎◎◎◎◎◎◎◎");
 
-        String string = "검색결과 " + beverage1;
+        String msg = "검색결과 " + beverage;
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
-            tts.speak(string, TextToSpeech.QUEUE_FLUSH, null, null);
-            //Log.d(tag, msg);
-            Log.d(tag, "▼▼▼▼▼▼▼▼▼▼▼▼4번▼▼▼▼▼▼▼▼▼▼▼▼");
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
-            tts.speak(string, TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
@@ -44,6 +40,7 @@ public class ShopServiceImpl extends MainActivity implements ShopService{
     public void recommendBeverage(TextToSpeech tts, Beverage beverage) {
 
         String msg = "사람들이 가장 많이 찾는 음료는 " + beverage;
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
             tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
