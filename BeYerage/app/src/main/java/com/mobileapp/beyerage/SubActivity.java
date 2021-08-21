@@ -99,8 +99,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             e.printStackTrace();
         }
 
-        Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_SHORT).show();
-        
+        Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
+
         //지도를 띄우자
         // java code
         mapView = new MapView(this);
