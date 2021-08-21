@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorMain">#293845</color>
+    <color name="colorMainDark">#14212B</color>
+    <!--기존 색상
     <color name="colorMain">#3F51B5</color>
     <color name="colorMainDark">#303F9F</color>
+    -->
     <color name="colorAccent">#cc0276f9</color>
     <color name="colorAccent2">#0276f9</color>
     <color name="colorAccentLight">#E1F5FE</color>
