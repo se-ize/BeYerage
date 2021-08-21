@@ -31,6 +31,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.mobileapp.beyerage.shop.ShopService;
+
+import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
@@ -66,49 +68,11 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
-    ArrayList<Document> convenienceList = new ArrayList<>(); //편의점
-
-    @Override
-    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-
-    }
-
-    @Override
-    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
-
-    }
-
-    //item 클래스
-    public static class Item {
-        public String place_name;
-        public String place_url;
-        public String address_name;
-        public String road_address_name;
-        public String phone;
-        public double x;
-        public double y;
-        public double distance;
-        public String category_group_name;
-        public String category_group_code;
-        public String id;
-        public String placeUrl;
-    }
-
     public class MapApiConst {
         public static final String DAUM_MAPS_ANDROID_APP_API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
     }
 
-    private void getHashKey(){
+    private void getHashKey() {
         PackageInfo packageInfo = null;
         try {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
@@ -127,32 +91,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
                 Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
             }
         }
-    }
-
-    //API 콜백 URL
-    public static final String LOCAL_KEYWORD_SEARCH_API_FORMAT = "https://dapi.kakao.com/v2/local/search/keyword.json?query=%s&y=%s&x=%s&radius=%d&page=%d&apikey=%s";
-    private OnFinishSearchListener onFinishSearchListener;
-
-    public void searchKeyword(Context applicationContext, String query, double latitude, double longitude, int radius, int page, String apikey, OnFinishSearchListener onFinishSearchListener) {
-        this.onFinishSearchListener = onFinishSearchListener;
-//        SearchTask searchTask = new SearchTask();
-//        if (searchTask != null) {
-//            searchTask.cancel(true);
-//            searchTask = null;
-//        }
-        String url = buildKeywordSearchApiUrlString(query, latitude, longitude, radius, page, apikey);
-//        searchTask = new SearchTask();
-//        searchTask.execute(url);
-    }
-    //UTF-8로 키워드 인코딩 필요.
-    private String buildKeywordSearchApiUrlString(String query, double latitude, double longitude, int radius, int page, String apikey) {
-        String encodedQuery = "";
-        try {
-            encodedQuery = URLEncoder.encode(query, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return String.format(Locale.ENGLISH, LOCAL_KEYWORD_SEARCH_API_FORMAT, encodedQuery, latitude, longitude, radius, page, apikey);
     }
 
     //API 호출을 위한 메서드
@@ -180,25 +118,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             e.printStackTrace();
             return null;
         }
-    }
-    //JSON 파싱용 메서드
-    private List<Item> parse(String jsonString) {
-        List<SubActivity.Item> itemList = new ArrayList<SubActivity.Item>();
-        try {
-            JSONObject reader = new JSONObject(jsonString);
-            JSONArray objects = reader.getJSONArray("documents");
-            for (int i = 0; i < objects.length(); i++) {
-                JSONObject object = objects.getJSONObject(i);
-                //item 클래스에 json 데이터 할당.
-                SubActivity.Item item = new SubActivity.Item();
-                item.place_name = object.getString("place_name");
-                //...중략
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return itemList;
     }
 
     @SuppressLint({"WrongViewCast", "CutPasteId"})
@@ -250,7 +169,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
 
         //shopService.voiceGuidance_map(tts);
-
 
 
     }
