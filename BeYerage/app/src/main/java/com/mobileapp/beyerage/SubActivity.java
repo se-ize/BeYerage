@@ -77,7 +77,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private TextToSpeech tts;
 
     String BASE_URL= "https://dapi.kakao.com/";
-    String API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
+    String API_KEY = "KakaoAK ac630fe1cb94f321ea8304474e644b3b";
 
     private static final String LOG_TAG = "SubActivity";
     private MapView mapView;
@@ -108,33 +108,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             } catch (NoSuchAlgorithmException e) {
                 Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
             }
-        }
-    }
-
-    //API 호출을 위한 메서드
-    private String fetchData(String urlString, Map<String, String> header) {
-        try {
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(4000 /* milliseconds */);
-            conn.setConnectTimeout(7000 /* milliseconds */);
-            conn.setRequestMethod("GET"); // GET 방식으로  API 요청
-            conn.setRequestProperty("Authorization", "KakaoAK "+ SubActivity.MapApiConst.DAUM_MAPS_ANDROID_APP_API_KEY); // header 부분에 앱키 작성
-            conn.setDoInput(true);
-            conn.connect();
-
-            InputStream is = conn.getInputStream();
-            @SuppressWarnings("resource")
-            Scanner s = new Scanner(is);
-            s.useDelimiter("\\A");
-            String data = s.hasNext() ? s.next() : "";
-
-            Log.w("data : ", data);
-
-            return data;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -180,21 +153,24 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         mapViewContainer.addView(mapView);
 
         mapView.setMapViewEventListener(this);
+
+        searchKeyword("편의점", "37.4812178", "126.8812636");
+
         // 현위치 찾기
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+        //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+
+        //mapView.setMapCenterPoint(mapPoint, true);
+
+
         // 나침반 모드 & 현위치 찾기
         //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
 
-        //원하는 키워드 입력
-        //ex)사당동 맛집, 사당동 카페으로도 검색 가능합니다.
-//        searchKeyword("편의점");
-
     }
 
-    private void searchKeyword(String keyword){
+    private void searchKeyword(String keyword, String x, String y){
 
         KakaoAPIInterface spotInterface =  ApiClient.getApiClient().create(KakaoAPIInterface.class);
-        Call<ResultSearchKeyword> call = spotInterface.getSearchKeyword(API_KEY, keyword);
+        Call<ResultSearchKeyword> call = spotInterface.getSearchKeyword(API_KEY, keyword, x, y);
 
         call.enqueue(new Callback<ResultSearchKeyword>()
         {
@@ -205,12 +181,26 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
                 Log.e("onSuccess", String.valueOf(response.raw()));
 
-                System.out.println(response.body());
-                System.out.println(response.body().getDocuments());
+                ResultSearchKeyword body = response.body();
+                if(body != null){
+                    List<Place> documents = body.getDocuments();
 
-//                String status = response.body().getStatus();
-//
-//                System.out.println("안녕"+response.body().getMessage());
+                    for(int i = 0; i < documents.size(); i++){
+                        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(Double.parseDouble(documents.get(i).getX()), Double.parseDouble(documents.get(i).getY()));
+                        MapPOIItem mapPOIItem = new MapPOIItem();
+                        mapPOIItem.setMapPoint(mapPoint);
+                        mapPOIItem.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                        mapView.addPOIItem(mapPOIItem);
+                        Log.d("result", documents.get(i).getPlace_name());
+                    }
+                } else {
+                    Log.d("not result", null);
+                }
+
+
+
+                System.out.println(response.body());
+                System.out.println("응답 코드 : "+ response.body().getDocuments().get(0).getPlace_name());
             }
 
             @Override
@@ -233,6 +223,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
+
         Log.i(LOG_TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
 
     }
