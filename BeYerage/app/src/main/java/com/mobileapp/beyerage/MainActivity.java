@@ -20,13 +20,12 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.mobileapp.beyerage.dto.Beverage;
 import com.mobileapp.beyerage.network.BeverageAPI;
-import com.mobileapp.beyerage.network.Server;
+import com.mobileapp.beyerage.network.BeverageAPIController;
 import com.mobileapp.beyerage.shop.ShopService;
 import retrofit2.Call;
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
     //음성 서비스
     private static final ShopService shopService = appConfig.shopService();
     //HTTP API 호출 클래스
-    private static final Server server = new Server();
+    private static final BeverageAPIController server = new BeverageAPIController();
     //TTS 변수 선언
     private TextToSpeech tts;
     //STT를 사용할 intent 와 SpeechRecognizer 초기화

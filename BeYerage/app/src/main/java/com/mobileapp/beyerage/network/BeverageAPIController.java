@@ -15,7 +15,7 @@ import retrofit2.http.Tag;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 
-public class Server {
+public class BeverageAPIController {
 
     private Beverage beverage = new Beverage();
 
