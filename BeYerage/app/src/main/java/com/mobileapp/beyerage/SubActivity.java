@@ -73,6 +73,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final AppConfig appConfig = new AppConfig();
     //음성 서비스
     private static final ShopService shopService = appConfig.shopService();
+    private static final MapPoint MARKER_POINT = null;
+
     //TTS 변수 선언
     private TextToSpeech tts;
 
@@ -80,11 +82,12 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     String API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
 
     private static final String LOG_TAG = "SubActivity";
-    private MapView mapView;
-    private ViewGroup mapViewContainer;
+    private MapView mapView = new MapView(this);
+    private ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+
 
     public class MapApiConst {
         public static final String DAUM_MAPS_ANDROID_APP_API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
@@ -185,10 +188,18 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         // 나침반 모드 & 현위치 찾기
         //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
 
-        //원하는 키워드 입력
-        //ex)사당동 맛집, 사당동 카페으로도 검색 가능합니다.
-//        searchKeyword("편의점");
+//        원하는 키워드 입력
+//        ex)사당동 맛집, 사당동 카페으로도 검색 가능합니다.
+        searchKeyword("편의점");
 
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName("Default Marker");
+        marker.setTag(0);
+        marker.setMapPoint(MARKER_POINT);
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+        mapView.addPOIItem(marker);
     }
 
     private void searchKeyword(String keyword){
@@ -202,8 +213,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             @Override
             public void onResponse(@NonNull Call<ResultSearchKeyword> call, @NonNull Response<ResultSearchKeyword> response)
             {
-
-                Log.e("onSuccess", String.valueOf(response.raw()));
+                        Log.e("onSuccess", String.valueOf(response.raw()));
 
                 System.out.println(response.body());
                 System.out.println(response.body().getDocuments());
@@ -307,7 +317,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
                 // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
                 Toast.makeText(SubActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                ActivityCompat.requestPermissions(SubActivity.this, REQUIRED_PERMISSIONS,
+                        ActivityCompat.requestPermissions(SubActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             } else {
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
