@@ -137,12 +137,16 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-        mapView.setMapViewEventListener(this);
+//        mapView.setMapViewEventListener(this);
 
-        searchCategory(current_latitude, current_longitude);
+        //맵 리스너 (현재위치 업데이트)
+        mapView.setCurrentLocationEventListener(this);
 
         // 현위치 찾기
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+
+        searchCategory(current_latitude, current_longitude);
+
 
     }
 
@@ -180,6 +184,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 //                    Log.d("not result", null);
 //                }
 
+                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+
                 int tagNum = 10;
                 for (Place document : ConvenienceList) {
                     MapPOIItem marker = new MapPOIItem();
@@ -211,6 +217,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     protected void onDestroy() {
         super.onDestroy();
         if(mapViewContainer != null) mapViewContainer.removeAllViews();
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
+        mapView.setShowCurrentLocationMarker(false);
     }
 
 
@@ -220,7 +228,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
         Log.i(LOG_TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
-
         currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
         //이 좌표로 지도 중심 이동
         mapView.setMapCenterPoint(currentMapPoint, true);
