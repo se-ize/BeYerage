@@ -137,6 +137,8 @@ public class MainActivity extends AppCompatActivity{
         listView = (ListView) findViewById(R.id.listview);
         listView.setOnItemClickListener(new myOnItemClickListener());
 
+        listView.setOnItemClickListener(new myOnItemClickListener());
+
         // Get permission
         String[] permission_list = {
                 Manifest.permission.ACCESS_FINE_LOCATION,
