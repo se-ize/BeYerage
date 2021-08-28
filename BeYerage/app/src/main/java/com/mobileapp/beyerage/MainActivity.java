@@ -201,8 +201,6 @@ public class MainActivity extends AppCompatActivity{
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //음성인식 시작
-                    shopService.voiceGuidance3(tts);
                 }
             }, 5000);
 

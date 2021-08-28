@@ -48,11 +48,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,8 +79,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     String API_KEY = "KakaoAK ac630fe1cb94f321ea8304474e644b3b";
 
     private static final String LOG_TAG = "SubActivity";
-    private MapView mapView = new MapView(this);
-    private ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+    private MapView mapView;
+    private ViewGroup mapViewContainer;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -124,6 +120,9 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //TTS 환경설정
+        setTTS();
+
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         }else {
@@ -139,8 +138,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //지도를 띄우자
         // java code
         mapView = new MapView(this);
-        //mapView = findViewById(R.id.map_view);
-
         RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
@@ -149,13 +146,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         searchCategory(current_latitude, current_longitude);
 
         // 현위치 찾기
-        //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
-        //mapView.setMapCenterPoint(mapPoint, true);
-
-
-        // 나침반 모드 & 현위치 찾기
-        //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
     }
 
 
@@ -192,9 +184,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 //                    Log.d("not result", null);
 //                }
 
-                System.out.println(response.body());
-                System.out.println("응답 코드 : "+ response.body().getDocuments().get(0).getPlace_name());
-
                 int tagNum = 10;
                 for (Place document : ConvenienceList) {
                     MapPOIItem marker = new MapPOIItem();
@@ -208,6 +197,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
                     marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
                     mapView.addPOIItem(marker);
                 }
+
+                Collections.sort(ConvenienceList);
+
+                shopService.findNearConvStore(tts, ConvenienceList.get(0).toString());
             }
 
             @Override
@@ -417,5 +410,17 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 
+    }
+
+
+    private void setTTS(){
+        //TTS를 생성하고 OnInitListener로 초기화
+        tts = new TextToSpeech(this, status -> {
+            if(status == TextToSpeech.SUCCESS) {
+                //언어 선택
+                tts.setLanguage(Locale.KOREAN);
+                shopService.defaultGuidance(tts);
+            }
+        });
     }
 }

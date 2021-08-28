@@ -74,6 +74,16 @@ public class ShopServiceImpl extends MainActivity implements ShopService{
     }
 
     @Override
+    public void findNearConvStore(TextToSpeech tts, String msg) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
+            tts.speak("현재 위치기반 가장 가까운 편의점은," + msg, TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            tts.speak("현재 위치기반 가장 가까운 편의점은," + msg, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+    @Override
     public void defaultGuidance(TextToSpeech tts) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 

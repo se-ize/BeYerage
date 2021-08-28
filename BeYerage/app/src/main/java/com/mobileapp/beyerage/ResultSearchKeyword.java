@@ -34,7 +34,7 @@ class RegionInfo {
     String keyword;  // 질의어에서 지역 정보를 제외한 키워드, ex) '중앙로 맛집' 에서 '맛집'
     String selected_region;   // 인식된 지역 리스트 중, 현재 검색
 }
-class Place {
+class Place implements Comparable<Place>{
     String id;           // 장소 ID
     String place_name;    // 장소명, 업체명
     String category_name;   // 카테고리 이름
@@ -66,6 +66,20 @@ class Place {
 
     public String getDistance() {
         return distance;
+    }
+
+    @Override
+    public int compareTo(Place place) {
+        if(this.distance.compareTo(place.distance) < 0) return -1;
+        else return 1;
+    }
+
+    @Override
+    public String toString() {
+        return "" + place_name + '\'' +
+                ", 전체 지번 주소는," + address_name + '\'' +
+                ", 전체 도로명 주소는," + road_address_name + '\'' +
+                ", 거리는," + distance + "입니다.";
     }
 }
 

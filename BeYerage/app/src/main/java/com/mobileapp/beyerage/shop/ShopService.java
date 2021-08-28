@@ -16,4 +16,6 @@ public interface ShopService {
     void voiceGuidance3(TextToSpeech tts);
 
     void voiceGuidance_map(TextToSpeech tts);
+
+    void findNearConvStore(TextToSpeech tts, String msg);
 }
