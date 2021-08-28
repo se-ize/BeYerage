@@ -79,7 +79,7 @@ class Place implements Comparable<Place>{
         return "" + place_name + '\'' +
                 ", 전체 지번 주소는," + address_name + '\'' +
                 ", 전체 도로명 주소는," + road_address_name + '\'' +
-                ", 거리는," + distance + "입니다.";
+                ", 거리는," + distance + "미터 입니다.";
     }
 }
 
