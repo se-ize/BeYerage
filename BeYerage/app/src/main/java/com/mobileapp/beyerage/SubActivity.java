@@ -90,10 +90,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private double current_longitude;
     ArrayList<Place> ConvenienceList = new ArrayList<>(); //편의점 CS2
 
-    public class MapApiConst {
-        public static final String DAUM_MAPS_ANDROID_APP_API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
-    }
-
     private void getHashKey() {
         PackageInfo packageInfo = null;
         try {
@@ -154,7 +150,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private void searchCategory(double x, double y){
         ConvenienceList.clear();
         KakaoAPIInterface spotInterface =  ApiClient.getApiClient().create(KakaoAPIInterface.class);
-        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", x + "", y + "", 1000);
+        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", Double.toString(current_latitude),Double.toString(current_longitude), 100);
 
         call.enqueue(new Callback<ResultSearchKeyword>()
         {
@@ -241,10 +237,14 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
     @Override
     public void onCurrentLocationUpdateFailed(MapView mapView) {
+        Log.i(LOG_TAG, "onCurrentLocationUpdateFailed");
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
     }
 
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
+        Log.i(LOG_TAG, "onCurrentLocationUpdateCancelled");
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
     }
 
 

@@ -25,7 +25,7 @@ public interface KakaoAPIInterface{
             @Query("category_group_code") String category_group_code,
             @Query("x") String x,
             @Query("y") String y,
-            @Query("radius") int radius
+            @Query("radius") Integer radius
     );
 
     //장소이름으로 특정위치기준으로 검색
