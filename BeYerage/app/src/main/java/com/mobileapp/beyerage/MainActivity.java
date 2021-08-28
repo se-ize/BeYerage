@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity{
         /**
          * 블루투스용  https://popcorn16.tistory.com/192
          */
-        listView.setOnItemClickListener(new myOnItemClickListener());
 
         // variables
         textStatus = (TextView) findViewById(R.id.text_status);
@@ -136,6 +135,7 @@ public class MainActivity extends AppCompatActivity{
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnSend = (Button) findViewById(R.id.btn_send);
         listView = (ListView) findViewById(R.id.listview);
+        listView.setOnItemClickListener(new myOnItemClickListener());
 
         // Get permission
         String[] permission_list = {

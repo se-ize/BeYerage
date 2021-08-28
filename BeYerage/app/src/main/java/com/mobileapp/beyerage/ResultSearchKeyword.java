@@ -20,6 +20,7 @@ public class ResultSearchKeyword {
     public void setDocuments(List<Place> documents) {
         this.documents = documents;
     }
+
 }
 
 class PlaceMeta{
@@ -45,7 +46,7 @@ class Place {
     String x;         // X 좌표값 혹은 longitude
     String y;            // Y 좌표값 혹은 latitude
     String place_url;    // 장소 상세페이지 URL
-    String distanc;      // 중심좌표까지의 거리. 단, x,y 파라미터를 준 경우에만 존재. 단위는 meter
+    String distance;      // 중심좌표까지의 거리. 단, x,y 파라미터를 준 경우에만 존재. 단위는 meter
 
     public String getPlace_name() {
         return place_name;
@@ -63,8 +64,8 @@ class Place {
         return y;
     }
 
-    public String getDistanc() {
-        return distanc;
+    public String getDistance() {
+        return distance;
     }
 }
 

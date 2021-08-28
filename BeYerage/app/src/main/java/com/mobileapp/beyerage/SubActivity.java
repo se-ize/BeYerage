@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.speech.tts.TextToSpeech;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -88,6 +89,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
+    MapPoint currentMapPoint;
+    private double current_latitude;
+    private double current_longitude;
+    ArrayList<Place> ConvenienceList = new ArrayList<>(); //편의점 CS2
 
     public class MapApiConst {
         public static final String DAUM_MAPS_ANDROID_APP_API_KEY = "ac630fe1cb94f321ea8304474e644b3b";
@@ -128,22 +133,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         setContentView(R.layout.activitiy_sub);
         getHashKey();
 
-        /*
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("키해시는 :  ", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        */
-
-
         Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
 
 
@@ -157,7 +146,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         mapView.setMapViewEventListener(this);
 
-        searchKeyword("편의점", "37.4812178", "126.8812636");
+        searchCategory(current_latitude, current_longitude);
 
         // 현위치 찾기
         //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
@@ -169,10 +158,11 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
     }
 
-    private void searchKeyword(String keyword, String x, String y){
 
+    private void searchCategory(double x, double y){
+        ConvenienceList.clear();
         KakaoAPIInterface spotInterface =  ApiClient.getApiClient().create(KakaoAPIInterface.class);
-        Call<ResultSearchKeyword> call = spotInterface.getSearchKeyword(API_KEY, keyword, x, y);
+        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", x + "", y + "", 1000);
 
         call.enqueue(new Callback<ResultSearchKeyword>()
         {
@@ -180,28 +170,44 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             @Override
             public void onResponse(@NonNull Call<ResultSearchKeyword> call, @NonNull Response<ResultSearchKeyword> response)
             {
-                        Log.e("onSuccess", String.valueOf(response.raw()));
+//                if (response.isSuccessful()) {
+//                    assert response.body() != null;
+                    Log.e("onSuccess", String.valueOf(response.raw()));
+                    ConvenienceList.addAll(response.body().getDocuments());
+//                }
 
-                ResultSearchKeyword body = response.body();
-                if(body != null){
-                    List<Place> documents = body.getDocuments();
-
-                    for(int i = 0; i < documents.size(); i++){
-                        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(Double.parseDouble(documents.get(i).getX()), Double.parseDouble(documents.get(i).getY()));
-                        MapPOIItem mapPOIItem = new MapPOIItem();
-                        mapPOIItem.setMapPoint(mapPoint);
-                        mapPOIItem.setMarkerType(MapPOIItem.MarkerType.BluePin);
-                        mapView.addPOIItem(mapPOIItem);
-                        Log.d("result", documents.get(i).getPlace_name());
-                    }
-                } else {
-                    Log.d("not result", null);
-                }
-
-
+//                ResultSearchKeyword body = response.body();
+//                if(body.getDocuments() != null){
+//                    List<Place> documents = body.getDocuments();
+//
+//                    for(int i = 0; i < documents.size(); i++){
+//                        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(Double.parseDouble(documents.get(i).getX()), Double.parseDouble(documents.get(i).getY()));
+//                        MapPOIItem mapPOIItem = new MapPOIItem();
+//                        mapPOIItem.setMapPoint(mapPoint);
+//                        mapPOIItem.setMarkerType(MapPOIItem.MarkerType.BluePin);
+//                        mapView.addPOIItem(mapPOIItem);
+//                        Log.d("result", documents.get(i).getPlace_name());
+//                    }
+//                } else {
+//                    Log.d("not result", null);
+//                }
 
                 System.out.println(response.body());
                 System.out.println("응답 코드 : "+ response.body().getDocuments().get(0).getPlace_name());
+
+                int tagNum = 10;
+                for (Place document : ConvenienceList) {
+                    MapPOIItem marker = new MapPOIItem();
+                    marker.setItemName(document.getPlace_name());
+                    marker.setTag(tagNum++);
+                    double x = Double.parseDouble(document.getY());
+                    double y = Double.parseDouble(document.getX());
+                    //카카오맵은 참고로 new MapPoint()로  생성못함. 좌표기준이 여러개라 이렇게 메소드로 생성해야함
+                    MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(x, y);
+                    marker.setMapPoint(mapPoint);
+                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                    mapView.addPOIItem(marker);
+                }
             }
 
             @Override
@@ -224,10 +230,18 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-
         Log.i(LOG_TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
 
+        currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
+        //이 좌표로 지도 중심 이동
+        mapView.setMapCenterPoint(currentMapPoint, true);
+        //전역변수로 현재 좌표 저장
+        current_latitude = mapPointGeo.latitude;
+        current_longitude = mapPointGeo.longitude;
+        Log.d(LOG_TAG, "현재위치 => " + current_latitude + "  " + current_longitude);
+
     }
+
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
     }
@@ -299,7 +313,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
                 // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
                 Toast.makeText(SubActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                        ActivityCompat.requestPermissions(SubActivity.this, REQUIRED_PERMISSIONS,
+                ActivityCompat.requestPermissions(SubActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             } else {
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
