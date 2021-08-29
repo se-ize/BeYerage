@@ -3,7 +3,6 @@ package com.mobileapp.beyerage;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -15,37 +14,24 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 
 import android.speech.tts.TextToSpeech;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
+import com.mobileapp.beyerage.dto.kakaoObject.Place;
+import com.mobileapp.beyerage.dto.kakaoObject.ResultSearchKeyword;
+import com.mobileapp.beyerage.network.KakaoAPIController;
+import com.mobileapp.beyerage.network.KakaoAPI;
 import com.mobileapp.beyerage.shop.ShopService;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.w3c.dom.Document;
-
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -53,16 +39,6 @@ import java.util.*;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 
 
 public class SubActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener{
@@ -70,17 +46,18 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final AppConfig appConfig = new AppConfig();
     //음성 서비스
     private static final ShopService shopService = appConfig.shopService();
-    private static final MapPoint MARKER_POINT = null;
+    //카카오 API 컨트롤러
+    private static final KakaoAPIController kakaoAPIController = new KakaoAPIController();
 
     //TTS 변수 선언
     private TextToSpeech tts;
 
-    String BASE_URL= "https://dapi.kakao.com/";
-    String API_KEY = "KakaoAK ac630fe1cb94f321ea8304474e644b3b";
+    private static final String API_KEY = "KakaoAK ac630fe1cb94f321ea8304474e644b3b";
 
     private static final String LOG_TAG = "SubActivity";
     private MapView mapView;
-    private ViewGroup mapViewContainer;
+    private RelativeLayout mapViewContainer;
+
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -88,7 +65,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     MapPoint currentMapPoint;
     private double current_latitude;
     private double current_longitude;
-    ArrayList<Place> ConvenienceList = new ArrayList<>(); //편의점 CS2
 
     private void getHashKey() {
         PackageInfo packageInfo = null;
@@ -115,9 +91,16 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activitiy_sub);
 
-        //TTS 환경설정
+        /**
+         * Text to Speech Setting
+         */
         setTTS();
+
+        /**
+         * Kakao Map Setting
+         */
 
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
@@ -125,16 +108,20 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             checkRunTimePermission();
         }
 
-        setContentView(R.layout.activitiy_sub);
         getHashKey();
 
-        Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
+        //맵 셋팅
+        setMapview();
 
+    }
+
+    private void setMapview() {
+        Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
 
         //지도를 띄우자
         // java code
         mapView = new MapView(this);
-        RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
+        mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
         mapView.setMapViewEventListener(this);
@@ -142,75 +129,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //맵 리스너 (현재위치 업데이트)
 //        mapView.setCurrentLocationEventListener(this);
 
-        searchCategory(current_latitude, current_longitude);
 
-        // 현위치 찾기
-//        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-
-
-    }
-
-
-    private void searchCategory(double x, double y){
-        ConvenienceList.clear();
-        KakaoAPIInterface spotInterface =  ApiClient.getApiClient().create(KakaoAPIInterface.class);
-        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", "37.4812178","126.8812636", 100);
-//Double.toString(current_latitude),Double.toString(current_longitude)
-        call.enqueue(new Callback<ResultSearchKeyword>()
-        {
-            //연결 성공 시에 싱행되는 부분
-            @Override
-            public void onResponse(@NonNull Call<ResultSearchKeyword> call, @NonNull Response<ResultSearchKeyword> response)
-            {
-//                if (response.isSuccessful()) {
-//                    assert response.body() != null;
-                    Log.e("onSuccess", String.valueOf(response.raw()));
-                    ConvenienceList.addAll(response.body().getDocuments());
-//                }
-
-//                ResultSearchKeyword body = response.body();
-//                if(body.getDocuments() != null){
-//                    List<Place> documents = body.getDocuments();
-//
-//                    for(int i = 0; i < documents.size(); i++){
-//                        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(Double.parseDouble(documents.get(i).getX()), Double.parseDouble(documents.get(i).getY()));
-//                        MapPOIItem mapPOIItem = new MapPOIItem();
-//                        mapPOIItem.setMapPoint(mapPoint);
-//                        mapPOIItem.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//                        mapView.addPOIItem(mapPOIItem);
-//                        Log.d("result", documents.get(i).getPlace_name());
-//                    }
-//                } else {
-//                    Log.d("not result", null);
-//                }
-
-//                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-
-                int tagNum = 10;
-                for (Place document : ConvenienceList) {
-                    MapPOIItem marker = new MapPOIItem();
-                    marker.setItemName(document.getPlace_name());
-                    marker.setTag(tagNum++);
-                    double x = Double.parseDouble(document.getX());
-                    double y = Double.parseDouble(document.getY());
-                    //카카오맵은 참고로 new MapPoint()로  생성못함. 좌표기준이 여러개라 이렇게 메소드로 생성해야함
-                    MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(x, y);
-                    marker.setMapPoint(mapPoint);
-                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-                    mapView.addPOIItem(marker);
-                }
-
-                Collections.sort(ConvenienceList);
-
-                shopService.findNearConvStore(tts, ConvenienceList.get(0).toString());
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResultSearchKeyword> call, @NonNull Throwable t)
-            {
-                Log.e("onfail", "에러 = " + t.getMessage());
-            }
-        });
+        mapView.setCurrentLocationRadius(100);
     }
 
     @Override
@@ -236,6 +156,11 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         current_longitude = mapPointGeo.longitude;
         Log.d(LOG_TAG, "현재위치 => " + current_latitude + "  " + current_longitude);
 
+        /**
+         * Kakao API controller
+         * 현재 위치기반으로 가까운 편의점 조회해서 음성안내
+         */
+        kakaoAPIController.getNearbyConv(mapView, tts, API_KEY, current_longitude, current_latitude);
     }
 
     @Override
@@ -252,11 +177,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
         Log.i(LOG_TAG, "onCurrentLocationUpdateCancelled");
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-    }
-
-
-    public void MapCircle(MapPoint center, int radius, int strokeColor, int fillColor){
-
     }
 
 

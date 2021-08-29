@@ -11,6 +11,7 @@ import thefaco.beyerage.dto.beverage.BeverageApiDto;
 import thefaco.beyerage.dto.beverage.BeverageWithLocApiDto;
 import thefaco.beyerage.service.BeverageService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
