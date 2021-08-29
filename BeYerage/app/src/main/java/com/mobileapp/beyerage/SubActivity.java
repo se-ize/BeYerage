@@ -127,7 +127,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         // 현위치 찾기
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
-        mapView.setCurrentLocationRadius(200);
+        mapView.setCurrentLocationRadius(100);
 
     }
 
@@ -136,7 +136,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private void searchCategory(double x, double y){
         ConvenienceList.clear();
         KakaoAPI spotInterface =  ApiClient.getApiClient().create(KakaoAPI.class);
-        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", Double.toString(x),Double.toString(y), 200);
+        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", Double.toString(x),Double.toString(y), 500);
 
         call.enqueue(new Callback<ResultSearchKeyword>()
         {
