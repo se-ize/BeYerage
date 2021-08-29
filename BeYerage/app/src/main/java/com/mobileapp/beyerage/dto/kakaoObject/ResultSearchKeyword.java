@@ -9,16 +9,8 @@ public class ResultSearchKeyword {
         return metadata;
     }
 
-    public void setMetadata(PlaceMeta metadata) {
-        this.metadata = metadata;
-    }
-
     public List<Place> getDocuments() {
         return documents;
-    }
-
-    public void setDocuments(List<Place> documents) {
-        this.documents = documents;
     }
 
 }

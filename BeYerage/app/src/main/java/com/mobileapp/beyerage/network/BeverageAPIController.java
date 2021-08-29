@@ -1,19 +1,12 @@
 package com.mobileapp.beyerage.network;
 
-import android.os.AsyncTask;
 import android.util.Log;
 import com.mobileapp.beyerage.dto.Beverage;
-import com.mobileapp.beyerage.shop.ShopService;
-import com.mobileapp.beyerage.shop.ShopServiceImpl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Tag;
-
-import java.io.IOException;
-import java.util.concurrent.Executors;
 
 public class BeverageAPIController {
 

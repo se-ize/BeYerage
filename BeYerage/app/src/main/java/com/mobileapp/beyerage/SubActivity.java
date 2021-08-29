@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.mobileapp.beyerage.dto.kakaoObject.Place;
 import com.mobileapp.beyerage.dto.kakaoObject.ResultSearchKeyword;
-import com.mobileapp.beyerage.network.ApiClient;
+import com.mobileapp.beyerage.network.KakaoAPIController;
 import com.mobileapp.beyerage.network.KakaoAPI;
 import com.mobileapp.beyerage.shop.ShopService;
 
@@ -46,7 +46,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final AppConfig appConfig = new AppConfig();
     //음성 서비스
     private static final ShopService shopService = appConfig.shopService();
-    private static final MapPoint MARKER_POINT = null;
+    //카카오 API 컨트롤러
+    private static final KakaoAPIController kakaoAPIController = new KakaoAPIController();
 
     //TTS 변수 선언
     private TextToSpeech tts;
@@ -64,7 +65,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     MapPoint currentMapPoint;
     private double current_latitude;
     private double current_longitude;
-    ArrayList<Place> ConvenienceList = new ArrayList<>(); //편의점 CS2
 
     private void getHashKey() {
         PackageInfo packageInfo = null;
@@ -108,9 +108,14 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             checkRunTimePermission();
         }
 
-
         getHashKey();
 
+        //맵 셋팅
+        setMapview();
+
+    }
+
+    private void setMapview() {
         Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
 
         //지도를 띄우자
@@ -128,52 +133,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
         mapView.setCurrentLocationRadius(100);
-
-    }
-
-
-
-    private void searchCategory(double x, double y){
-        ConvenienceList.clear();
-        KakaoAPI spotInterface =  ApiClient.getApiClient().create(KakaoAPI.class);
-        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", Double.toString(x),Double.toString(y), 500);
-
-        call.enqueue(new Callback<ResultSearchKeyword>()
-        {
-            //연결 성공 시에 싱행되는 부분
-            @Override
-            public void onResponse(@NonNull Call<ResultSearchKeyword> call, @NonNull Response<ResultSearchKeyword> response)
-            {
-
-                Log.e("onSuccess", String.valueOf(response.raw()));
-                ConvenienceList.addAll(response.body().getDocuments());
-
-                int tagNum = 10;
-                for (Place document : ConvenienceList) {
-                    MapPOIItem marker = new MapPOIItem();
-                    marker.setItemName(document.getPlace_name());
-                    marker.setTag(tagNum++);
-                    double x = Double.parseDouble(document.getY());
-                    double y = Double.parseDouble(document.getX());
-                    //카카오맵은 참고로 new MapPoint()로  생성못함. 좌표기준이 여러개라 이렇게 메소드로 생성해야함
-                    MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(x, y);
-                    marker.setMapPoint(mapPoint);
-                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-                    mapView.addPOIItem(marker);
-                }
-
-                Collections.sort(ConvenienceList);
-
-                shopService.findNearConvStore(tts, ConvenienceList.get(0).toString());
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResultSearchKeyword> call, @NonNull Throwable t)
-            {
-                Log.e("onfail", "에러 = " + t.getMessage());
-            }
-        });
     }
 
     @Override
@@ -199,7 +158,11 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         current_longitude = mapPointGeo.longitude;
         Log.d(LOG_TAG, "현재위치 => " + current_latitude + "  " + current_longitude);
 
-        searchCategory(current_longitude, current_latitude);
+        /**
+         * Kakao API controller
+         * 현재 위치기반으로 가까운 편의점 조회해서 음성안내
+         */
+        kakaoAPIController.getNearbyConv(mapView, tts, API_KEY, current_longitude, current_latitude);
     }
 
     @Override
