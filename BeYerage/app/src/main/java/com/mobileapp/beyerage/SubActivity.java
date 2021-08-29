@@ -137,15 +137,15 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-//        mapView.setMapViewEventListener(this);
+        mapView.setMapViewEventListener(this);
 
         //맵 리스너 (현재위치 업데이트)
-        mapView.setCurrentLocationEventListener(this);
-
-        // 현위치 찾기
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+//        mapView.setCurrentLocationEventListener(this);
 
         searchCategory(current_latitude, current_longitude);
+
+        // 현위치 찾기
+//        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
     }
@@ -154,8 +154,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private void searchCategory(double x, double y){
         ConvenienceList.clear();
         KakaoAPIInterface spotInterface =  ApiClient.getApiClient().create(KakaoAPIInterface.class);
-        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", Double.toString(current_latitude),Double.toString(current_longitude), 100);
-
+        Call<ResultSearchKeyword> call = spotInterface.getSearchCategory(API_KEY, "CS2", "37.4812178","126.8812636", 100);
+//Double.toString(current_latitude),Double.toString(current_longitude)
         call.enqueue(new Callback<ResultSearchKeyword>()
         {
             //연결 성공 시에 싱행되는 부분
@@ -184,15 +184,15 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 //                    Log.d("not result", null);
 //                }
 
-                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+//                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
                 int tagNum = 10;
                 for (Place document : ConvenienceList) {
                     MapPOIItem marker = new MapPOIItem();
                     marker.setItemName(document.getPlace_name());
                     marker.setTag(tagNum++);
-                    double x = Double.parseDouble(document.getY());
-                    double y = Double.parseDouble(document.getX());
+                    double x = Double.parseDouble(document.getX());
+                    double y = Double.parseDouble(document.getY());
                     //카카오맵은 참고로 new MapPoint()로  생성못함. 좌표기준이 여러개라 이렇게 메소드로 생성해야함
                     MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(x, y);
                     marker.setMapPoint(mapPoint);
@@ -217,8 +217,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     protected void onDestroy() {
         super.onDestroy();
         if(mapViewContainer != null) mapViewContainer.removeAllViews();
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
-        mapView.setShowCurrentLocationMarker(false);
+//        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
+//        mapView.setShowCurrentLocationMarker(false);
     }
 
 
