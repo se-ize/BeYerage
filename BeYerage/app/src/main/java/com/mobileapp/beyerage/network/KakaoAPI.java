@@ -1,10 +1,11 @@
-package com.mobileapp.beyerage;
+package com.mobileapp.beyerage.network;
+import com.mobileapp.beyerage.dto.kakaoObject.ResultSearchKeyword;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
 
-public interface KakaoAPIInterface{
+public interface KakaoAPI {
 
     //장소이름으로 검색
     @GET("v2/local/search/keyword.json")

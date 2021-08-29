@@ -24,4 +24,5 @@ public class BeverageWithLocApiDto {
         row = beverage.getBeverageLocation().getRow();
         column = beverage.getBeverageLocation().getColumn();
     }
+
 }

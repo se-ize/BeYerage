@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
     //음성 서비스
     private static final ShopService shopService = appConfig.shopService();
     //HTTP API 호출 클래스
-    private static final BeverageAPIController server = new BeverageAPIController();
+    private static final BeverageAPIController beverageAPIController = new BeverageAPIController();
     //TTS 변수 선언
     private TextToSpeech tts;
     //STT를 사용할 intent 와 SpeechRecognizer 초기화
@@ -68,11 +68,7 @@ public class MainActivity extends AppCompatActivity{
     private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
 
     //로그 확인용
-    String tag;
-
-    //REST API 키
-    String BASE_URL= "https://dapi.kakao.com/";
-    String API_KEY = "KakaoAK " + "ac630fe1cb94f321ea8304474e644b3b";
+    private String tag = "MainActivity";
 
     /**
      * 블루투스용
@@ -197,13 +193,7 @@ public class MainActivity extends AppCompatActivity{
             Intent intent = new Intent(MainActivity.this, SubActivity.class);
             startActivity(intent);
 
-            shopService.voiceGuidance_map(tts);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                }
-            }, 5000);
-
+            shopService.voiceGuidanceMapStart(tts);
         });
     }
 
@@ -241,7 +231,7 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         protected Beverage doInBackground(Void... params) {
-            BeverageAPI beverageAPI = server.getBeverageAPI();
+            BeverageAPI beverageAPI = beverageAPIController.getBeverageAPI();
             Call<Beverage> freqBeverageData = beverageAPI.getFreqBeverageData();
             try{
                 return freqBeverageData.execute().body();
@@ -273,7 +263,7 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         protected Beverage doInBackground(Void... params) {
-            BeverageAPI beverageAPI = server.getBeverageAPI();
+            BeverageAPI beverageAPI = beverageAPIController.getBeverageAPI();
             Call<Beverage> findBeverageData = beverageAPI.getBeverageData(userVoice);
             try {
                 return findBeverageData.execute().body();
@@ -521,8 +511,6 @@ public class MainActivity extends AppCompatActivity{
             tts.stop();
             tts.shutdown();
         }
-        // Don't forget to unregister the ACTION_FOUND receiver.
-        unregisterReceiver(receiver);
 
         super.onDestroy();
     }

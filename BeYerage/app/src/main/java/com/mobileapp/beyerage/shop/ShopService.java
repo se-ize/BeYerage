@@ -12,10 +12,8 @@ public interface ShopService {
     void findUserWantBeverage(TextToSpeech tts, Beverage beverage);
     //추천 음료 안내
     void recommendBeverage(TextToSpeech tts, Beverage beverage);
-    //지원 편의점 안내
-    void voiceGuidance3(TextToSpeech tts);
-
-    void voiceGuidance_map(TextToSpeech tts);
-
+    //kakao 맵이 시작될 때 맵을 찾는 안내
+    void voiceGuidanceMapStart(TextToSpeech tts);
+    //근처 편의점에 대한 정보를 안내
     void findNearConvStore(TextToSpeech tts, String msg);
 }
