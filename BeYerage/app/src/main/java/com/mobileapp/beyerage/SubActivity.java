@@ -48,10 +48,9 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final ShopService shopService = appConfig.shopService();
     //카카오 API 컨트롤러
     private static final KakaoAPIController kakaoAPIController = new KakaoAPIController();
-
-    //TTS 변수 선언
+    //Text to Speech 변수 선언
     private TextToSpeech tts;
-
+    //kakao api key
     private static final String API_KEY = "KakaoAK ac630fe1cb94f321ea8304474e644b3b";
 
     private static final String LOG_TAG = "SubActivity";
@@ -93,24 +92,18 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_sub);
 
-        /**
-         * Text to Speech Setting
-         */
+        // Text to Speech Setting
         setTTS();
 
-        /**
-         * Kakao Map Setting
-         */
-
+        // Permission check
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         }else {
             checkRunTimePermission();
         }
-
+        // Get Hash key
         getHashKey();
-
-        //맵 셋팅
+        // Set Mapview
         setMapview();
 
     }
@@ -118,8 +111,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private void setMapview() {
         Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
 
-        //지도를 띄우자
-        // java code
         mapView = new MapView(this);
         mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
@@ -143,20 +134,18 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         mapView.setShowCurrentLocationMarker(false);
     }
 
-
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
 
         //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-        Log.i(LOG_TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
         currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
         //이 좌표로 지도 중심 이동
         mapView.setMapCenterPoint(currentMapPoint, true);
         //전역변수로 현재 좌표 저장
         current_latitude = mapPointGeo.latitude;
         current_longitude = mapPointGeo.longitude;
-        Log.d(LOG_TAG, "현재위치 => " + current_latitude + "  " + current_longitude);
+        Log.d(LOG_TAG, "현재위치: " + current_latitude + "  " + current_longitude);
 
         /**
          * Kakao API controller
@@ -204,15 +193,16 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             if ( check_result ) {
                 Log.d("@@@", "start");
                 //위치 값을 가져올 수 있음
-
             }
             else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있다
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])) {
                     Toast.makeText(SubActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    shopService.voiceGuidance(tts, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.");
                     finish();
                 }else {
-                    Toast.makeText(SubActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SubActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.", Toast.LENGTH_LONG).show();
+                    shopService.voiceGuidance(tts, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.");
                 }
             }
         }
@@ -234,6 +224,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             if (ActivityCompat.shouldShowRequestPermissionRationale(SubActivity.this, REQUIRED_PERMISSIONS[0])) {
                 // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
                 Toast.makeText(SubActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                shopService.voiceGuidance(tts, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.");
                 // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions(SubActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);

@@ -11,15 +11,14 @@ import com.mobileapp.beyerage.dto.Beverage;
 import org.w3c.dom.Text;
 
 public class ShopServiceImpl extends MainActivity implements ShopService{
-    String tag;
 
     @Override
-    public void voiceGuidance(TextToSpeech tts) {
+    public void voiceGuidance(TextToSpeech tts, String msg) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
-            tts.speak("찾으실 음료를 말씀해주세요", TextToSpeech.QUEUE_FLUSH, null, null);
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
-            tts.speak("찾으실 음료를 말씀해주세요", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
@@ -51,19 +50,9 @@ public class ShopServiceImpl extends MainActivity implements ShopService{
         }
     }
 
-    public void voiceGuidanceMapStart(TextToSpeech tts) {
-        //지원 편의점에서 버튼을 클릭했을 때 음성안내
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
-            tts.speak("현재 위치를 파악중입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
-        } else {
-            tts.speak("현재 위치를 파악중입니다.", TextToSpeech.QUEUE_FLUSH, null);
-        }
-    }
-
     @Override
     public void findNearConvStore(TextToSpeech tts, String msg) {
-        Log.d(tag, "가까운 편의점 안내 access");
+        Log.d("가까운 편의점 안내 access: ", msg);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
             tts.speak("현재 위치기반 가장 가까운 편의점은," + msg, TextToSpeech.QUEUE_FLUSH, null, null);

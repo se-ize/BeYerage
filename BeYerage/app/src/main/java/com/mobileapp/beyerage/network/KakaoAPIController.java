@@ -21,9 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.Collections;
 import java.util.List;
 
-public class KakaoAPIController
-{
-    //private static Retrofit retrofit;
+public class KakaoAPIController {
 
     private ShopService shopService = new ShopServiceImpl();
     /**
@@ -34,12 +32,7 @@ public class KakaoAPIController
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public Retrofit getRetrofit()
-    {
-        return retrofit;
-    }
-
-    public KakaoAPI getKakaoAPI(){
+    private KakaoAPI getKakaoAPI(){
         return retrofit.create(KakaoAPI.class);
     }
 

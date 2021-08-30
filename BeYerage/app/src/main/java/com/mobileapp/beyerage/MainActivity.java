@@ -63,10 +63,6 @@ public class MainActivity extends AppCompatActivity{
     private final int PERMISSION = 1;
     //음성인식 결과를 담는 변수
     private String userVoice = "";
-
-    //음성 허용 확인
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
-
     //로그 확인용
     private String tag = "MainActivity";
 
@@ -193,7 +189,7 @@ public class MainActivity extends AppCompatActivity{
             Intent intent = new Intent(MainActivity.this, SubActivity.class);
             startActivity(intent);
 
-            shopService.voiceGuidanceMapStart(tts);
+            shopService.voiceGuidance(tts, "현재 위치를 파악중입니다.");
         });
     }
 
@@ -201,7 +197,7 @@ public class MainActivity extends AppCompatActivity{
 
         //버튼 클릭시 원하는 음료 안내 서비스 호출
         findBeverageButton.setOnClickListener(view -> {
-            shopService.voiceGuidance(tts);
+            shopService.voiceGuidance(tts, "찾으실 음료를 말씀해주세요");
             new Handler().postDelayed(() -> {
                 //음성인식 시작
                 Intent intent = setSTTPermission();
@@ -224,7 +220,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     /**
-     * 동기식 방식 HTTP CONNECTION
+     * 비동기식 방식 HTTP CONNECTION
      * 가장 많이 찾는 음료를 가져옴
      */
     public class findFreqBeverageAsyncTask extends AsyncTask<Void, Void, Beverage>{
@@ -235,7 +231,8 @@ public class MainActivity extends AppCompatActivity{
             Call<Beverage> freqBeverageData = beverageAPI.getFreqBeverageData();
             try{
                 return freqBeverageData.execute().body();
-            } catch (Exception e){                e.printStackTrace();
+            } catch (Exception e){
+                e.printStackTrace();
                 Log.d(tag,"Network IOException");
             }
             return null;
@@ -245,18 +242,19 @@ public class MainActivity extends AppCompatActivity{
         protected void onPostExecute(Beverage beverage) {
             super.onPostExecute(beverage);
             if(beverage != null){
-                Log.d("getFreqBeverage name= ", beverage.getName());
                 shopService.recommendBeverage(tts, beverage);
+                Log.d("getFreqBeverage name= ", beverage.getName());
+                Toast.makeText(getApplicationContext(), "추천 음료명 : " + beverage.getName(),Toast.LENGTH_SHORT).show();
             } else {
-                Log.d("getFreqBeverage name= ", null);
                 shopService.recommendBeverage(tts, null);
+                Log.d("getFreqBeverage name= ", null);
             }
 
         }
     }
 
     /**
-     * 동기식 방식 HTTP CONNECTION
+     * 비동기식 방식 HTTP CONNECTION
      * 사용자가 원하는 음료를 가져옴
      */
     public class findBeverageAsyncTask extends AsyncTask<Void, Void, Beverage> {
@@ -278,11 +276,13 @@ public class MainActivity extends AppCompatActivity{
         protected void onPostExecute(Beverage beverage) {
             super.onPostExecute(beverage);
             if(beverage != null){
-                Log.d("getWantBeverage name=", beverage.getName());
                 shopService.findUserWantBeverage(tts, beverage);
+                Log.d("getWantBeverage name=", beverage.getName());
+                Toast.makeText(getApplicationContext(), "찾으신 음료명 : " + beverage.getName(),Toast.LENGTH_SHORT).show();
             } else {
-                Log.d(tag, "없는 음료 검색");
                 shopService.findUserWantBeverage(tts, null);
+                Log.d(tag, "없는 음료 검색");
+                Toast.makeText(getApplicationContext(), "없는 음료 검색",Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -343,30 +343,37 @@ public class MainActivity extends AppCompatActivity{
                     message = "클라이언트 에러";
                     break;
                 case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-                    message = "퍼미션 없음";
+                    message = "퍼미션 에러";
                     break;
                 case SpeechRecognizer.ERROR_NETWORK:
                     message = "네트워크 에러";
                     break;
                 case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-                    message = "네트웍 타임아웃";
+                    message = "네트웍 타임아웃 에러";
                     break;
                 case SpeechRecognizer.ERROR_NO_MATCH:
-                    message = "찾을 수 없음";
+                    message = "찾을 수 없음 에러";
                     break;
                 case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                    message = "RECOGNIZER가 바쁨";
+                    message = "RECOGNIZER BUSY 에러";
                     break;
                 case SpeechRecognizer.ERROR_SERVER:
-                    message = "서버가 이상함";
+                    message = "서버에 문제";
                     break;
                 case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
                     message = "말하는 시간초과";
                     break;
                 default:
-                    message = "알 수 없는 오류임";
+                    message = "알 수 없는 오류";
                     break;
             }
+            //사용자에게 오류 안내
+            if(error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS){
+                shopService.voiceGuidance(tts, message + "가 발생하였습니다. 액세스 허용을 해주세요.");
+            } else {
+                shopService.voiceGuidance(tts, message + "가 발생하였습니다.");
+            }
+
             Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message,Toast.LENGTH_SHORT).show();
         }
 

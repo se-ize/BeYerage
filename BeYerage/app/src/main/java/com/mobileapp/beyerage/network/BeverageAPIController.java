@@ -25,7 +25,7 @@ public class BeverageAPIController {
     }
 
     /**
-     * 비동기식 HTTP CONNECTION
+     * 동기식 HTTP CONNECTION
      * Database에서 사용자가 원하는 음료를 찾아오는 메서드
      * @return Beverage Object
      */
@@ -55,7 +55,7 @@ public class BeverageAPIController {
     }
 
     /**
-     * 비동기식 HTTP CONNECTION
+     * 동기식 HTTP CONNECTION
      * Database에서 빈도(Frequency)가 가장 높은 음료를 찾아오는 메서드
      * @return Beverage Object
      */
