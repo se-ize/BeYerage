@@ -50,7 +50,7 @@ public class Place implements Comparable<Place> {
 
     @Override
     public int compareTo(Place place) {
-        if (this.distance.compareTo(place.distance) > 0) return -1;
+        if (Integer.parseInt(this.distance) < Integer.parseInt(place.distance)) return -1;
         else return 1;
     }
 
