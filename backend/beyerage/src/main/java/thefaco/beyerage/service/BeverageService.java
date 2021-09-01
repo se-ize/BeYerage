@@ -19,4 +19,5 @@ public interface BeverageService {
     void deleteBeverage(Beverage beverage);
     List<Beverage> findMostFreqOne();
     List<Beverage> findMostFreqOneWithLoc();
+    Beverage checkDuplicateRowColumn(int row, int column);
 }

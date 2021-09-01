@@ -79,11 +79,20 @@ public class BeverageRepositoryImpl implements BeverageRepository {
                 , Beverage.class)
                 .getResultList();
     }
-
+    //사람들이 가장많이 찾는 음료상세정보와 위치정보를 가져오는메서드
     @Override
     public List<Beverage> findMostFreqWithLoc() {
         return em.createQuery("select b from Beverage b join fetch b.beverageLocation where b.frequency = (select max(b.frequency) from Beverage b)"
                 , Beverage.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Beverage> findByRowAndColumn(int row, int column) {
+        return em.createQuery("select b from Beverage b join fetch b.beverageLocation" +
+                " where b.beverageLocation.row = :row and b.beverageLocation.column = :column", Beverage.class)
+                .setParameter("row", row)
+                .setParameter("column", column)
                 .getResultList();
     }
 }
