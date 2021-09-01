@@ -62,8 +62,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     MapPoint currentMapPoint;
-    private double current_latitude;
-    private double current_longitude;
 
     //해시키 찾기
     private void getHashKey() {
@@ -146,8 +144,8 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         mapView.setMapCenterPoint(currentMapPoint, true);
 
         //전역변수로 현재 좌표 저장
-        current_latitude = mapPointGeo.latitude;
-        current_longitude = mapPointGeo.longitude;
+        double current_latitude = mapPointGeo.latitude;
+        double current_longitude = mapPointGeo.longitude;
         Log.d(LOG_TAG, "현재위치: " + current_latitude + "  " + current_longitude);
 
         /**

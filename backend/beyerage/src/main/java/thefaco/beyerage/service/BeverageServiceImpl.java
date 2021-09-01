@@ -78,4 +78,11 @@ public class BeverageServiceImpl implements BeverageService {
     public List<Beverage> findMostFreqOneWithLoc() {
         return beverageRepository.findMostFreqWithLoc();
     }
+
+    @Override
+    public Beverage checkDuplicateRowColumn(int row, int column) {
+        List<Beverage> beverages = beverageRepository.findByRowAndColumn(row, column);
+        if(beverages.get(0) != null) return beverages.get(0);
+        else return null;
+    }
 }

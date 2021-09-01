@@ -16,4 +16,5 @@ public interface BeverageRepository {
     void delete(Beverage beverage);
     List<Beverage> findMostFreq();
     List<Beverage> findMostFreqWithLoc();
+    List<Beverage> findByRowAndColumn(int row, int column);
 }

@@ -185,7 +185,7 @@ public class BeverageController {
                 beverageUpdateDto.getSize(),
                 beverageUpdateDto.getRow(),
                 beverageUpdateDto.getColumn()
-                );
+        );
 
         log.info("음료수정: id={} name={}", beverageUpdateDto.getId(), beverageUpdateDto.getName());
 
