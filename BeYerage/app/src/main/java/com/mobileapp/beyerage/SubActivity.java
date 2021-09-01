@@ -65,6 +65,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private double current_latitude;
     private double current_longitude;
 
+    //해시키 찾기
     private void getHashKey() {
         PackageInfo packageInfo = null;
         try {
@@ -91,19 +92,19 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_sub);
-
-        // Text to Speech Setting
+        //TTS 설정
         setTTS();
 
-        // Permission check
+        //퍼미션 체크
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         }else {
             checkRunTimePermission();
         }
-        // Get Hash key
+
+        //해시키 가져오기
         getHashKey();
-        // Set Mapview
+        //Mapview 세팅
         setMapview();
 
     }
@@ -120,7 +121,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //맵 리스너 (현재위치 업데이트)
         mapView.setCurrentLocationEventListener(this);
 
-        // 현위치 찾기
+        //현위치 찾기
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
         mapView.setCurrentLocationRadius(100);
@@ -140,8 +141,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
         currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
-        //이 좌표로 지도 중심 이동
+
+        //지도 중심 이동
         mapView.setMapCenterPoint(currentMapPoint, true);
+
         //전역변수로 현재 좌표 저장
         current_latitude = mapPointGeo.latitude;
         current_longitude = mapPointGeo.longitude;
@@ -151,6 +154,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
          * Kakao API controller
          * 현재 위치기반으로 가까운 편의점 조회해서 음성안내
          */
+
         kakaoAPIController.getNearbyConv(mapView, tts, API_KEY, current_longitude, current_latitude);
     }
 
@@ -171,7 +175,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     }
 
 
-    // ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드
+    //ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드
     @Override
     public void onRequestPermissionsResult(int permsRequestCode,
                                            @NonNull String[] permissions,
@@ -179,10 +183,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
-            // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
+            //요청 코드가 PERMISSIONS_REQUEST_CODE이고, 요청한 퍼미션 개수만큼 수신되었다면
             boolean check_result = true;
 
-            // 모든 퍼미션을 허용했는지 체크합니다.
+            //모든 퍼미션을 허용했는지 체크
             for (int result : grandResults) {
                 if (result != PackageManager.PERMISSION_GRANTED) {
                     check_result = false;
@@ -192,10 +196,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
             if ( check_result ) {
                 Log.d("@@@", "start");
-                //위치 값을 가져올 수 있음
+                //위치 값을 가져오도록 함
             }
             else {
-                // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있다
+                //거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])) {
                     Toast.makeText(SubActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
                     shopService.voiceGuidance(tts, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.");
@@ -210,34 +214,34 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     void checkRunTimePermission(){
 
         //런타임 퍼미션 처리
-        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
+        //1. 위치 퍼미션을 가지고 있는지 체크
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(SubActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED ) {
-            // 2. 이미 퍼미션을 가지고 있다면
-            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
-            // 3.  위치 값을 가져올 수 있음
+            //2. 이미 퍼미션을 가지고 있다면
+            //( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
+            //3. 위치 값을 가져올 수 있음
 
-        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
-            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
+        } else { //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요. 2가지 경우(3-1, 4-1)가 있음
+            //3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
             if (ActivityCompat.shouldShowRequestPermissionRationale(SubActivity.this, REQUIRED_PERMISSIONS[0])) {
-                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
+                //3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있음
                 Toast.makeText(SubActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 shopService.voiceGuidance(tts, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.");
-                // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                //3-3. 사용자게에 퍼미션 요청함. 요청 결과는 onRequestPermissionResult에서 수신됨
                 ActivityCompat.requestPermissions(SubActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             } else {
-                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
-                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                //4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 함
+                //요청 결과는 onRequestPermissionResult에서 수신됨
                 ActivityCompat.requestPermissions(SubActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             }
         }
     }
 
-    //여기부터는 GPS 활성화를 위한 메소드들
+    //GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(SubActivity.this);

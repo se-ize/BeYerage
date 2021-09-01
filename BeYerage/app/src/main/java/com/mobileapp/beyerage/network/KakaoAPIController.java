@@ -50,15 +50,15 @@ public class KakaoAPIController {
 
                                 int tagNum = 10;
                                 for (Place place : places) {
-                                    MapPOIItem marker = new MapPOIItem();
+                                    MapPOIItem marker = new MapPOIItem(); //마커 생성
                                     marker.setItemName(place.getPlace_name());
                                     marker.setTag(tagNum++);
-                                    double x = Double.parseDouble(place.getY());
-                                    double y = Double.parseDouble(place.getX());
-                                    //카카오맵은 참고로 new MapPoint()로  생성못함. 좌표기준이 여러개라 이렇게 메소드로 생성해야함
+                                    double x = Double.parseDouble(place.getY()); //latitude
+                                    double y = Double.parseDouble(place.getX()); //longitude
+
                                     MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(x, y);
                                     marker.setMapPoint(mapPoint);
-                                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin); //마커타입 설정
                                     mapView.addPOIItem(marker);
                                 }
 
