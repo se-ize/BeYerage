@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorMain">#242427</color>
-    <color name="colorMainDark">#414143</color>
+    <color name="colorMain">#182028</color>
+    <color name="colorMainDark">#cc182028</color>
     <color name="colorAccent">#cc0276f9</color>
     <color name="colorAccentLight">#E1F5FE</color>
     <color name="colorPrimary">#FFDD73</color>
     <color name="colorPrimaryDark">#B3973E</color>
-    <color name="colorText">#d54824</color>
-    <color name="colorTeduri">#fdfedf</color>
 </resources>
