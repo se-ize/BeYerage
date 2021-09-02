@@ -1,0 +1,16 @@
+"id":5,"name":"사이다","price":1200,"type":"CAN","size":340
+"id":6,"name":"웰치스","price":1200,"type":"CAN","size":340
+"id":10,"name":"펩시","price":1000,"type":"CAN","size":340
+"id":27,"name":"환타","price":1100,"type":"CAN","size":250
+"id":29,"name":"밀키스","price":1200,"type":"CAN","size":340
+"id":31,"name":"레쓰비","price":900,"type":"CAN","size":250
+"id":32,"name":"게토레이","price":1500,"type":"BOTTLE","size":500
+"id":33,"name":"레몬워터","price":1500,"type":"BOTTLE","size":500
+"id":34,"name":"코카콜라","price":1200,"type":"CAN","size":250
+"id":35,"name":"스프라이트","price":1200,"type":"CAN","size":250
+"id":36,"name":"솔의눈","price":1000,"type":"CAN","size":250
+"id":37,"name":"파워에이드","price":1800,"type":"BOTTLE","size":500
+"id":38,"name":"포카리스웨트","price":1700,"type":"BOTTLE","size":500
+"id":39,"name":"핫식스","price":1000,"type":"CAN","size":250
+"id":40,"name":"토레타","price":1000,"type":"CAN","size":250
+"id":41,"name":"데미소다","price":900,"type":"CAN","size":250
