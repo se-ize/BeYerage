@@ -7,7 +7,7 @@ from datetime import datetime
 def nothing(x):
     pass
 
-color = [ 83 , 89 , 105]
+color = [ 177, 177, 217]
 
 one_pixel = np.uint8([[color]])
 hsv = cv.cvtColor(one_pixel, cv.COLOR_BGR2HSV)
@@ -31,7 +31,7 @@ cap = cv.VideoCapture(1)
 TrainSetName = 'Train_Dataset_'+ str(datetime.today().month) + str(datetime.today().day)+ '.csv'
 TestSetName = 'Test_Dataset_'+ str(datetime.today().month) + str(datetime.today().day)+ '.csv'
 
-f = open(TestSetName,'w', newline='')
+f = open(TrainSetName,'w', newline='')
 b_number = 0
 
 while(True):
@@ -83,9 +83,9 @@ while(True):
 
         if  450 > height > 60:
             if 360 > width > 40:
-                if key == ord(' '):
+                if key == 32:
                     b_number = input("해당되는 번호를 누르세요\n")
-                    key = key = cv.waitKey(1)
+                    key = cv.waitKey(1)
                 wr.writerow([centerX,centerY,width,height,area,b_number])
                 #print(centerX, centerY)
                 # print(height)
