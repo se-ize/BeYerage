@@ -176,18 +176,56 @@ public class BeverageController {
             return "beverage/updateBeverageForm";
         }
 
-        //사용자가 수정한 DTO 객체를 실제 DB 에 업데이트 해서 반영
-        beverageService.updateBeverage(
-                id,
-                beverageUpdateDto.getName(),
-                beverageUpdateDto.getPrice(),
-                beverageUpdateDto.getBottleType(),
-                beverageUpdateDto.getSize(),
-                beverageUpdateDto.getRow(),
-                beverageUpdateDto.getColumn()
-        );
+        Beverage subBeverage = beverageService.findOneById(id);
+        BeverageLocation subBeverageLocation = BeverageLocation.createBeverageLocation(subBeverage.getBeverageLocation().getRow(), subBeverage.getBeverageLocation().getColumn());
+        Beverage prevBeverage = beverageService.checkDuplicateRowColumn(beverageUpdateDto.getRow(), beverageUpdateDto.getColumn());
 
-        log.info("음료수정: id={} name={}", beverageUpdateDto.getId(), beverageUpdateDto.getName());
+        if(prevBeverage != null) {
+            //바꾸려는 음료 위치 null로 셋팅
+            beverageService.updateBeverage(
+                    prevBeverage.getId(),
+                    prevBeverage.getName(),
+                    prevBeverage.getPrice(),
+                    prevBeverage.getType(),
+                    prevBeverage.getSize(),
+                    0,
+                    0
+            );
+
+            //바꾸려는 위치에 삽입
+            beverageService.updateBeverage(
+                    id,
+                    beverageUpdateDto.getName(),
+                    beverageUpdateDto.getPrice(),
+                    beverageUpdateDto.getBottleType(),
+                    beverageUpdateDto.getSize(),
+                    beverageUpdateDto.getRow(),
+                    beverageUpdateDto.getColumn()
+            );
+            //바꾼 음료 원래 위치에 삽입
+            beverageService.updateBeverage(
+                    prevBeverage.getId(),
+                    prevBeverage.getName(),
+                    prevBeverage.getPrice(),
+                    prevBeverage.getType(),
+                    prevBeverage.getSize(),
+                    subBeverageLocation.getRow(),
+                    subBeverageLocation.getColumn()
+            );
+        } else {
+            //사용자가 수정한 DTO 객체를 실제 DB 에 업데이트 해서 반영
+            beverageService.updateBeverage(
+                    id,
+                    beverageUpdateDto.getName(),
+                    beverageUpdateDto.getPrice(),
+                    beverageUpdateDto.getBottleType(),
+                    beverageUpdateDto.getSize(),
+                    beverageUpdateDto.getRow(),
+                    beverageUpdateDto.getColumn()
+            );
+
+            log.info("음료수정: id={} name={}", beverageUpdateDto.getId(), beverageUpdateDto.getName());
+        }
 
         return "redirect:/beverages";
     }

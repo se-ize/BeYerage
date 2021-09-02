@@ -1,6 +1,8 @@
 package com.mobileapp.beyerage.network;
 
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 import com.mobileapp.beyerage.dto.Beverage;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -11,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BeverageAPIController {
 
     private Beverage beverage = new Beverage();
+    private String tag = "BeverageAPIController";
 
     /**
      * HTTP API 를 설계하기 위한 Retrofit 객체 생성

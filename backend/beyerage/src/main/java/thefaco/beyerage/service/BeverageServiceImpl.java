@@ -82,7 +82,7 @@ public class BeverageServiceImpl implements BeverageService {
     @Override
     public Beverage checkDuplicateRowColumn(int row, int column) {
         List<Beverage> beverages = beverageRepository.findByRowAndColumn(row, column);
-        if(beverages.get(0) != null) return beverages.get(0);
+        if(!beverages.isEmpty()) return beverages.get(0);
         else return null;
     }
 }

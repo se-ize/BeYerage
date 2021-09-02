@@ -102,9 +102,9 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //해시키 가져오기
         getHashKey();
+
         //Mapview 세팅
         setMapview();
-
     }
 
     private void setMapview() {
@@ -116,6 +116,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         mapView.setMapViewEventListener(this);
 
+        setCurrentLocationUpdate();
+    }
+
+    private void setCurrentLocationUpdate() {
         //맵 리스너 (현재위치 업데이트)
         mapView.setCurrentLocationEventListener(this);
 
@@ -237,6 +241,7 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
                         PERMISSIONS_REQUEST_CODE);
             }
         }
+
     }
 
     //GPS 활성화를 위한 메소드들
