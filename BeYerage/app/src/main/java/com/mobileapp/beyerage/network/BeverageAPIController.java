@@ -1,8 +1,6 @@
 package com.mobileapp.beyerage.network;
 
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 import com.mobileapp.beyerage.dto.Beverage;
 import retrofit2.Call;
 import retrofit2.Callback;

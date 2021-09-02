@@ -18,7 +18,7 @@
         tools:ignore="ExtraText">
 
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="bb3d52359045c2151849b3c5892af066"/>
-        //카카오 네이티브 키
+        <!-- 카카오 네이티브 키 -->
 
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
