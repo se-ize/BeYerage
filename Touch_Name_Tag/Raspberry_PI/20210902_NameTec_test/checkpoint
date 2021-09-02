@@ -1,0 +1,2 @@
+model_checkpoint_path: "bp_final_checkpoint"
+all_model_checkpoint_paths: "bp_final_checkpoint"
