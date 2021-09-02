@@ -16,7 +16,7 @@ def nothing(x):
     pass
 
 ######### 색상 설정 #############
-color = [ 83 , 89 , 105]
+color = [ 177 ,177 ,217]
 
 one_pixel = np.uint8([[color]])
 hsv = cv.cvtColor(one_pixel, cv.COLOR_BGR2HSV)
@@ -35,7 +35,7 @@ cv.namedWindow('img_result')
 
 videoname = 'RealCheck_' + str(datetime.today().month) + str(datetime.today().day) + '.avi'
 cam = cv.VideoWriter(videoname,cv.VideoWriter_fourcc('D', 'I', 'V', 'X'),25,(640,480))
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(1)
 # 카메라를 연결합니다.
 
 with open("connect_data.txt", 'r',encoding='UTF8') as f:
@@ -62,7 +62,7 @@ model = tf.keras.models.Sequential([
 ])
 
 
-model.load_weights('bp_final_checkpoint')
+model.load_weights('bp_final_checkpoint_0902')
 model.summary()
 #print(model.predict(x_test[:1]))
 #print(x_test[:1])
