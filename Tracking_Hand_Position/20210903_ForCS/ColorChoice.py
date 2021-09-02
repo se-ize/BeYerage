@@ -79,7 +79,7 @@ cv.setTrackbarPos('threshold', 'img_result', 30)
 #cam = cv.VideoWriter('test0406.avi',cv.VideoWriter_fourcc('D', 'I', 'V', 'X'),25,(640,480))
 # 녹화 하고 싶을때
 
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
     #img_color = cv.imread('2.jpg')
 while(True):
     #img_color = cv.imread('2.jpg')

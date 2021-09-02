@@ -14,8 +14,6 @@ def server_connect():
         characters = "[]"
 
         pan = pd.DataFrame.from_dict(r.json())
-        #print(pan)
-        #pan = pan.set_index(["row","column"])
         #pan = pan.set_index('id')
         pan = pan.sort_values(by=['row', 'column'] ,ascending=True)
         #pan.to_csv('connect_data_pandas.txt')
@@ -34,7 +32,7 @@ def server_connect():
 
         with open("connect_data.txt", "w",encoding="UTF-8") as f:
             f.write(string1)
-            #print(string1)
+            print(string1)
 
         #print("time :", time.time() - start)
         # 현재시각 - 시작시간 = 실행 시간
@@ -43,4 +41,4 @@ def server_connect():
         print("서버 연결에 문제가 발생하였습니다.")
         print(ex)
 
-server_connect()
+#server_connect()

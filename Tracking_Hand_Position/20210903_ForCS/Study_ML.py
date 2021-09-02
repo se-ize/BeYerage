@@ -46,4 +46,4 @@ print(y_test[:5])
 
 print(model.get_weights())
 
-model.save_weights('bp_final_checkpoint_0902')
+model.save_weights('bp_final_checkpoint_0903')

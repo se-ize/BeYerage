@@ -25,3 +25,4 @@ def connect(B_name):
             return("오류가 발생하였습니다. 다시 선택해주세요.")
             # print(data)
 
+#print(connect('코카콜라'))
