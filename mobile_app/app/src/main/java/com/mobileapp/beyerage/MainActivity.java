@@ -81,16 +81,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        //해시키 로그에 출력
-//        Log.e("GR_KeyHash",getKeyHash(MainActivity.this));
-//
-//        // Get permission
-//        String[] permission_list = {
-//                Manifest.permission.ACCESS_FINE_LOCATION,
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//        };
-//        ActivityCompat.requestPermissions(MainActivity.this, permission_list, 1);
-
         /* TTS, STT */
 
         //TTS 환경설정
@@ -351,12 +341,12 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         // Don't forget to shutdown!
         if (tts != null) {
             tts.stop();
             tts.shutdown();
         }
 
-        super.onDestroy();
     }
 }

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -61,6 +62,9 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
+    private double current_latitude;
+    private double current_longitude;
+
     MapPoint currentMapPoint;
 
     //해시키 찾기
@@ -105,6 +109,13 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //Mapview 세팅
         setMapview();
+
+        /**
+         * Kakao API controller
+         * 현재 위치기반으로 가까운 편의점 조회해서 음성안내
+         */
+        Handler handler = new Handler();
+        handler.postDelayed(() -> kakaoAPIController.getNearbyConv(mapView, tts, API_KEY, current_longitude, current_latitude), 5000);
     }
 
     private void setMapview() {
@@ -126,12 +137,19 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //현위치 찾기
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
-        mapView.setCurrentLocationRadius(100);
+        mapView.setCurrentLocationRadius(500);
+        mapView.zoomOut(true);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // TTS shutdown!
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        //mapView shutdown!
         if(mapViewContainer != null) mapViewContainer.removeAllViews();
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
         mapView.setShowCurrentLocationMarker(false);
@@ -148,16 +166,10 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         mapView.setMapCenterPoint(currentMapPoint, true);
 
         //전역변수로 현재 좌표 저장
-        double current_latitude = mapPointGeo.latitude;
-        double current_longitude = mapPointGeo.longitude;
+        current_latitude = mapPointGeo.latitude;
+        current_longitude = mapPointGeo.longitude;
         Log.d(LOG_TAG, "현재위치: " + current_latitude + "  " + current_longitude);
 
-        /**
-         * Kakao API controller
-         * 현재 위치기반으로 가까운 편의점 조회해서 음성안내
-         */
-
-        kakaoAPIController.getNearbyConv(mapView, tts, API_KEY, current_longitude, current_latitude);
     }
 
     @Override
@@ -346,7 +358,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
             if(status == TextToSpeech.SUCCESS) {
                 //언어 선택
                 tts.setLanguage(Locale.KOREAN);
-                shopService.defaultGuidance(tts);
             }
         });
     }
