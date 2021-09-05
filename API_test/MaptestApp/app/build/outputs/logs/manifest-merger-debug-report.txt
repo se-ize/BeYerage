@@ -1,0 +1,161 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\a2e01fba526045d5166ab60abedb2e3a\transformed\constraintlayout-2.1.0\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.appcompat:appcompat:1.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\173cccafd03e9091bdd005773ea0278a\transformed\appcompat-1.3.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Woojin\.gradle\caches\transforms-3\65c9c043660ead6e0a72577b6138aff9\transformed\fragment-1.3.6\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.2.4] C:\Users\Woojin\.gradle\caches\transforms-3\18a01869ec9203cdc9f982b173ce72d4\transformed\jetified-activity-1.2.4\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\3ceb33ae4e946051aa5c96d0ec57540f\transformed\jetified-appcompat-resources-1.3.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\8b8d26f46a8bcb25cbecb994162f06ad\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\79e2d857848d3c82987976775de6bfe1\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\3a7b5cb404b73ef16e09c6360bb420c0\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\e03cc1731706371b6f694343a2397b01\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\52c1d87cc4a21894c24d3b92da183d70\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\5e1a6292f193c542ec435cae53ca10f6\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.5.0] C:\Users\Woojin\.gradle\caches\transforms-3\4520c718b4b745daed53d69ccbafbc33\transformed\core-1.5.0\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\954195a74c4a9f09ce11145b7df5e1bd\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\3c62e0d56f1de357dd6117d98c61a8c1\transformed\jetified-lifecycle-viewmodel-savedstate-2.3.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\44cc25cd3a469bca0cd5a726998dadc8\transformed\jetified-savedstate-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\6cd26561befaf43401cd87c29d6ce89c\transformed\lifecycle-runtime-2.3.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\16e7c50ec612544b1b39a82440aa5447\transformed\lifecycle-viewmodel-2.3.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Woojin\.gradle\caches\transforms-3\46f9f917f54674f13cb0fd7f3d0b0fbe\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\e1b9deb0b974a751cff58593b4c898bf\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\35a530b46b7e3f978c49772304a99aab\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\33ec026d15fea0d9de7b7a3afdee1211\transformed\lifecycle-livedata-core-2.3.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\429f9db7f58dce33fa953334f95d6c60\transformed\core-runtime-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\9338f1e45d736742e5c60af5a615aef1\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\51cb39f0ec8586690a45446a3befa7fa\transformed\jetified-annotation-experimental-1.0.0\AndroidManifest.xml:17:1-24:12
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+	package
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:3:5-36
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:1-31:12
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:4:5-66
+	android:name
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:4:22-64
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:5:5-78
+	android:name
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:5:22-76
+application
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:7:5-29:19
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\a2e01fba526045d5166ab60abedb2e3a\transformed\constraintlayout-2.1.0\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\a2e01fba526045d5166ab60abedb2e3a\transformed\constraintlayout-2.1.0\AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.5.0] C:\Users\Woojin\.gradle\caches\transforms-3\4520c718b4b745daed53d69ccbafbc33\transformed\core-1.5.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.5.0] C:\Users\Woojin\.gradle\caches\transforms-3\4520c718b4b745daed53d69ccbafbc33\transformed\core-1.5.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Woojin\.gradle\caches\transforms-3\46f9f917f54674f13cb0fd7f3d0b0fbe\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Woojin\.gradle\caches\transforms-3\46f9f917f54674f13cb0fd7f3d0b0fbe\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.5.0] C:\Users\Woojin\.gradle\caches\transforms-3\4520c718b4b745daed53d69ccbafbc33\transformed\core-1.5.0\AndroidManifest.xml:24:18-86
+	android:supportsRtl
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:13:9-35
+	android:label
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:11:9-41
+	android:roundIcon
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:12:9-54
+	android:icon
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:10:9-43
+	android:allowBackup
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:9:9-35
+	android:theme
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:14:9-40
+	android:usesCleartextTraffic
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:8:9-44
+meta-data#com.kakao.sdk.AppKey
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:16:9-18:59
+	android:value
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:18:9-57
+	android:name
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:17:9-44
+activity#com.sample.maptestapp.MainActivity
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:20:9-27:20
+	android:name
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:20:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:22:13-26:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:23:17-69
+	android:name
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:23:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:25:17-77
+	android:name
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml:25:27-74
+uses-sdk
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\a2e01fba526045d5166ab60abedb2e3a\transformed\constraintlayout-2.1.0\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\a2e01fba526045d5166ab60abedb2e3a\transformed\constraintlayout-2.1.0\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat:1.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\173cccafd03e9091bdd005773ea0278a\transformed\appcompat-1.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\173cccafd03e9091bdd005773ea0278a\transformed\appcompat-1.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Woojin\.gradle\caches\transforms-3\65c9c043660ead6e0a72577b6138aff9\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Woojin\.gradle\caches\transforms-3\65c9c043660ead6e0a72577b6138aff9\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.2.4] C:\Users\Woojin\.gradle\caches\transforms-3\18a01869ec9203cdc9f982b173ce72d4\transformed\jetified-activity-1.2.4\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.2.4] C:\Users\Woojin\.gradle\caches\transforms-3\18a01869ec9203cdc9f982b173ce72d4\transformed\jetified-activity-1.2.4\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\3ceb33ae4e946051aa5c96d0ec57540f\transformed\jetified-appcompat-resources-1.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\3ceb33ae4e946051aa5c96d0ec57540f\transformed\jetified-appcompat-resources-1.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\8b8d26f46a8bcb25cbecb994162f06ad\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\8b8d26f46a8bcb25cbecb994162f06ad\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\79e2d857848d3c82987976775de6bfe1\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\79e2d857848d3c82987976775de6bfe1\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\3a7b5cb404b73ef16e09c6360bb420c0\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\3a7b5cb404b73ef16e09c6360bb420c0\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\e03cc1731706371b6f694343a2397b01\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\e03cc1731706371b6f694343a2397b01\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\52c1d87cc4a21894c24d3b92da183d70\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\52c1d87cc4a21894c24d3b92da183d70\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\5e1a6292f193c542ec435cae53ca10f6\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\5e1a6292f193c542ec435cae53ca10f6\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.5.0] C:\Users\Woojin\.gradle\caches\transforms-3\4520c718b4b745daed53d69ccbafbc33\transformed\core-1.5.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.5.0] C:\Users\Woojin\.gradle\caches\transforms-3\4520c718b4b745daed53d69ccbafbc33\transformed\core-1.5.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\954195a74c4a9f09ce11145b7df5e1bd\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\954195a74c4a9f09ce11145b7df5e1bd\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\3c62e0d56f1de357dd6117d98c61a8c1\transformed\jetified-lifecycle-viewmodel-savedstate-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\3c62e0d56f1de357dd6117d98c61a8c1\transformed\jetified-lifecycle-viewmodel-savedstate-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\44cc25cd3a469bca0cd5a726998dadc8\transformed\jetified-savedstate-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\44cc25cd3a469bca0cd5a726998dadc8\transformed\jetified-savedstate-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\6cd26561befaf43401cd87c29d6ce89c\transformed\lifecycle-runtime-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\6cd26561befaf43401cd87c29d6ce89c\transformed\lifecycle-runtime-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\16e7c50ec612544b1b39a82440aa5447\transformed\lifecycle-viewmodel-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\16e7c50ec612544b1b39a82440aa5447\transformed\lifecycle-viewmodel-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Woojin\.gradle\caches\transforms-3\46f9f917f54674f13cb0fd7f3d0b0fbe\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Woojin\.gradle\caches\transforms-3\46f9f917f54674f13cb0fd7f3d0b0fbe\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\e1b9deb0b974a751cff58593b4c898bf\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\e1b9deb0b974a751cff58593b4c898bf\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\35a530b46b7e3f978c49772304a99aab\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\35a530b46b7e3f978c49772304a99aab\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\33ec026d15fea0d9de7b7a3afdee1211\transformed\lifecycle-livedata-core-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] C:\Users\Woojin\.gradle\caches\transforms-3\33ec026d15fea0d9de7b7a3afdee1211\transformed\lifecycle-livedata-core-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\429f9db7f58dce33fa953334f95d6c60\transformed\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Woojin\.gradle\caches\transforms-3\429f9db7f58dce33fa953334f95d6c60\transformed\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\9338f1e45d736742e5c60af5a615aef1\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\9338f1e45d736742e5c60af5a615aef1\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\51cb39f0ec8586690a45446a3befa7fa\transformed\jetified-annotation-experimental-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] C:\Users\Woojin\.gradle\caches\transforms-3\51cb39f0ec8586690a45446a3befa7fa\transformed\jetified-annotation-experimental-1.0.0\AndroidManifest.xml:20:5-22:41
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Woojin\Desktop\21_PF057\API_test\MaptestApp\app\src\main\AndroidManifest.xml

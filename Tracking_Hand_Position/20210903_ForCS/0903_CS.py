@@ -16,7 +16,7 @@ def nothing(x):
     pass
 
 ######### 색상 설정 #############
-color = [ 177 ,177 ,217]
+color = [ 161, 172, 200]
 
 one_pixel = np.uint8([[color]])
 hsv = cv.cvtColor(one_pixel, cv.COLOR_BGR2HSV)
@@ -157,7 +157,7 @@ while(True):
                     print(predictions)
                     print(" 근사 예측값 ")
                     a = list(map(float, predictions))
-                    #print(round(a[0]))
+                    print(round(a[0]))
                     c = round(a[0])
                     '''
                     if c > 16:

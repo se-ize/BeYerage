@@ -7,12 +7,12 @@ from datetime import datetime
 def nothing(x):
     pass
 
-color = [ 177, 177, 217]
+color = [196, 201, 222]
 
 one_pixel = np.uint8([[color]])
 hsv = cv.cvtColor(one_pixel, cv.COLOR_BGR2HSV)
 hsv = hsv[0][0]
-threshold = 60
+threshold = 55
 lower_blue1 = np.array([hsv[0], threshold, threshold])
 upper_blue1 = np.array([180, 255, 255])
 lower_blue2 = np.array([0, threshold, threshold])
@@ -31,7 +31,7 @@ cap = cv.VideoCapture(1)
 TrainSetName = 'Train_Dataset_'+ str(datetime.today().month) + str(datetime.today().day)+ '.csv'
 TestSetName = 'Test_Dataset_'+ str(datetime.today().month) + str(datetime.today().day)+ '.csv'
 
-f = open(TrainSetName,'w', newline='')
+f = open(TestSetName,'w', newline='')
 b_number = 0
 
 while(True):
