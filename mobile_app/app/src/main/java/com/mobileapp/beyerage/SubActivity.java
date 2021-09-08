@@ -106,7 +106,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //해시키 가져오기
         getHashKey();
-
         //Mapview 세팅
         setMapview();
 
