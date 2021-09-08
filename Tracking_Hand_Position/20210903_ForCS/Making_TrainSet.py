@@ -7,7 +7,7 @@ from datetime import datetime
 def nothing(x):
     pass
 
-color = [196, 201, 222]
+color = [246, 239, 255]
 
 one_pixel = np.uint8([[color]])
 hsv = cv.cvtColor(one_pixel, cv.COLOR_BGR2HSV)
