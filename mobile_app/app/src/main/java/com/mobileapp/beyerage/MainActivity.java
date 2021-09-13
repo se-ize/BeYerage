@@ -36,6 +36,7 @@ import java.util.Locale;
 import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity{
+    private BackPressCloseHandler backPressCloseHandler;
     //컨트롤러
     private static final AppConfig appConfig = new AppConfig();
     //음성 서비스
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         /* TTS, STT */
 
@@ -347,6 +349,10 @@ public class MainActivity extends AppCompatActivity{
             tts.stop();
             tts.shutdown();
         }
+    }
 
+    @Override
+    public void onBackPressed() { //'뒤로' 두번누르면 종료
+        backPressCloseHandler.onBackPressed();
     }
 }
