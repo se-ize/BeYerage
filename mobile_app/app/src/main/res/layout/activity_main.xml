@@ -23,23 +23,5 @@
             android:background="@drawable/button_selector_conv"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/findBeverageButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="25dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_selector_find"/>
-
-        <Button
-            android:id="@+id/mostFreqBeverageButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="25dp"
-            android:background="@drawable/button_selector_mostfreq"
-            android:layout_weight="1" />
-
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -9,37 +9,40 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
-
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.mobileapp.beyerage.dto.kakaoObject.Place;
-import com.mobileapp.beyerage.dto.kakaoObject.ResultSearchKeyword;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.network.BeverageAPI;
+import com.mobileapp.beyerage.network.BeverageAPIController;
 import com.mobileapp.beyerage.network.KakaoAPIController;
-import com.mobileapp.beyerage.network.KakaoAPI;
 import com.mobileapp.beyerage.shop.ShopService;
 
-import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Locale;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class SubActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener{
@@ -66,6 +69,18 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
     private double current_longitude;
 
     MapPoint currentMapPoint;
+
+    private BackPressCloseHandler backPressCloseHandler;
+    //HTTP API 호출 클래스
+    private static final BeverageAPIController beverageAPIController = new BeverageAPIController();
+    //STT를 사용할 intent 와 SpeechRecognizer 초기화
+    private SpeechRecognizer sRecognizer;
+    //퍼미션 체크를 위한 변수
+    private final int PERMISSION = 1;
+    //음성인식 결과를 담는 변수
+    private String userVoice = "";
+    //로그 확인용
+    private String tag;
 
     //해시키 찾기
     private void getHashKey() {
@@ -97,6 +112,21 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         //TTS 설정
         setTTS();
 
+        Button findBeverageButton = (Button) findViewById(R.id.findBeverageButton);
+        Button mostFreqBeverageButton = (Button) findViewById(R.id.mostFreqBeverageButton);
+
+        /**
+         * 원하는 음료 안내
+         */
+        //버튼 클릭시 음성 안내 서비스 호출
+        findBevButtonEvent(findBeverageButton);
+
+        /**
+         * 추천 음료 안내
+         */
+        mostFreqButtonEvent(mostFreqBeverageButton);
+
+
         //퍼미션 체크
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
@@ -116,6 +146,210 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         Handler handler = new Handler();
         handler.postDelayed(() -> kakaoAPIController.getNearbyConv(mapView, tts, API_KEY, current_longitude, current_latitude), 5000);
     }
+
+    private void findBevButtonEvent(Button findBeverageButton) {
+
+        //버튼 클릭시 원하는 음료 안내 서비스 호출
+        findBeverageButton.setOnClickListener(view -> {
+            shopService.voiceGuidance(tts, "찾으실 음료를 말씀해주세요");
+            new Handler().postDelayed(() -> {
+                //음성인식 시작
+                Intent intent = setSTTPermission();
+                sRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+                sRecognizer.setRecognitionListener(listener);
+                sRecognizer.startListening(intent);
+
+            }, 2200);
+            // 2.2초 딜레이 첨부
+
+        });
+    }
+
+    private void mostFreqButtonEvent(Button mostFreqBeverageButton) {
+
+        //버튼 클릭시 음성 안내 서비스 호출
+        mostFreqBeverageButton.setOnClickListener(view -> {
+            new findFreqBeverageAsyncTask().execute();
+        });
+    }
+
+    /**
+     * 비동기식 방식 HTTP CONNECTION
+     * 가장 많이 찾는 음료를 가져옴
+     */
+    public class findFreqBeverageAsyncTask extends AsyncTask<Void, Void, Beverage> {
+
+        @Override
+        protected Beverage doInBackground(Void... params) {
+            BeverageAPI beverageAPI = beverageAPIController.getBeverageAPI();
+            Call<Beverage> freqBeverageData = beverageAPI.getFreqBeverageData();
+            try{
+                return freqBeverageData.execute().body();
+            } catch (Exception e){
+                e.printStackTrace();
+                Log.d(tag,"Network IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Beverage beverage) {
+            super.onPostExecute(beverage);
+            if(beverage != null){
+                shopService.recommendBeverage(tts, beverage);
+                Log.d("getFreqBeverage name= ", beverage.getName());
+                Toast.makeText(getApplicationContext(), "추천 음료명 : " + beverage.getName(),Toast.LENGTH_SHORT).show();
+            } else {
+                shopService.recommendBeverage(tts, null);
+                Log.d("getFreqBeverage name= ", null);
+            }
+
+        }
+    }
+
+    /**
+     * 비동기식 방식 HTTP CONNECTION
+     * 사용자가 원하는 음료를 가져옴
+     */
+    public class findBeverageAsyncTask extends AsyncTask<Void, Void, Beverage> {
+
+        @Override
+        protected Beverage doInBackground(Void... params) {
+            BeverageAPI beverageAPI = beverageAPIController.getBeverageAPI();
+            Call<Beverage> findBeverageData = beverageAPI.getBeverageData(userVoice);
+            try {
+                return findBeverageData.execute().body();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(tag,"Network IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Beverage beverage) {
+            super.onPostExecute(beverage);
+            if(beverage != null){
+                shopService.findUserWantBeverage(tts, beverage);
+                Log.d("getWantBeverage name=", beverage.getName());
+                Toast.makeText(getApplicationContext(), "찾으신 음료명 : " + beverage.getName(),Toast.LENGTH_SHORT).show();
+            } else {
+                shopService.findUserWantBeverage(tts, null);
+                Log.d(tag, "없는 음료 검색");
+                Toast.makeText(getApplicationContext(), "없는 음료 검색",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
+    private Intent setIntentForVoiceRec() {
+        //사용자에게 음성을 요구하고 음성 인식기를 통해 전송하는 활동 시작
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
+        //음석을 번역할 언어 설정
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+        return intent;
+    }
+
+    //음성인식 환경설정
+    private Intent setSTTPermission() {
+        //STT 퍼미션 체크
+        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,
+                    Manifest.permission.RECORD_AUDIO}, PERMISSION);
+        }
+        // STT intent 설정
+        Intent intent = setIntentForVoiceRec();
+        return intent;
+    }
+
+    private RecognitionListener listener = new RecognitionListener() {
+
+        @Override
+        public void onReadyForSpeech(Bundle params) {
+            Toast.makeText(getApplicationContext(),"음성인식을 시작합니다.",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {}
+
+        @Override
+        public void onRmsChanged(float rmsdB) {}
+
+        @Override
+        public void onBufferReceived(byte[] buffer) {}
+
+        @Override
+        public void onEndOfSpeech() {}
+
+        @Override
+        public void onError(int error) {
+            String message;
+
+            switch (error) {
+                case SpeechRecognizer.ERROR_AUDIO:
+                    message = "오디오 에러";
+                    break;
+                case SpeechRecognizer.ERROR_CLIENT:
+                    message = "클라이언트 에러";
+                    break;
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                    message = "퍼미션 에러";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK:
+                    message = "네트워크 에러";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                    message = "네트웍 타임아웃 에러";
+                    break;
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                    message = "찾을 수 없음 에러";
+                    break;
+                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                    message = "RECOGNIZER BUSY 에러";
+                    break;
+                case SpeechRecognizer.ERROR_SERVER:
+                    message = "서버에 문제";
+                    break;
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                    message = "말하는 시간초과";
+                    break;
+                default:
+                    message = "알 수 없는 오류";
+                    break;
+            }
+            //사용자에게 오류 안내
+            if(error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS){
+                shopService.voiceGuidance(tts, message + "가 발생하였습니다. 액세스 허용을 해주세요.");
+            } else {
+                shopService.voiceGuidance(tts, message + "가 발생하였습니다.");
+            }
+
+            Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message,Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            userVoice = "";
+
+            ArrayList<String> matches = results
+                    .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            for (String match : matches) {
+                userVoice += match;
+            }
+
+            findBeverageAsyncTask voiceTask = new findBeverageAsyncTask();
+            voiceTask.execute();
+
+        }
+        @Override
+        public void onPartialResults(Bundle partialResults) {}
+        @Override
+        public void onEvent(int eventType, Bundle params) {}
+    };
 
     private void setMapview() {
         Toast.makeText(this, "맵을 로딩중입니다", Toast.LENGTH_LONG).show();
