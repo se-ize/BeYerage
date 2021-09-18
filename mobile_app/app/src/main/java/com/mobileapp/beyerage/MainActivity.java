@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobileapp.beyerage.shop.ShopService;
 
@@ -30,22 +29,10 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        /* TTS, STT */
-
         //TTS 환경설정
         setTTS();
-        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
 
         Button closeConvStoreButton = (Button) findViewById(R.id.closeConvenienceStoreButton);
-
-        //당겨서 메뉴 안내
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                                               @Override
-                                               public void onRefresh() {
-                                                   shopService.defaultGuidance(tts);
-                                                   refreshLayout.setRefreshing(false);
-                                               }
-                                           });
 
         /**
          * 근처 편의점 안내
@@ -132,7 +119,6 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public void onEvent(int eventType, Bundle params) {}
     };
-
 
     private void setTTS(){
         //TTS를 생성하고 OnInitListener로 초기화

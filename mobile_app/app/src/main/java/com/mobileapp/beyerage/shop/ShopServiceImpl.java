@@ -65,9 +65,21 @@ public class ShopServiceImpl extends MainActivity implements ShopService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
-            tts.speak("화면을 터치하시면 비어레지를 실행합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+            tts.speak("화면을 터치하시면 음료 안내 서비스를 실행합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
-            tts.speak("화면을 터치하시면 비어레지를 실행합니다.", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak("화면을 터치하시면 음료 안내 서비스를 실행합니다.", TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+    @Override
+    public void reGuide(TextToSpeech tts) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
+            tts.speak("편의점 내의 음료 위치 안내는 하단의 좌측 버튼," +
+                    "가장 인기 있는 음료 안내는 하단의 우측 버튼을 터치해주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            tts.speak("편의점 내의 음료 위치 안내는 하단의 좌측 버튼," +
+                    "가장 인기 있는 음료 안내는 하단의 우측 버튼을 터치해주세요.", TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 }

@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobileapp.beyerage.dto.Beverage;
 import com.mobileapp.beyerage.network.BeverageAPI;
@@ -111,6 +112,16 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         setContentView(R.layout.activitiy_sub);
         //TTS 설정
         setTTS();
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+
+        //당겨서 메뉴 안내
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                shopService.reGuide(tts);
+                refreshLayout.setRefreshing(false);
+            }
+        });
 
         Button findBeverageButton = (Button) findViewById(R.id.findBeverageButton);
         Button mostFreqBeverageButton = (Button) findViewById(R.id.mostFreqBeverageButton);
