@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class BeverageController {
 
     private final BeverageService beverageService;
+    private static final int refrigeratorSize = 3;
 
     /**
      * 음료 상세정보 추가 Form
@@ -118,15 +119,15 @@ public class BeverageController {
     private List<List<String>> switchLocationList(List<BeverageLocListDto> beverageLocListDtos) {
 
         List<List<String>> locations = new ArrayList<>();
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < refrigeratorSize; i++){
             locations.add(new ArrayList<>());
-            for(int j = 0; j < 4; j++){
+            for(int j = 0; j < refrigeratorSize; j++){
                 locations.get(i).add("");
             }
         }
         for (BeverageLocListDto beverageLocListDto : beverageLocListDtos) {
-            for(int i = 0; i < 4; i++){
-                for(int j = 0; j < 4; j++){
+            for(int i = 0; i < refrigeratorSize; i++){
+                for(int j = 0; j < refrigeratorSize; j++){
                     int row = beverageLocListDto.getBeverageLocation().getRow();
                     int column = beverageLocListDto.getBeverageLocation().getColumn();
                     if(row-1 == i && column-1 == j) locations.get(i).set(j, beverageLocListDto.getName());
