@@ -7,12 +7,12 @@ from datetime import datetime
 def nothing(x):
     pass
 
-color = [ 177, 177, 217]
+color = [ 203, 197, 215]
 
 one_pixel = np.uint8([[color]])
 hsv = cv.cvtColor(one_pixel, cv.COLOR_BGR2HSV)
 hsv = hsv[0][0]
-threshold = 60
+threshold = 30
 lower_blue1 = np.array([hsv[0], threshold, threshold])
 upper_blue1 = np.array([180, 255, 255])
 lower_blue2 = np.array([0, threshold, threshold])

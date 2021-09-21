@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/Users/Woojin/Desktop/21_PF057/BeYerage/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Woojin/Desktop/21_PF057/BeYerage/app/src/main/res/layout/activity_splash.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/Woojin/Desktop/21_PF057/mobile_app/app/src/main/res/layout/activitiy_sub.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/Woojin/Desktop/21_PF057/mobile_app/app/src/main/res/layout/activity_main.xml" value="0.11096014492753623" />
+        <entry key="..\:/Users/Woojin/Desktop/21_PF057/mobile_app/app/src/main/res/layout/activity_splash.xml" value="0.11096014492753623" />
         <entry key="..\:/Users/idshk/Documents/GitHub/21_pf057/BeYerage/app/src/main/res/layout/activitiy_sub.xml" value="0.1" />
         <entry key="..\:/Users/idshk/Documents/GitHub/21_pf057/BeYerage/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/idshk/Documents/GitHub/21_pf057/BeYerage/app/src/main/res/layout/activity_splash.xml" value="0.2953125" />
@@ -14,7 +17,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

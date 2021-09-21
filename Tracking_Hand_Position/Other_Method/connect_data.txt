@@ -1,0 +1,15 @@
+"id":7,"name":"레쓰비","price":1100,"type":"CAN","size":240,"row":1,"column":1
+"id":9,"name":"콜롬비아나","price":1200,"type":"CAN","size":240,"row":1,"column":2
+"id":15,"name":"칸타타아메리카노","price":2200,"type":"BOTTLE","size":275,"row":1,"column":3
+"id":13,"name":"데자와밀크티","price":1400,"type":"CAN","size":240,"row":1,"column":4
+"id":11,"name":"조지아오리지널","price":1100,"type":"CAN","size":240,"row":2,"column":1
+"id":1,"name":"TOP스위트아메리카노","price":2200,"type":"BOTTLE","size":275,"row":2,"column":2
+"id":3,"name":"TOP스모키블랙","price":2400,"type":"BOTTLE","size":275,"row":2,"column":3
+"id":5,"name":"스타벅스더블샷에스프레소","price":3000,"type":"BOTTLE","size":275,"row":2,"column":4
+"id":17,"name":"웰치스","price":1300,"type":"CAN","size":355,"row":3,"column":1
+"id":21,"name":"스프라이트","price":1100,"type":"CAN","size":355,"row":3,"column":3
+"id":23,"name":"코코팜","price":1300,"type":"CAN","size":355,"row":3,"column":4
+"id":25,"name":"파워에이드","price":1600,"type":"BOTTLE","size":355,"row":4,"column":1
+"id":27,"name":"포카리스웨트","price":1600,"type":"BOTTLE","size":355,"row":4,"column":2
+"id":41,"name":"코카콜라제로","price":2000,"type":"BOTTLE","size":750,"row":4,"column":3
+"id":31,"name":"마운틴듀","price":1400,"type":"BOTTLE","size":355,"row":4,"column":4
