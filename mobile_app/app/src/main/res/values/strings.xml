@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">BeYerage</string>
-    <string name="default_question">근처 편의점 안내는 첫번째 버튼, 음료 위치 안내는 두번째 버튼, 인기있는 음료 추천은 세번째 버튼을 터치해주세요. 다시 듣고 싶으시면 화면을 아래로 당겨주세요.</string>
 </resources>
