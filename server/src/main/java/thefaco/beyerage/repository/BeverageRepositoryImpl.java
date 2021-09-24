@@ -45,6 +45,7 @@ public class BeverageRepositoryImpl implements BeverageRepository {
                 .getResultList();
     }
 
+    //음료 이름으로 음료 상세정보와 위치정보를 찾는 메서드
     @Override
     public List<Beverage> findByNameWithLoc(String name) {
         return em.createQuery("select b from Beverage b join fetch b.beverageLocation where b.name = :name", Beverage.class)
@@ -87,7 +88,8 @@ public class BeverageRepositoryImpl implements BeverageRepository {
                 .getResultList();
     }
 
-    @Override
+    //특정 행, 열에 존재하는 음료 객체를 가져오는 메서드드
+   @Override
     public List<Beverage> findByRowAndColumn(int row, int column) {
         return em.createQuery("select b from Beverage b join fetch b.beverageLocation" +
                 " where b.beverageLocation.row = :row and b.beverageLocation.column = :column", Beverage.class)
