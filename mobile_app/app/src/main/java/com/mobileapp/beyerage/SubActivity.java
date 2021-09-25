@@ -404,14 +404,17 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-        currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
+//        currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
+        currentMapPoint = MapPoint.mapPointWithGeoCoord(37.7124556, 126.7621576);
 
         //지도 중심 이동
         mapView.setMapCenterPoint(currentMapPoint, true);
 
         //전역변수로 현재 좌표 저장
-        current_latitude = mapPointGeo.latitude;
-        current_longitude = mapPointGeo.longitude;
+//        current_latitude = mapPointGeo.latitude;
+//        current_longitude = mapPointGeo.longitude;
+        current_latitude = 37.7124556;
+        current_longitude = 126.7621576;
         Log.d(LOG_TAG, "현재위치: " + current_latitude + "  " + current_longitude);
 
     }
