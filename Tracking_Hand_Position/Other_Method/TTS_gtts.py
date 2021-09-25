@@ -16,7 +16,7 @@ def speak(text):
     filename ='Voice'+ str(datetime.today().month) + str(datetime.today().day) +'.mp3'
 
     tts.save(filename)
-    playsound.playsound('C:/Users/Woojin/Desktop/프로보노/Tracking_Hand_Position/Other_Method/' + filename)
+    playsound.playsound('C:/Users/Woojin/Desktop/probono/Tracking_Hand_Position/Other_Method/' + filename)
     os.remove(filename)
     #playsound 는 리룩스에서는 작동하지않아요.
 

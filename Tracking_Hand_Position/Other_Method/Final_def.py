@@ -121,11 +121,13 @@ while(True):
                 #print('no')
     '''
     
+    '''
     if (time.time() - start_time2) > 10:
         data = arduino.readline()
         if data == a:
             TTS_gtts.speak(exit_msg)
         start_time2 = time.time()
+        '''
 
     if (time.time() - start_time) > 60:
         TTS_gtts.speak('서버로부터 데이터를 갱신 합니다.')
