@@ -404,17 +404,15 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
 
         //내 위치 찾기
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-//        currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
-        currentMapPoint = MapPoint.mapPointWithGeoCoord(37.7124556, 126.7621576);
+        currentMapPoint = MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude);
 
         //지도 중심 이동
         mapView.setMapCenterPoint(currentMapPoint, true);
 
         //전역변수로 현재 좌표 저장
-//        current_latitude = mapPointGeo.latitude;
-//        current_longitude = mapPointGeo.longitude;
-        current_latitude = 37.7124556;
-        current_longitude = 126.7621576;
+        current_latitude = mapPointGeo.latitude;
+        current_longitude = mapPointGeo.longitude;
+
         Log.d(LOG_TAG, "현재위치: " + current_latitude + "  " + current_longitude);
 
     }
@@ -502,6 +500,23 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         }
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case GPS_ENABLE_REQUEST_CODE:
+                //사용자가 GPS 활성 시켰는지 검사
+                if (checkLocationServicesStatus()) {
+                    if (checkLocationServicesStatus()) {
+                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
+                        checkRunTimePermission();
+                        return;
+                    }
+                }
+                break;
+        }
+    }
 
     //GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
@@ -528,23 +543,6 @@ public class SubActivity extends AppCompatActivity implements MapView.CurrentLoc
         builder.create().show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case GPS_ENABLE_REQUEST_CODE:
-                //사용자가 GPS 활성 시켰는지 검사
-                if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
-                        checkRunTimePermission();
-                        return;
-                    }
-                }
-                break;
-        }
-    }
 
     public boolean checkLocationServicesStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
