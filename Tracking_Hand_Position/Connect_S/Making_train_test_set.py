@@ -13,7 +13,7 @@ wCam, hCam = 640, 480
 
 videoname = 'MakingDataSet_' + str(datetime.today().month) + str(datetime.today().day) + '.avi'
 cam = cv.VideoWriter(videoname,cv.VideoWriter_fourcc('D', 'I', 'V', 'X'),25,(640,480))
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 cap.set(3, wCam)
 cap.set(4, hCam)
 pTime = 0

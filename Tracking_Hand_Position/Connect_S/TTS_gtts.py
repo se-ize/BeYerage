@@ -38,4 +38,4 @@ def speakend(filename):
     os.remove(filename)
 
 
-#speak(" 올해는 도시마다 다시 즐거움이 켜질거에요! 해당 제품은 코카콜라입니다. ")
+#speak(" 객체인식을 통한 음료 안내를 종료합니다. ")

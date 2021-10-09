@@ -10,13 +10,15 @@ import time
 import ConnectAndData
 import TTS_gtts_2 as TTS_gtts
 import Server_Connect
+import pyfirmata
 
 videoname = 'RealCheck_' + str(datetime.today().month) + str(datetime.today().day) + '.avi'
 
-a = b'1\r\n'
-result = 'no'
 start_msg = '객체인식을 통한 음료 안내를 시작합니다.'
+restart_msg = '객체인식을 통한 음료 안내를 다시 시작합니다.'
 exit_msg = '객체인식을 통한 음료 안내를 종료합니다.'
+touch_msg = '객체인식 시작을 위한 터치센서를 눌러주세요'
+touch_start = 0 
 
 ################################
 wCam, hCam = 640, 480
@@ -73,6 +75,17 @@ start_time = time.time()
 start_time2 = time.time()
 # 시작시간 체크
 
+board = pyfirmata.Arduino('/COM6')
+#board = pyfirmata.Arduino('/dev/ttyACM0')
+led_builtin = board.get_pin('d:13:o')
+touch = board.get_pin('d:10:i')
+magnetic = board.get_pin('d:9:i')
+
+it = pyfirmata.util.Iterator(board)
+it.start()
+
+touch.enable_reporting()
+magnetic.enable_reporting()
 
 TTS_gtts.speak(start_msg)
 detector = htm.handDetector(detectionCon=0.7, maxHands=1)
@@ -95,7 +108,7 @@ class final:
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
@@ -109,7 +122,7 @@ class final:
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
@@ -123,12 +136,12 @@ class final:
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
             elif c == 4:
-                b_name = xy_name[22][8:-1]
+                b_name = xy_name[22][6:-2]
                 speakstory = ConnectAndData.connect(b_name)
                 t += 1
                 if t > 6:
@@ -137,7 +150,7 @@ class final:
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
@@ -152,7 +165,7 @@ class final:
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
@@ -167,7 +180,7 @@ class final:
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
@@ -182,35 +195,37 @@ class final:
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
             elif c == 8:
-                b_name = xy_name[50][8:-1]
+                b_name = xy_name[50][6:-2]
                 speakstory = ConnectAndData.connect(b_name)
                 t += 1
                 if t > 6:
+                    print(speakstory)
                     print(speakstory)
                     TTS_gtts.speak(speakstory)
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
             elif c == 9:
-                b_name = xy_name[57][8:-1]
+                b_name = xy_name[57][6:-2]
                 speakstory = ConnectAndData.connect(b_name)
                 t += 1
                 if t > 6:
+                    print(speakstory)
                     print(speakstory)
                     TTS_gtts.speak(speakstory)
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
                     cv.putText(img,'Real : ' + str(predictions), (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
-                    cv.putText(img,'About : ' + str(round(a[0])), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
+                    cv.putText(img,'About : ' + str(round(predictions)), (10, 50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, lineType=cv.LINE_AA)
                     t = 0
                     return img, b, t, check_time
                 return img, b, t, check_time
@@ -219,8 +234,12 @@ class final:
             t = 0
             return img, b, t, check_time
 
+    
 
     while(True):
+        if touch == 1:
+            start_camera = time.time()
+
         with open("connect_data.txt", 'r',encoding='UTF8') as f:
                 x = list(f.readlines())
                 xy_name = []
@@ -228,11 +247,12 @@ class final:
                     x_name = list(x[i].split(','))
                     xy_name.extend(x_name)
         
-        if (time.time() - start_time) > 600:
+        if (time.time() - start_time) > 60:
             TTS_gtts.speak('서버로부터 데이터를 갱신 합니다.')
             start_time = time.time()
             Server_Connect.server_connect()
 
+    
         success, img = cap.read()
         img = detector.findHands(img)
         lmList, bbox = detector.findPosition(img, draw=True)
@@ -258,12 +278,31 @@ class final:
                     c = round(a[0])
 
                     # eval 함수 이용
-                    img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
+                    #img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
 
-                    #print(round(a))
 
+                    
+
+                    if touch_start != 0 and magnetic.read():
+                        if time.time() - touch_start > 20:
+                            print(exit_msg)
+                            TTS_gtts.speak(exit_msg)
+                            touch_start = 0
+                        else:
+                            img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
+                    else:
+                        # 핀에 출력값으로 0을 주면 led 불이 꺼집니다.     
+                        led_builtin.write(0)
+        if touch.read():
+            print(start_msg)
+            TTS_gtts.speak(start_msg)
+            touch_start = time.time()
+            # 핀에 출력값으로 1을 주면 led 불이 켜집니다. 
+            led_builtin.write(1)
+            time.sleep(1)
         cam.write(img)
         cv.imshow('img', img)
+
 
         # ESC 키누르면 종료
         if cv.waitKey(1) & 0xFF == 27:
