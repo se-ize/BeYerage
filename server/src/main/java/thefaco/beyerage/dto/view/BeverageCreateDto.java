@@ -1,8 +1,7 @@
-package thefaco.beyerage.dto.beverage;
+package thefaco.beyerage.dto.view;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 import thefaco.beyerage.domain.BottleType;
 
 import javax.validation.constraints.Max;
@@ -28,10 +27,10 @@ public class BeverageCreateDto {
     private int size;
 
     @Positive(message = "행은 양수입니다")
-    @Max(value = 3, message = "행은 4행까지 존재합니다")
+    @Max(value = 3, message = "행은 3행까지 존재합니다")
     private int row;
 
     @Positive(message = "열은 양수입니다")
-    @Max(value = 3, message = "열은 4열까지 존재합니다")
+    @Max(value = 3, message = "열은 3열까지 존재합니다")
     private int column;
 }

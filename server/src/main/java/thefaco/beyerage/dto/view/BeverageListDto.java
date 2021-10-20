@@ -1,4 +1,4 @@
-package thefaco.beyerage.dto.beverage;
+package thefaco.beyerage.dto.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

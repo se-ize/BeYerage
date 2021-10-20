@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import thefaco.beyerage.domain.Beverage;
 import thefaco.beyerage.domain.BeverageLocation;
-import thefaco.beyerage.dto.beverage.BeverageCreateDto;
-import thefaco.beyerage.dto.beverage.BeverageListDto;
-import thefaco.beyerage.dto.beverage.BeverageLocListDto;
-import thefaco.beyerage.dto.beverage.BeverageUpdateDto;
+import thefaco.beyerage.dto.view.BeverageCreateDto;
+import thefaco.beyerage.dto.view.BeverageListDto;
+import thefaco.beyerage.dto.view.BeverageLocListDto;
+import thefaco.beyerage.dto.view.BeverageUpdateDto;
 import thefaco.beyerage.service.BeverageService;
 
 import javax.validation.Valid;

@@ -88,7 +88,7 @@ public class BeverageRepositoryImpl implements BeverageRepository {
                 .getResultList();
     }
 
-    //특정 행, 열에 존재하는 음료 객체를 가져오는 메서드드
+    //특정 행, 열에 존재하는 음료 객체를 가져오는 메서드
    @Override
     public List<Beverage> findByRowAndColumn(int row, int column) {
         return em.createQuery("select b from Beverage b join fetch b.beverageLocation" +

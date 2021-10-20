@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import thefaco.beyerage.domain.Beverage;
-import thefaco.beyerage.dto.beverage.BeverageApiDto;
-import thefaco.beyerage.dto.beverage.BeverageWithLocApiDto;
+import thefaco.beyerage.dto.api.BeverageApiDto;
+import thefaco.beyerage.dto.api.BeverageWithLocApiDto;
 import thefaco.beyerage.service.BeverageService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

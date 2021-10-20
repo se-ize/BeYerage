@@ -1,4 +1,4 @@
-package thefaco.beyerage.dto.beverage;
+package thefaco.beyerage.dto.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,10 +31,10 @@ public class BeverageUpdateDto {
     private int size;
 
     @Positive(message = "행은 양수입니다")
-    @Max(value = 3, message = "행은 4행까지 존재합니다")
+    @Max(value = 3, message = "행은 3행까지 존재합니다")
     private int row;
 
     @Positive(message = "열은 양수입니다")
-    @Max(value = 3, message = "열은 4열까지 존재합니다")
+    @Max(value = 3, message = "열은 3열까지 존재합니다")
     private int column;
 }

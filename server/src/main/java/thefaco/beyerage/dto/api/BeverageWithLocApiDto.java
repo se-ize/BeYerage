@@ -1,4 +1,4 @@
-package thefaco.beyerage.dto.beverage;
+package thefaco.beyerage.dto.api;
 
 import lombok.Getter;
 import thefaco.beyerage.domain.Beverage;
