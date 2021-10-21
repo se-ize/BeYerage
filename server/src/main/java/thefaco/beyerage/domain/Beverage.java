@@ -28,7 +28,7 @@ public class Beverage {
 
     private Long frequency;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "beverage_location_id")
     private BeverageLocation beverageLocation;
 
