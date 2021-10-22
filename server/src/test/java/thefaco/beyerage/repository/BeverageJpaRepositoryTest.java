@@ -1,35 +1,30 @@
 package thefaco.beyerage.repository;
 
-import org.assertj.core.api.Assertions;
-import org.hibernate.TransientPropertyValueException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import thefaco.beyerage.domain.Beverage;
 import thefaco.beyerage.domain.BeverageLocation;
 import thefaco.beyerage.domain.BottleType;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 class BeverageJpaRepositoryTest {
 
-    @Autowired BeverageJpaRepository beverageJpaRepository;
+    @Autowired
+    BeverageRepository beverageJpaRepository;
     @Autowired EntityManager em;
 
     private Beverage beverage;
-    private List<Beverage> beverages = new ArrayList<>(3);
 
     @BeforeEach
     void beforeEach(){
@@ -113,16 +108,13 @@ class BeverageJpaRepositoryTest {
 
     @Test
     @DisplayName("음료 전체 조회 테스트")
-    void findAll(){
-        //given
-        List<Beverage> savedBeverages = beverageJpaRepository.saveAll(this.beverages);
-        em.flush();
-        em.clear();
+    void findAllOrderByRowAndColumn(){
         //when
         List<Beverage> findBeverages = beverageJpaRepository.findAllWithLoc();
         //then
         assertThat(findBeverages.size()).isEqualTo(9);
-        assertThat(findBeverages.get(0).getBeverageLocation()).isInstanceOf(savedBeverages.get(0).getBeverageLocation().getClass());
+        assertThat(findBeverages.get(0).getBeverageLocation().getRow()).isEqualTo(1);
+        assertThat(findBeverages.get(findBeverages.size()-1).getBeverageLocation().getColumn()).isEqualTo(3);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package thefaco.beyerage.service;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,81 +11,86 @@ import thefaco.beyerage.domain.BeverageLocation;
 import thefaco.beyerage.domain.BottleType;
 import thefaco.beyerage.repository.BeverageRepository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 class BeverageServiceImplTest {
 
     @Autowired BeverageService beverageService;
-    @Autowired BeverageRepository beverageRepository;
+    @Autowired
+    BeverageRepository beverageJpaRepository;
 
-    @Test
-    public void addBeverage() throws Exception{
-        //given
-        BeverageLocation beverageLocation = BeverageLocation.createBeverageLocation(1, 1);
-        Beverage beverage = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 250, 0L, beverageLocation);
-        //when
-        Long id = beverageService.addBeverage(beverage);
-        Beverage findBeverage = beverageRepository.findById(id);
-        //then
-        assertThat(beverage).isEqualTo(findBeverage);
-        assertThat(beverage.getBeverageLocation().getRow()).isEqualTo(findBeverage.getBeverageLocation().getRow());
+    @Autowired EntityManager em;
+
+    private Beverage beverage;
+
+    @BeforeEach
+    void beforeEach(){
+        BeverageLocation beverageLocation = BeverageLocation.createBeverageLocation(4, 4);
+        beverage = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 240, 1L, beverageLocation);
     }
 
     @Test
+    @DisplayName("음료 추가 서비스 테스트")
+    public void addBeverage() throws Exception{
+        //given
+        Long savedId = beverageService.addBeverage(beverage);
+        em.flush();
+        em.clear();
+        //when
+        Beverage findBeverage = beverageJpaRepository.findById(savedId).get();
+        //then
+        assertThat(findBeverage.getId()).isEqualTo(savedId);
+    }
+
+    @Test
+    @DisplayName("음료 조회 서비스 테스트")
+    public void findBeveragesWithLoc() throws Exception {
+        //when
+        List<Beverage> findBeverages = beverageService.findBeveragesWithLoc();
+        //then
+        assertThat(findBeverages.size()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("음료 수정 서비스 테스트")
     public void updateBeverage() throws Exception {
         //given
-        BeverageLocation beverageLocation = BeverageLocation.createBeverageLocation(1, 1);
-        Beverage beverage = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 250, 0L, beverageLocation);
+        Long savedId = beverageService.addBeverage(beverage);
         //when
-        Long id = beverageService.addBeverage(beverage);
-        beverageService.updateBeverage(id, "사이다", 2000, BottleType.CAN, 380, 1, 2);
+        beverageService.updateBeverage(savedId, "사이다", 2000, BottleType.CAN, 380, 4, 4);
+        em.flush();
+        em.clear();
         //then
         assertThat(beverage.getName()).isEqualTo("사이다");
     }
 
     @Test
+    @DisplayName("음료 삭제 서비스 테스트")
     public void deleteBeverage() throws Exception {
         //given
-        BeverageLocation beverageLocation = BeverageLocation.createBeverageLocation(1, 1);
-        Beverage beverage = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 250, 0L, beverageLocation);
-        Long id = beverageService.addBeverage(beverage);
+        Long savedId = beverageService.addBeverage(beverage);
         //when
-        Beverage findBeverage = beverageService.findOneById(id);
+        Beverage findBeverage = beverageService.findOneById(savedId);
         beverageService.deleteBeverage(findBeverage);
+        em.flush();
+        em.clear();
         //then
-        assertThat(beverageService.findOneById(id)).isEqualTo(null);
+        assertThat(beverageService.findOneById(savedId)).isNull();
     }
 
     @Test
+    @DisplayName("가장 많이찾는 음료 조회 테스트")
     public void findMostFreqBeverage() throws Exception {
-        //given
-        BeverageLocation beverageLocation1 = BeverageLocation.createBeverageLocation(1, 1);
-        Beverage beverage1 = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 250, 10L, beverageLocation1);
-        Long id1 = beverageService.addBeverage(beverage1);
-
-        BeverageLocation beverageLocation2 = BeverageLocation.createBeverageLocation(1, 2);
-        Beverage beverage2 = Beverage.createBeverage("사이다", 1000, BottleType.CAN, 250, 5L, beverageLocation2);
-        Long id2 = beverageService.addBeverage(beverage2);
         //when
-        List<Beverage> mostFreqOnes = beverageService.findMostFreqOne();
+        Optional<Beverage> findBeverage = beverageService.findMostFreqOneWithLoc();
         //then
-        assertThat(mostFreqOnes.get(0).getName()).isEqualTo("콜라");
+        assertThat(findBeverage.get().getName()).isEqualTo("코카콜라");
     }
 
-    @Test
-    public void findBeveragesWithLoc() throws Exception {
-        //given
-        BeverageLocation beverageLocation = BeverageLocation.createBeverageLocation(1, 1);
-        Beverage beverage = Beverage.createBeverage("콜라", 1000, BottleType.CAN, 250, 10L, beverageLocation);
-        Long id = beverageService.addBeverage(beverage);
-        //when
-        List<Beverage> beveragesWithLoc = beverageService.findBeveragesWithLoc();
-        //then
-        assertThat(beveragesWithLoc.get(0).getBeverageLocation().getRow()).isEqualTo(1);
-    }
 }
