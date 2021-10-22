@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import thefaco.beyerage.domain.Beverage;
-import thefaco.beyerage.dto.api.BeverageApiDto;
 import thefaco.beyerage.dto.api.BeverageWithLocApiDto;
 import thefaco.beyerage.service.BeverageService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -22,25 +22,6 @@ public class BeverageApiController {
     private final BeverageService beverageService;
 
     /**
-     * 음료 이름에 따른 상세정보 API
-     * @param beverageName : 음료 이름
-     * @return : 음료위치정보를 제외한 엔티티
-     */
-    @GetMapping(value = "/beverageInfo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BeverageApiDto beverageInfo(@RequestParam("beverageName") String beverageName) {
-        log.info("beverageInfoApi access: beverageName={}", beverageName);
-
-        List<Beverage> findBeverage = beverageService.findOneByName(beverageName);
-        List<BeverageApiDto> result = findBeverage.stream()
-                .map(b -> new BeverageApiDto(b))
-                .collect(Collectors.toList());
-
-        if(result.isEmpty()) return null;
-        else return result.get(0);
-
-    }
-
-    /**
      * 음료 이름에 따른 상세, 위치정보 API -> 모바일 앱에서 사용
      * @param beverageName :음료 이름
      * @return : 음료 엔티티
@@ -49,19 +30,19 @@ public class BeverageApiController {
     public BeverageWithLocApiDto beverageWithLocInfo(@RequestParam("beverageName") String beverageName) {
         log.info("beverageWithLocInfoApi access: beverageName={}", beverageName);
 
-        List<Beverage> findBeverage = beverageService.findOneByNameWithLoc(beverageName);
-        List<BeverageWithLocApiDto> result = findBeverage.stream()
-                .map(b -> new BeverageWithLocApiDto(b))
-                .collect(Collectors.toList());
+        Optional<Beverage> findBeverage = beverageService.findOneByNameWithLoc(beverageName);
 
-        if(result.isEmpty()) {
-            return null;
-        } else {
+        if(findBeverage.isPresent()){
+            List<BeverageWithLocApiDto> result = findBeverage.stream()
+                    .map(BeverageWithLocApiDto::new)
+                    .collect(Collectors.toList());
+
             //모바일 앱에서 호출 시 frequency 1 증가
             beverageService.addFrequency(beverageName);
             return result.get(0);
+        } else {
+            return null;
         }
-
     }
 
     /**
@@ -72,13 +53,15 @@ public class BeverageApiController {
     public BeverageWithLocApiDto mostFreqBeverageWithLocInfo() {
         log.info("mostFreqBeverageWithLocInfoApi access");
 
-        List<Beverage> findBeverage = beverageService.findMostFreqOneWithLoc();
-        List<BeverageWithLocApiDto> result = findBeverage.stream()
-                .map(b -> new BeverageWithLocApiDto(b))
-                .collect(Collectors.toList());
-
-        if(result.isEmpty()) return null;
-        else return result.get(0);
+        Optional<Beverage> findBeverage = beverageService.findMostFreqOneWithLoc();
+        if(findBeverage.isPresent()){
+            List<BeverageWithLocApiDto> result = findBeverage.stream()
+                    .map(BeverageWithLocApiDto::new)
+                    .collect(Collectors.toList());
+            return result.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -91,7 +74,7 @@ public class BeverageApiController {
 
         List<Beverage> findBeverages = beverageService.findBeveragesWithLoc();
         List<BeverageWithLocApiDto> result = findBeverages.stream()
-                .map(b -> new BeverageWithLocApiDto(b))
+                .map(BeverageWithLocApiDto::new)
                 .collect(Collectors.toList());
 
         return result;

@@ -103,7 +103,7 @@ public class BeverageController {
                 .map(b -> new BeverageLocListDto(b.getId(), b.getName(), b.getBeverageLocation()))
                 .collect(Collectors.toList());
 
-        List<List<String>> locations = switchLocationList(beverageLocListDtos);
+        List<List<String>> locations = makeLocationList(beverageLocListDtos);
 
         //model에 DTO를 담아서 View로 전송
         model.addAttribute("beveragesLoc", beverageLocListDtos);
@@ -116,7 +116,7 @@ public class BeverageController {
     }
 
     //각 위치에 음료 이름 담는 알고리즘
-    private List<List<String>> switchLocationList(List<BeverageLocListDto> beverageLocListDtos) {
+    private List<List<String>> makeLocationList(List<BeverageLocListDto> beverageLocListDtos) {
 
         List<List<String>> locations = new ArrayList<>();
         for(int i = 0; i < refrigeratorSize; i++){

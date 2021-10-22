@@ -1,20 +1,29 @@
 package thefaco.beyerage.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import thefaco.beyerage.domain.Beverage;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface BeverageRepository {
+@Repository
+public interface BeverageRepository extends JpaRepository<Beverage, Long> {
 
-    void save(Beverage beverage);
-    Beverage findById(Long id);
-    List<Beverage> findByIdWithLoc(Long id);
-    List<Beverage> findByName(String name);
-    List<Beverage> findByNameWithLoc(String name);
-    List<Beverage> findAll();
+    @Query("select b from Beverage b join fetch b.beverageLocation where b.id = :id")
+    Optional<Beverage> findByIdWithLoc(@Param("id") Long id);
+
+    @Query("select b from Beverage b join fetch b.beverageLocation where b.name = :name")
+    Optional<Beverage> findByNameWithLoc(@Param("name") String name);
+
+    @Query("select b from Beverage b join fetch b.beverageLocation order by b.beverageLocation.row asc, b.beverageLocation.column asc")
     List<Beverage> findAllWithLoc();
-    void delete(Beverage beverage);
-    List<Beverage> findMostFreq();
-    List<Beverage> findMostFreqWithLoc();
-    List<Beverage> findByRowAndColumn(int row, int column);
+
+    @Query("select b from Beverage b join fetch b.beverageLocation where b.frequency in (select max(b.frequency) from Beverage b)")
+    Optional<Beverage> findMostFreqWithLoc();
+
+    @Query("select b from Beverage b join fetch b.beverageLocation where b.beverageLocation.row = :row and b.beverageLocation.column = :column")
+    Optional<Beverage> findByRowAndColumn(@Param("row") int row, @Param("column") int column);
 }
