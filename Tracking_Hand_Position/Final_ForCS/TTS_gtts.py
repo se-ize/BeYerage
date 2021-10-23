@@ -16,7 +16,7 @@ def speak(text):
     filename ='Voice'+ str(datetime.today().month) + str(datetime.today().day) +'.mp3'
 
     tts.save(filename)
-    playsound.playsound('C:/Users/Woojin/Desktop/21_PF057/Tracking_Hand_Position/20210903_ForCS/' + filename)
+    playsound.playsound('C:/Users/Woojin/Desktop/ProBono/Tracking_Hand_Position/Final_ForCS/' + filename)
     os.remove(filename)
     #playsound 는 리룩스에서는 작동하지않아요.
 
@@ -40,3 +40,4 @@ def speakend(filename):
 
 
 #speak(" 올해는 도시마다 다시 즐거움이 켜질거에요! 해당 제품은 코카콜라입니다. ")
+speak(" 선택하신 음료는 레쓰비 입니다. 해당 음료의 위치는 1 행 1 열 이며, 가격은 1100 원, 해당 음료의 크기는 240ml 입니다.")
