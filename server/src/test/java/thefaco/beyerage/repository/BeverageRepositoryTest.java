@@ -18,10 +18,10 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class BeverageJpaRepositoryTest {
+class BeverageRepositoryTest {
 
     @Autowired
-    BeverageRepository beverageJpaRepository;
+    BeverageRepository beverageRepository;
     @Autowired EntityManager em;
 
     private Beverage beverage;
@@ -36,7 +36,7 @@ class BeverageJpaRepositoryTest {
     @DisplayName("음료 저장 테스트")
     void save(){
         //given
-        Beverage savedBeverage = beverageJpaRepository.save(this.beverage);
+        Beverage savedBeverage = beverageRepository.save(this.beverage);
         //when
         String findName = savedBeverage.getName();
         //then
@@ -48,9 +48,9 @@ class BeverageJpaRepositoryTest {
     @DisplayName("PK 값으로 음료 찾기 테스트")
     void findById(){
         //given
-        Beverage savedBeverage = beverageJpaRepository.save(beverage);
+        Beverage savedBeverage = beverageRepository.save(beverage);
         //when
-        Optional<Beverage> findBeverage = beverageJpaRepository.findById(savedBeverage.getId());
+        Optional<Beverage> findBeverage = beverageRepository.findById(savedBeverage.getId());
         //then
         assertThat(findBeverage.get().getId()).isEqualTo(savedBeverage.getId());
     }
@@ -59,11 +59,11 @@ class BeverageJpaRepositoryTest {
     @DisplayName("PK 값으로 음료 조회 테스트 - 스프링 데이터 JPA 기본 메서드 사용")
     void findByIdWithLoc1(){
         //given
-        Beverage savedBeverage = beverageJpaRepository.save(beverage);
+        Beverage savedBeverage = beverageRepository.save(beverage);
         em.flush();
         em.clear();
         //when
-        Optional<Beverage> findBeverage = beverageJpaRepository.findById(savedBeverage.getId());
+        Optional<Beverage> findBeverage = beverageRepository.findById(savedBeverage.getId());
         //then
         /**
          * 음료 상세정보만을 불러올 때 조인하지 않고 Query 가 날라간다 -> LAZY 로딩
@@ -79,11 +79,11 @@ class BeverageJpaRepositoryTest {
     @DisplayName("PK 값으로 음료 조회 테스트 - 사용자 지정 메서드 사용")
     void findByIdWithLoc2(){
         //given
-        Beverage savedBeverage = beverageJpaRepository.save(beverage);
+        Beverage savedBeverage = beverageRepository.save(beverage);
         em.flush();
         em.clear();
         //when
-        Optional<Beverage> findBeverage = beverageJpaRepository.findByIdWithLoc(savedBeverage.getId());
+        Optional<Beverage> findBeverage = beverageRepository.findByIdWithLoc(savedBeverage.getId());
         //then
         //쿼리가 내부 조인으로 한번만 날라감
         assertThat(findBeverage.get().getId()).isEqualTo(savedBeverage.getId());
@@ -95,11 +95,11 @@ class BeverageJpaRepositoryTest {
     @DisplayName("음료 이름으로 조회 테스트")
     void findByNameOrBeverageLocation(){
         //given
-        Beverage savedBeverage = beverageJpaRepository.save(beverage);
+        Beverage savedBeverage = beverageRepository.save(beverage);
         em.flush();
         em.clear();
         //when
-        Optional<Beverage> findBeverage = beverageJpaRepository.findByNameWithLoc(savedBeverage.getName());
+        Optional<Beverage> findBeverage = beverageRepository.findByNameWithLoc(savedBeverage.getName());
         //then
         assertThat(findBeverage.get().getId()).isEqualTo(savedBeverage.getId());
         assertThat(findBeverage.get().getBeverageLocation()).isInstanceOf(savedBeverage.getBeverageLocation().getClass());
@@ -110,7 +110,7 @@ class BeverageJpaRepositoryTest {
     @DisplayName("음료 전체 조회 테스트")
     void findAllOrderByRowAndColumn(){
         //when
-        List<Beverage> findBeverages = beverageJpaRepository.findAllWithLoc();
+        List<Beverage> findBeverages = beverageRepository.findAllWithLoc();
         //then
         assertThat(findBeverages.size()).isEqualTo(9);
         assertThat(findBeverages.get(0).getBeverageLocation().getRow()).isEqualTo(1);
@@ -121,20 +121,20 @@ class BeverageJpaRepositoryTest {
     @DisplayName("음료 삭제 테스트")
     void delete(){
         //given
-        Beverage savedBeverage = beverageJpaRepository.save(beverage);
+        Beverage savedBeverage = beverageRepository.save(beverage);
         em.flush();
         em.clear();
         //when
-        beverageJpaRepository.delete(savedBeverage);
+        beverageRepository.delete(savedBeverage);
         //then
-        assertThat(beverageJpaRepository.findByIdWithLoc(savedBeverage.getId())).isEmpty();
+        assertThat(beverageRepository.findByIdWithLoc(savedBeverage.getId())).isEmpty();
     }
 
     @Test
     @DisplayName("가장 많이찾는 음료 조회 테스트")
     void findFirstByFrequency(){
         //when
-        Optional<Beverage> findBeverage = beverageJpaRepository.findMostFreqWithLoc();
+        Optional<Beverage> findBeverage = beverageRepository.findMostFreqWithLoc();
         //then
         assertThat(findBeverage.get().getName()).isEqualTo("코카콜라");
     }
@@ -143,11 +143,11 @@ class BeverageJpaRepositoryTest {
     @DisplayName("특정 행, 열의 음료 조회 테스트")
     void findByRowAndColumn(){
         //given
-        Beverage savedBeverage = beverageJpaRepository.save(this.beverage);
+        Beverage savedBeverage = beverageRepository.save(this.beverage);
         em.flush();
         em.clear();
         //when
-        Optional<Beverage> findBeverage = beverageJpaRepository.findByRowAndColumn(4, 4);
+        Optional<Beverage> findBeverage = beverageRepository.findByRowAndColumn(4, 4);
         //then
         assertThat(findBeverage.get().getName()).isEqualTo("콜라");
         assertThat(findBeverage.get()).isInstanceOf(savedBeverage.getClass());
