@@ -16,4 +16,6 @@ public interface ShopService {
     void findNearConvStore(TextToSpeech tts, String msg);
     //재안내
     void reGuide(TextToSpeech tts);
+    //voc 물어보기
+    void vocQuestion(TextToSpeech tts);
 }

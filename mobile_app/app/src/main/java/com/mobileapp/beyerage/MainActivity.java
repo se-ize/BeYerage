@@ -1,17 +1,28 @@
 package com.mobileapp.beyerage;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.mobileapp.beyerage.shop.ShopService;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
@@ -22,6 +33,13 @@ public class MainActivity extends AppCompatActivity{
     private static final ShopService shopService = appConfig.shopService();
     //TTS 변수 선언
     private TextToSpeech tts;
+    //음성인식 결과를 담는 변수
+    private String userVoice = "";
+    //퍼미션 체크를 위한 변수
+    private final int PERMISSION = 1;
+    //STT를 사용할 intent 와 SpeechRecognizer 초기화
+    private SpeechRecognizer sRecognizer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +50,35 @@ public class MainActivity extends AppCompatActivity{
         //TTS 환경설정
         setTTS();
 
-        Button closeConvStoreButton = (Button) findViewById(R.id.closeConvenienceStoreButton);
+        Button startServiceButton = (Button) findViewById(R.id.startServiceButton);
+        Button vocButton = (Button) findViewById(R.id.vocButton);
 
         /**
-         * 근처 편의점 안내
+         * 메인서비스 시작
          */
-        //버튼 클릭시 음성 안내 서비스 호출
-        closeConvStoreButton.setOnClickListener(v -> {
+        //버튼 클릭시 음료 안내 서비스 호출
+        startServiceButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SubActivity.class);
             startActivity(intent);
 
             shopService.voiceGuidance(tts, "현재 위치를 파악중입니다.");
+        });
+
+        /**
+         * VOC
+         */
+        vocButton.setOnClickListener(v -> {
+            shopService.vocQuestion(tts); //일단 뭘 전송할지 물어보고
+            new Handler().postDelayed(() -> {
+                //음성인식 시작
+                Intent intent = setSTTPermission();
+                sRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+                sRecognizer.setRecognitionListener(listener);
+                sRecognizer.startListening(intent);
+            }, 500);
+            // 0.5초 딜레이 첨부
+
+
         });
     }
 
@@ -113,12 +149,64 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         public void onResults(Bundle results) {
+            userVoice = "";
+
+            ArrayList<String> matches = results
+                    .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            for (String match : matches) {
+                userVoice += match;
+            }
+            Log.i("태그","######################################"+matches);
+            AlertDialog.Builder oDialog = new AlertDialog.Builder(MainActivity.this);
+
+            //팝업창에 텍스트 셋팅
+            oDialog.setMessage(userVoice)
+                    .setTitle("고객의 소리")
+                    .setPositiveButton("취소", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        { }
+                    })
+                    .setNeutralButton("전송", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            //전송
+                            //3초 후 자동 전송은 없을까
+                        }
+                    })
+                    .setCancelable(true)
+                    .show();
         }
         @Override
         public void onPartialResults(Bundle partialResults) {}
         @Override
         public void onEvent(int eventType, Bundle params) {}
     };
+
+    //음성인식 환경설정
+    private Intent setSTTPermission() {
+        //STT 퍼미션 체크
+        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,
+                    Manifest.permission.RECORD_AUDIO}, PERMISSION);
+        }
+        // STT intent 설정
+        Intent intent = setIntentForVoiceRec();
+        return intent;
+    }
+    private Intent setIntentForVoiceRec() {
+        //사용자에게 음성을 요구하고 음성 인식기를 통해 전송하는 활동 시작
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
+        //음석을 번역할 언어 설정
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+        return intent;
+    }
 
     private void setTTS(){
         //TTS를 생성하고 OnInitListener로 초기화
