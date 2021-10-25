@@ -22,13 +22,12 @@ public class CustomerService {
         return savedCustomer.getId();
     }
 
-    public List<Customer> findAllText(){
-        return customerRepository.findAllOrderByCreatedDate();
+    public Optional<Customer> findOneText(Long id){
+        return customerRepository.findById(id);
     }
 
-    @Transactional
-    public void updateText(Customer customer, String text){
-        customer.updateCustomer(text);
+    public List<Customer> findAllText(){
+        return customerRepository.findAllOrderByCreatedDate();
     }
 
     @Transactional

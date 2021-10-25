@@ -12,6 +12,7 @@ import thefaco.beyerage.dto.view.CustomerListDto;
 import thefaco.beyerage.service.CustomerService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,11 +41,46 @@ public class CustomerController {
 
     /**
      * 고객의 소리 목록 중 하나
-     * 제작중
      */
     @GetMapping("/customer_service/{id}")
     public String oneBoardInfo(@PathVariable("id") Long id, Model model){
-        return "***";
+        Optional<Customer> findCustomer = customerService.findOneText(id);
+        List<CustomerListDto> customerListDto = findCustomer.stream()
+                .map(c -> new CustomerListDto(c.getId(), c.getText(), c.getLike()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("customer", customerListDto);
+
+        log.info("고객의 소리 하나 조회 access id={}", id);
+
+        return "customer/board";
     }
+
+    /**
+     * 고객의 소리 삭제
+     */
+    @GetMapping("/customer_service/{id}/delete")
+    public String deleteCustomerVoice(@PathVariable("id") Long id){
+        Optional<Customer> findCustomer = customerService.findOneText(id);
+        findCustomer.ifPresent(customerService::deleteText);
+
+        log.info("delete customerVoice id={}", id);
+
+        return "redirect:/customer_service";
+    }
+
+    /**
+     * 좋아요 눌렀을 때 좋아요 수 증가
+     */
+    @PostMapping("/customer_service/{id}/like")
+    public String addLike(@PathVariable("id") Long id){
+
+        customerService.addLike(id);
+        log.info("좋아요 수 증가 id={}", id);
+
+        return "redirect:/customer_service";
+    }
+
+
 
 }
