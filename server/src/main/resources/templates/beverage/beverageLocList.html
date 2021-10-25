@@ -30,22 +30,23 @@
                 <li class="nav-item"><a class="nav-link" href="/#services">Services</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#team">Team</a></li>
+                <li class="nav-item"><a class="nav-link" href="/customer_service">Customer Service</a></li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <div class="position-absolute top-50 start-50 translate-middle">
-        <table class="table table-primary table-striped table-bordered">
+        <table class="table table-primary table-striped table-bordered" style="table-layout: fixed">
             <thead>
-            <tr>
+            <tr class="text-lg-center">
                 <th>1열</th>
                 <th>2열</th>
                 <th>3열</th>
             </tr>
             </thead>
             <tbody>
-                <tr th:each="location : ${locations}">
+                <tr class="text-lg-center" th:each="location : ${locations}">
                     <td th:if="${!#strings.equals(location.get(0), '')}" th:text="${location.get(0)}"></td>
                     <td th:unless="${!#strings.equals(location.get(0), '')}">ooo</td>
                     <td th:if="${!#strings.equals(location.get(1), '')}" th:text="${location.get(1)}"></td>
