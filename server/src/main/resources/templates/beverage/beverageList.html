@@ -36,21 +36,21 @@
 </nav>
 <body id="page-top" style="margin-top: 250px; margin-bottom: 250px;">
   <div class="position-absolute top-50 start-50 translate-middle">
-    <table class="table table-primary table-striped">
+    <table class="table table-primary table-striped" style="table-layout: fixed">
       <thead>
-      <tr>
-        <th scope="col">음료명</th>
-        <th scope="col">가격</th>
-        <th scope="col">종류</th>
-        <th scope="col">크기</th>
-        <th scope="col">위치-행</th>
-        <th scope="col">위치-열</th>
-        <th></th>
-        <th></th>
+      <tr class="text-lg-center">
+        <th width="16%" scope="col">음료명</th>
+        <th width="12%" scope="col">가격</th>
+        <th width="12%" scope="col">종류</th>
+        <th width="12%" scope="col">크기</th>
+        <th width="12%" scope="col">위치-행</th>
+        <th width="12%" scope="col">위치-열</th>
+        <th width="12%"></th>
+        <th width="12%"></th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="beverage: ${beverages}">
+      <tr class="text-lg-center" th:each="beverage: ${beverages}">
         <td th:text="${beverage.name}"></td>
         <td th:text="${beverage.price}"></td>
         <td th:text="${beverage.type}"></td>
