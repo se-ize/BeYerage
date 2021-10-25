@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.network.BeverageAPI;
+import com.mobileapp.beyerage.network.CustomerAPI;
+import com.mobileapp.beyerage.network.CustomerAPIController;
 import com.mobileapp.beyerage.shop.ShopService;
+import retrofit2.Call;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -39,6 +45,10 @@ public class MainActivity extends AppCompatActivity{
     private final int PERMISSION = 1;
     //STT를 사용할 intent 와 SpeechRecognizer 초기화
     private SpeechRecognizer sRecognizer;
+    //HTTP API 호출 클래스
+    private static final CustomerAPIController customerAPIController = new CustomerAPIController();
+    // 태그
+    private static final String tag = "MainActivity";
 
 
     @Override
@@ -80,6 +90,39 @@ public class MainActivity extends AppCompatActivity{
 
 
         });
+    }
+
+    /**
+     * 비동기식 방식 HTTP CONNECTION
+     * 사용자가 원하는 음료를 가져옴
+     */
+    public class addCutomerVoiceAsyncTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            CustomerAPI customerAPI = customerAPIController.getCustomerAPI();
+            Call<String> customerVoice = customerAPI.addCustomerVoice(userVoice);
+            try {
+                return customerVoice.execute().body();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(tag,"Network IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String text) {
+            super.onPostExecute(text);
+            if(text != null){
+                Log.d("고객의 소리=", text);
+                Toast.makeText(getApplicationContext(), "고객의 소리 : " + text,Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d("고객의 소리 등록 X", text);
+                Toast.makeText(getApplicationContext(), "고객의 소리가 등록되지 않았습니다",Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     private RecognitionListener listener = new RecognitionListener() {

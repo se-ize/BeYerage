@@ -89,9 +89,9 @@ public class ShopServiceImpl extends MainActivity implements ShopService {
     public void vocQuestion(TextToSpeech tts) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
-            tts.speak("고객의소리", TextToSpeech.QUEUE_FLUSH, null, null);
+            tts.speak("불편 사항을 말씀해주세요", TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
-            tts.speak("고객의소리", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak("불편 사항을 말씀해주세요", TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 }
