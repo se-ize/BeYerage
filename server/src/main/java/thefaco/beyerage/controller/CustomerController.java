@@ -30,7 +30,7 @@ public class CustomerController {
     public String boardInfo(Model model){
         List<Customer> customers = customerService.findAllText();
         List<CustomerListDto> customerListDtos = customers.stream()
-                .map(c -> new CustomerListDto(c.getId(), c.getText(), c.getLike()))
+                .map(c -> new CustomerListDto(c.getId(), c.getText()))
                 .collect(Collectors.toList());
         model.addAttribute("customers", customerListDtos);
 
@@ -51,19 +51,4 @@ public class CustomerController {
 
         return "redirect:/customer_service";
     }
-
-    /**
-     * 좋아요 눌렀을 때 좋아요 수 증가
-     */
-    @PostMapping("/customer_service/{id}/like")
-    public String addLike(@PathVariable("id") Long id){
-
-        customerService.addLike(id);
-        log.info("좋아요 수 증가 id={}", id);
-
-        return "redirect:/customer_service";
-    }
-
-
-
 }

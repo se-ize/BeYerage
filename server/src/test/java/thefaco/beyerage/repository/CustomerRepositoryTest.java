@@ -28,7 +28,7 @@ class CustomerRepositoryTest {
 
     @BeforeEach
     void beforeEach(){
-        customer = Customer.createCustomer("A매장의 음료 위치가 설명과 다릅니다.", 0);
+        customer = Customer.createCustomer("A매장의 음료 위치가 설명과 다릅니다.");
     }
 
     @Test
@@ -48,9 +48,9 @@ class CustomerRepositoryTest {
     @DisplayName("고객의 소리 조회 테스트")
     void findAllOrderByCreatedDate(){
         //given
-        Customer customerA = Customer.createCustomer("A",0);
-        Customer customerB = Customer.createCustomer("B",0);
-        Customer customerC = Customer.createCustomer("C",0);
+        Customer customerA = Customer.createCustomer("A");
+        Customer customerB = Customer.createCustomer("B");
+        Customer customerC = Customer.createCustomer("C");
         customerRepository.save(customerA);
         em.flush();
         customerRepository.save(customerB);
@@ -61,7 +61,7 @@ class CustomerRepositoryTest {
         //when
         List<Customer> findCustomers = customerRepository.findAllOrderByCreatedDate();
         //then
-        assertThat(findCustomers.size()).isEqualTo(3);
+        assertThat(findCustomers.size()).isEqualTo(5);
         assertThat(findCustomers.get(0)).isInstanceOf(customerA.getClass());
     }
 
@@ -96,22 +96,5 @@ class CustomerRepositoryTest {
         em.clear();
         //then
         assertThat(customerRepository.findById(savedCustomer.getId())).isEmpty();
-    }
-
-    @Test
-    @DisplayName("고객의 소리 좋아요 수 증가 테스트")
-    void addLike(){
-        //given
-        Customer savedCustomer = customerRepository.save(customer);
-        em.flush();
-        em.clear();
-        //when
-        Optional<Customer> findCustomer = customerRepository.findById(savedCustomer.getId());
-        findCustomer.get().addLike();
-        findCustomer.get().addLike();
-        em.flush();
-        em.clear();
-        //then
-        assertThat(customerRepository.findById(savedCustomer.getId()).get().getLike()).isEqualTo(2);
     }
 }

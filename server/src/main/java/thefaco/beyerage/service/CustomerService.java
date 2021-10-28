@@ -34,10 +34,4 @@ public class CustomerService {
     public void deleteText(Customer customer){
         customerRepository.delete(customer);
     }
-
-    @Transactional
-    public void addLike(Long id){
-        Optional<Customer> findCustomer = customerRepository.findById(id);
-        findCustomer.ifPresent(Customer::addLike);
-    }
 }

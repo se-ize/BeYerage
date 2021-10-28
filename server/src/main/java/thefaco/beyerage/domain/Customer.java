@@ -22,16 +22,12 @@ public class Customer extends BaseEntity {
 
     private String text;
 
-    @Column(name = "customer_like")
-    private int like;
-
     /**
      * 고객의 소리 생성 메서드
      */
-    public static Customer createCustomer(String text, int like){
+    public static Customer createCustomer(String text){
         Customer customer = new Customer();
         customer.setText(text);
-        customer.setLike(like);
         customer.setCreatedDate(LocalDateTime.now());
         customer.setLastModifiedDate(LocalDateTime.now());
         return customer;
@@ -43,10 +39,5 @@ public class Customer extends BaseEntity {
     public void updateCustomer(String text){
         this.setText(text);
         this.setLastModifiedDate(LocalDateTime.now());
-    }
-
-    //좋아요 수 더하기
-    public void addLike(){
-        this.setLike(like + 1);
     }
 }

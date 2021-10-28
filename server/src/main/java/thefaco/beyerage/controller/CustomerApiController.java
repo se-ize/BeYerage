@@ -17,7 +17,7 @@ public class CustomerApiController {
 
     @PostMapping("/addCustomerVoice")
     public void addCustomerVoice(@RequestBody String text){
-        Customer newCustomer = Customer.createCustomer(text, 0);
+        Customer newCustomer = Customer.createCustomer(text);
         Long savedId = customerService.addText(newCustomer);
 
         log.info("Add new text savedId={}", savedId);
