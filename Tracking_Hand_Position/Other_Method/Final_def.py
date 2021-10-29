@@ -2,7 +2,6 @@ import tensorflow as tf
 import cv2 as cv
 import numpy as np
 import csv
-import serial
 import HandTrackingModule as htm
 import math
 from datetime import datetime

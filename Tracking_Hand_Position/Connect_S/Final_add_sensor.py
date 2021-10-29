@@ -2,7 +2,6 @@ import tensorflow as tf
 import cv2 as cv
 import numpy as np
 import csv
-import serial
 import HandTrackingModule as htm
 import math
 from datetime import datetime
@@ -16,7 +15,7 @@ videoname = 'RealCheck_' + str(datetime.today().month) + str(datetime.today().da
 
 start_msg = '객체인식을 통한 음료 안내를 시작합니다.'
 restart_msg = '객체인식을 통한 음료 안내를 다시 시작합니다.'
-exit_msg = '객체인식을 통한 음료 안내를 종료합니다.'
+exit_msg = '객체인식을 통한 음료 안내를 종료합니다. 안내버튼을 다시 눌러주세요.'
 touch_msg = '객체인식 시작을 위한 터치센서를 눌러주세요'
 touch_start = 0 
 
@@ -247,7 +246,7 @@ class final:
                     x_name = list(x[i].split(','))
                     xy_name.extend(x_name)
         
-        if (time.time() - start_time) > 60:
+        if (time.time() - start_time) > 120:
             TTS_gtts.speak('서버로부터 데이터를 갱신 합니다.')
             start_time = time.time()
             Server_Connect.server_connect()
@@ -257,7 +256,7 @@ class final:
         img = detector.findHands(img)
         lmList, bbox = detector.findPosition(img, draw=True)
 
-        if len(lmList) != 0:
+        if len(lmList) != 0 and detector.fingersUp() == [0, 1, 0, 0, 0]:
             area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])//100
             # print(area)
             if 70 < area < 800:
@@ -281,8 +280,6 @@ class final:
                     #img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
 
 
-                    
-
                     if touch_start != 0 and magnetic.read():
                         if time.time() - touch_start > 20:
                             print(exit_msg)
@@ -291,11 +288,12 @@ class final:
                         else:
                             img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
                     else:
-                        # 핀에 출력값으로 0을 주면 led 불이 꺼집니다.     
+                        # 핀에 출력값으로 0을 주면 led 불이 꺼집니다.
                         led_builtin.write(0)
+
         if touch.read():
-            print(start_msg)
-            TTS_gtts.speak(start_msg)
+            print(restart_msg)
+            TTS_gtts.speak(restart_msg)
             touch_start = time.time()
             # 핀에 출력값으로 1을 주면 led 불이 켜집니다. 
             led_builtin.write(1)
