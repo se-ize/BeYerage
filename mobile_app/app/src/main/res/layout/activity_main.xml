@@ -8,7 +8,7 @@
     <Button
         android:id="@+id/startServiceButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="25dp"
         android:layout_weight="1"
@@ -21,7 +21,6 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:layout_margin="25dp"
-        android:text="고객의 소리"
-        android:background="#D01E1E" />
+        android:background="@drawable/button_selector_service" />
 
 </LinearLayout>
