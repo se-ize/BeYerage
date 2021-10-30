@@ -67,9 +67,11 @@ public class ShopServiceImpl extends MainActivity implements ShopService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             //QUEUE_FLUSH: Queue 값을 초기화한 후 값을 넣는다.
-            tts.speak("화면을 터치하시면 음료 안내 서비스를 실행합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+            tts.speak("화면 상단을 터치하시면 음료 안내 서비스를 실행합니다. " +
+                    "화면의 하단을 터치하여 고객의 소리를 추가할 수 있습니다.", TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
-            tts.speak("화면을 터치하시면 음료 안내 서비스를 실행합니다.", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak("화면 상단을 터치하시면 음료 안내 서비스를 실행합니다. " +
+                    "화면의 하단을 터치하여 고객의 소리를 추가할 수 있습니다.", TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
