@@ -85,10 +85,8 @@ public class MainActivity extends AppCompatActivity{
                 sRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
                 sRecognizer.setRecognitionListener(listener);
                 sRecognizer.startListening(intent);
-            }, 500);
-            // 0.5초 딜레이 첨부
-
-
+            }, 2200);
+            // 2.2초 딜레이 첨부
         });
     }
 
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity{
      * 비동기식 방식 HTTP CONNECTION
      * 사용자가 원하는 음료를 가져옴
      */
-    public class addCutomerVoiceAsyncTask extends AsyncTask<Void, Void, String> {
+    public class AddCutomerVoiceAsyncTask extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... params) {
@@ -114,11 +112,12 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(String text) {
             super.onPostExecute(text);
-            if(text != null){
-                Log.d("고객의 소리=", text);
-                Toast.makeText(getApplicationContext(), "고객의 소리 : " + text,Toast.LENGTH_SHORT).show();
+            if(!userVoice.equals("")){
+                Log.d("고객의 소리=", userVoice);
+                Toast.makeText(getApplicationContext(), "고객의 소리 : " + userVoice,Toast.LENGTH_SHORT).show();
+                shopService.voiceGuidance(tts, "고객의 소리가 추가되었습니다.");
             } else {
-                Log.d("고객의 소리 등록 X", text);
+                Log.d("고객의 소리 등록 X", "");
                 Toast.makeText(getApplicationContext(), "고객의 소리가 등록되지 않았습니다",Toast.LENGTH_SHORT).show();
             }
 
@@ -199,28 +198,9 @@ public class MainActivity extends AppCompatActivity{
             for (String match : matches) {
                 userVoice += match;
             }
-            Log.i("태그","######################################"+matches);
-            AlertDialog.Builder oDialog = new AlertDialog.Builder(MainActivity.this);
 
-            //팝업창에 텍스트 셋팅
-            oDialog.setMessage(userVoice)
-                    .setTitle("고객의 소리")
-                    .setPositiveButton("취소", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        { }
-                    })
-                    .setNeutralButton("전송", new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int which)
-                        {
-                            //전송
-                            //3초 후 자동 전송은 없을까
-                        }
-                    })
-                    .setCancelable(true)
-                    .show();
+            AddCutomerVoiceAsyncTask addCutomerVoiceAsyncTask = new AddCutomerVoiceAsyncTask();
+            addCutomerVoiceAsyncTask.execute();
         }
         @Override
         public void onPartialResults(Bundle partialResults) {}
