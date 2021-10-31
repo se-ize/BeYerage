@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.mobileapp.beyerage.dto.Beverage;
+import com.mobileapp.beyerage.dto.Customer;
 import com.mobileapp.beyerage.network.BeverageAPI;
 import com.mobileapp.beyerage.network.CustomerAPI;
 import com.mobileapp.beyerage.network.CustomerAPIController;
@@ -94,12 +95,12 @@ public class MainActivity extends AppCompatActivity{
      * 비동기식 방식 HTTP CONNECTION
      * 사용자가 원하는 음료를 가져옴
      */
-    public class AddCutomerVoiceAsyncTask extends AsyncTask<Void, Void, String> {
+    public class AddCutomerVoiceAsyncTask extends AsyncTask<Void, Void, Customer> {
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected Customer doInBackground(Void... params) {
             CustomerAPI customerAPI = customerAPIController.getCustomerAPI();
-            Call<String> customerVoice = customerAPI.addCustomerVoice(userVoice);
+            Call<Customer> customerVoice = customerAPI.addCustomerVoice(userVoice);
             try {
                 return customerVoice.execute().body();
             } catch (Exception e) {
@@ -110,17 +111,13 @@ public class MainActivity extends AppCompatActivity{
         }
 
         @Override
-        protected void onPostExecute(String text) {
-            super.onPostExecute(text);
-            if(!userVoice.equals("")){
-                Log.d("고객의 소리=", userVoice);
-                Toast.makeText(getApplicationContext(), "고객의 소리 : " + userVoice,Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(Customer customer) {
+            super.onPostExecute(customer);
+            if(!customer.getText().equals("")){
+                Log.d("고객의 소리=", customer.getText());
+                Toast.makeText(getApplicationContext(), "고객의 소리 : " + customer.getText(),Toast.LENGTH_SHORT).show();
                 shopService.voiceGuidance(tts, "고객의 소리가 추가되었습니다.");
-            } else {
-                Log.d("고객의 소리 등록 X", "");
-                Toast.makeText(getApplicationContext(), "고객의 소리가 등록되지 않았습니다",Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 
@@ -183,7 +180,11 @@ public class MainActivity extends AppCompatActivity{
             if(error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS){
                 shopService.voiceGuidance(tts, message + "가 발생하였습니다. 액세스 허용을 해주세요.");
             } else {
-                shopService.voiceGuidance(tts, message + "가 발생하였습니다.");
+                if(error == SpeechRecognizer.ERROR_NO_MATCH){
+                    shopService.voiceGuidance(tts, "고객의 소리가 등록되지 않았습니다");
+                } else {
+                    shopService.voiceGuidance(tts, message + "가 발생하였습니다.");
+                }
             }
 
             Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message,Toast.LENGTH_SHORT).show();
