@@ -5,7 +5,7 @@ import TTS_gtts_2 as TTS_gtts
 board = pyfirmata.Arduino('/COM6')
 led_builtin = board.get_pin('d:13:o')
 touch = board.get_pin('d:10:i')
-magnetic = board.get_pin('d:9:i')
+magnetic = board.get_pin('d:8:i')
 it = pyfirmata.util.Iterator(board)
 it.start()
 touch.enable_reporting()
@@ -24,21 +24,17 @@ while True:
     if touch.read():
         print(start_msg)
         TTS_gtts.speak(start_msg)
-        touch_start = time.time()
+        #touch_start = time.time()
         # 핀에 출력값으로 1을 주면 led 불이 켜집니다. 
         led_builtin.write(1)
         time.sleep(1)
         continue
 
-    if touch_start != 0 and magnetic.read():
-        if time.time() - touch_start > 20:
-            print(exit_msg)
-            TTS_gtts.speak(exit_msg)
-            touch_start = 0
-        else:
-            print("인식중")
-
+    if magnetic.read():
+        print(magnetic.read())
+        continue
+        
     else:
         # 핀에 출력값으로 0을 주면 led 불이 꺼집니다.     
         led_builtin.write(0)
-    
+        #print('mag off')

@@ -62,7 +62,7 @@ model = tf.keras.models.Sequential([
 ML_Name = 'final_checkpoint_'+ str(datetime.today().month) + str(datetime.today().day)
 
 #final_checkpoint_918
-model.load_weights('final_checkpoint_918')
+model.load_weights('final_checkpoint_1031')
 
 model.summary()
 #print(model.predict(x_test[:1]))
@@ -78,7 +78,7 @@ board = pyfirmata.Arduino('/COM6')
 #board = pyfirmata.Arduino('/dev/ttyACM0')
 led_builtin = board.get_pin('d:13:o')
 touch = board.get_pin('d:10:i')
-magnetic = board.get_pin('d:9:i')
+magnetic = board.get_pin('d:8:i')
 
 it = pyfirmata.util.Iterator(board)
 it.start()
@@ -140,7 +140,7 @@ class final:
                     return img, b, t, check_time
                 return img, b, t, check_time
             elif c == 4:
-                b_name = xy_name[22][6:-2]
+                b_name = xy_name[22][8:-1]
                 speakstory = ConnectAndData.connect(b_name)
                 t += 1
                 if t > 6:
@@ -199,7 +199,7 @@ class final:
                     return img, b, t, check_time
                 return img, b, t, check_time
             elif c == 8:
-                b_name = xy_name[50][6:-2]
+                b_name = xy_name[50][8:-1]
                 speakstory = ConnectAndData.connect(b_name)
                 t += 1
                 if t > 6:
@@ -214,7 +214,7 @@ class final:
                     return img, b, t, check_time
                 return img, b, t, check_time
             elif c == 9:
-                b_name = xy_name[57][6:-2]
+                b_name = xy_name[57][8:-1]
                 speakstory = ConnectAndData.connect(b_name)
                 t += 1
                 if t > 6:
@@ -256,7 +256,10 @@ class final:
         img = detector.findHands(img)
         lmList, bbox = detector.findPosition(img, draw=True)
 
-        if len(lmList) != 0 and detector.fingersUp() == [0, 1, 0, 0, 0]:
+        
+
+        if len(lmList) != 0 and detector.fingersUp() == [0, 0, 1, 1, 1]:
+            #print(detector.fingersUp())
             area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])//100
             # print(area)
             if 70 < area < 800:
@@ -269,9 +272,9 @@ class final:
         
                 with tf.compat.v1.Session() as sess:
                 
-                    print(" 실 예측값 : ")
-                    print(predictions)
-                    print(" 근사 예측값 ")
+                    #print(" 실 예측값 : ")
+                    #print(predictions)
+                    #print(" 근사 예측값 ")
                     a = list(map(float, predictions))
                     print(round(a[0]))
                     c = round(a[0])
@@ -280,12 +283,13 @@ class final:
                     #img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
 
 
-                    if touch_start != 0 and magnetic.read():
-                        if time.time() - touch_start > 20:
+                    if touch_start != 0:
+                        if time.time() - touch_start > 30:
                             print(exit_msg)
                             TTS_gtts.speak(exit_msg)
                             touch_start = 0
                         else:
+                            print(magnetic.read())
                             img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
                     else:
                         # 핀에 출력값으로 0을 주면 led 불이 꺼집니다.

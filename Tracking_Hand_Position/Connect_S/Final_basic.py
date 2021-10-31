@@ -262,7 +262,7 @@ class final:
                     #print(round(a))
 
         cam.write(img)
-        cv.imshow('img', img)
+        #cv.imshow('img', img)
 
         # ESC 키누르면 종료
         if cv.waitKey(1) & 0xFF == 27:
