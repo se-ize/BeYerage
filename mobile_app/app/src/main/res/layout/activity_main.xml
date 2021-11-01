@@ -21,6 +21,6 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:layout_margin="25dp"
-        android:background="@drawable/button_selector_service" />
+        android:background="@drawable/button_selector_voc" />
 
 </LinearLayout>
