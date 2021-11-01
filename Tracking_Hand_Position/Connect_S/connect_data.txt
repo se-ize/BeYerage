@@ -3,7 +3,7 @@
 "id":5,"name":"스프라이트","price":1300,"type":"CAN","size":240,"row":1,"column":3
 "id":7,"name":"웰치스","price":1500,"type":"CAN","size":355,"row":2,"column":1
 "id":9,"name":"코코팜","price":1400,"type":"CAN","size":355,"row":2,"column":2
-"id":11,"name":"갈아만든배","price":1300,"type":"CAN","size":355,"row":2,"column":3
+"id":11,"name":"갈아만든 배","price":1300,"type":"CAN","size":355,"row":2,"column":3
 "id":13,"name":"데미소다","price":1600,"type":"BOTTLE","size":340,"row":3,"column":1
 "id":15,"name":"옥수수수염차","price":1700,"type":"BOTTLE","size":340,"row":3,"column":2
-"id":17,"name":"이프로","price":1700,"type":"BOTTLE","size":340,"row":3,"column":3
+"id":105,"name":"122%","price":1500,"type":"BOTTLE","size":350,"row":3,"column":3

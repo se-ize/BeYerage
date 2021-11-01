@@ -44,7 +44,7 @@ class handDetector():
                 # print(id, cx, cy)
                 self.lmList.append([id, cx, cy])
                 if draw:
-                    cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
+                    cv2.circle(img, (cx, cy), 5, (25,109,250), cv2.FILLED)
             xmin, xmax = min(xList), max(xList)
             ymin, ymax = min(yList), max(yList)
             bbox = xmin, ymin, xmax, ymax
@@ -73,10 +73,10 @@ class handDetector():
         cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
         
         if draw:
-            cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
-            cv2.circle(img, (x2, y2), 15, (255, 0, 255), cv2.FILLED)
-            cv2.line(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
-            cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
+            cv2.circle(img, (x1, y1), 15, (25,109,250), cv2.FILLED)
+            cv2.circle(img, (x2, y2), 15, (25,109,250), cv2.FILLED)
+            cv2.line(img, (x1, y1), (x2, y2), (25,109,250), 3)
+            cv2.circle(img, (cx, cy), 15, (25,109,250), cv2.FILLED)
         
         length = math.hypot(x2 - x1, y2 - y1)
         return length, img, [x1, y1, x2, y2, cx, cy]
@@ -96,7 +96,7 @@ class handDetector():
         fps = 1 / (cTime - pTime)
         pTime = cTime
         
-        cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,(255, 0, 255), 3)
+        cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,(25,109,250), 3)
         
         cv2.imshow("Image", img)
         cv2.waitKey(1)

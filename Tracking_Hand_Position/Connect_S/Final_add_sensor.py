@@ -36,14 +36,6 @@ detector = htm.handDetector(detectionCon=0.7, maxHands=1)
 area = 0
 
 
-with open("connect_data.txt", 'r',encoding='UTF8') as f:
-            x = list(f.readlines())
-            xy_name = []
-            for i in range(0,len(x)):
-                x_name = list(x[i].split(','))
-                xy_name.extend(x_name)
-            #print(xy_name)
-
 b_number = 0
 model = tf.keras.models.Sequential([
     tf.keras.layers.Input((8,)),
@@ -96,6 +88,14 @@ check_time = time.time()
 
 class final:
     def eval(img,predictions,c,b,t,check_time):
+        
+        with open("connect_data.txt", 'r',encoding='UTF8') as f:
+            x = list(f.readlines())
+            xy_name = []
+            for i in range(0,len(x)):
+                x_name = list(x[i].split(','))
+                xy_name.extend(x_name)
+            #print(xy_name)
         if b == c:
             if c == 1:
                 b_name = xy_name[1][8:-1]
@@ -204,7 +204,6 @@ class final:
                 t += 1
                 if t > 6:
                     print(speakstory)
-                    print(speakstory)
                     TTS_gtts.speak(speakstory)
                     print("표현까지 소요시간 : " + str(time.time()-check_time))
                     check_time = time.time()
@@ -218,7 +217,6 @@ class final:
                 speakstory = ConnectAndData.connect(b_name)
                 t += 1
                 if t > 6:
-                    print(speakstory)
                     print(speakstory)
                     TTS_gtts.speak(speakstory)
                     print("표현까지 소요시간 : " + str(time.time()-check_time))

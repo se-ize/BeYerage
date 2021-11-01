@@ -3,8 +3,8 @@ import numpy as np
 import random
 from datetime import datetime
 
-bp = np.loadtxt('Train_Dataset_1031.csv', delimiter=',', dtype=np.float32)
-bp2 = np.loadtxt('Test_Dataset_1031.csv', delimiter=',', dtype=np.float32)
+bp = np.loadtxt('Train_Dataset_111_youjin.csv', delimiter=',', dtype=np.float32)
+bp2 = np.loadtxt('Test_Dataset_111_youjin.csv', delimiter=',', dtype=np.float32)
 ML_Name = 'final_checkpoint_'+ str(datetime.today().month) + str(datetime.today().day)
 
 #(x_train, y_train),(x_test, y_test) = bp.load_data()

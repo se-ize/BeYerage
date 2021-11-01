@@ -41,7 +41,7 @@ while True:
         # Filter based on size
         area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])//100
         #print(area)
-        if 70 < area < 800:
+        if 70 < area < 900:
             real_area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
             # Find Distance between index and Thumb
             length, img, lineInfo = detector.findDistance(0, 8, img)
