@@ -41,10 +41,11 @@ while True:
         # Filter based on size
         area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])//100
         #print(area)
-        if 70 < area < 900:
+        if 70 < area < 1500:
             real_area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
             # Find Distance between index and Thumb
             length, img, lineInfo = detector.findDistance(0, 8, img)
+            length2, img, lineInfo = detector.findDistance(5, 17, img)
             # print(length)
 
             # Check fingers up
@@ -56,7 +57,7 @@ while True:
                 if key == 32:
                         b_number = input("해당되는 번호를 누르세요\n")
                         key = cv.waitKey(1)
-                wr.writerow([real_area,length,lineInfo[0],lineInfo[1],lineInfo[2],lineInfo[3],lineInfo[4],lineInfo[5],b_number])
+                wr.writerow([real_area,length,length2,lineInfo[0],lineInfo[1],lineInfo[2],lineInfo[3],lineInfo[4],lineInfo[5],b_number])
             
 # Drawings
 

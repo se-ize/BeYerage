@@ -1,4 +1,4 @@
-import tensorflow as tf
+
 import cv2 as cv
 import numpy as np
 import csv
@@ -10,6 +10,7 @@ import ConnectAndData
 import TTS_gtts_2 as TTS_gtts
 import Server_Connect
 import pyfirmata
+import pickle
 
 videoname = 'RealCheck_' + str(datetime.today().month) + str(datetime.today().day) + '.avi'
 
@@ -37,34 +38,15 @@ area = 0
 
 
 b_number = 0
-model = tf.keras.models.Sequential([
-    tf.keras.layers.Input((9,)),
-    tf.keras.layers.Dense(10),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Activation('swish'),
-    tf.keras.layers.Dense(10),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Activation('swish'),
-    tf.keras.layers.Dense(10),
-    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Activation('swish'),
-    tf.keras.layers.Dense(1)
-])
+model = pickle.load(open('tree', 'rb'))
 
 ML_Name = 'final_checkpoint_'+ str(datetime.today().month) + str(datetime.today().day)
 
-#final_checkpoint_918
-model.load_weights('final_checkpoint_115')
-
-model.summary()
-#print(model.predict(x_test[:1]))
-#print(x_test[:1])
 
 check = 0
 area = 0
 start_time = time.time()
 start_time2 = time.time()
-
 # 시작시간 체크
 
 board = pyfirmata.Arduino('/COM6')
@@ -261,41 +243,36 @@ class final:
             #print(detector.fingersUp())
             area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])//100
             # print(area)
-            if 70 < area < 1500:
+            if 70 < area < 800:
                 real_area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
                 length, img, lineInfo = detector.findDistance(0, 8, img)
-                length2, img, lineInfo = detector.findDistance(5, 17, img)
             
-                result = [[real_area,length,length2,lineInfo[0],lineInfo[1],lineInfo[2],lineInfo[3],lineInfo[4],lineInfo[5]]]
+                result = [[real_area,length,lineInfo[0],lineInfo[1],lineInfo[2],lineInfo[3],lineInfo[4],lineInfo[5]]]
 
                 predictions = model.predict(result)
         
-                with tf.compat.v1.Session() as sess:
-                
-                    #print(" 실 예측값 : ")
-                    #print(predictions)
-                    #print(" 근사 예측값 ")
-                    a = list(map(float, predictions))
-                    c = round(a[0])
-                    if c > 9:
-                        c = 9
-                    print(c)
+                #print(" 실 예측값 : ")
+                #print(predictions)
+                #print(" 근사 예측값 ")
+                a = list(map(float, predictions))
+                print(round(a[0]))
+                c = round(a[0])
 
-                    # eval 함수 이용
-                    #img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
+                # eval 함수 이용
+                #img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
 
 
-                    if touch_start != 0:
-                        if time.time() - touch_start > 30:
-                            print(exit_msg)
-                            TTS_gtts.speak(exit_msg)
-                            touch_start = 0
-                        else:
-                            print(magnetic.read())
-                            img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
+                if touch_start != 0:
+                    if time.time() - touch_start > 30:
+                        print(exit_msg)
+                        TTS_gtts.speak(exit_msg)
+                        touch_start = 0
                     else:
-                        # 핀에 출력값으로 0을 주면 led 불이 꺼집니다.
-                        led_builtin.write(0)
+                        print(magnetic.read())
+                        img,b,t,check_time = eval(img,a[0],c,b,t,check_time)
+                else:
+                    # 핀에 출력값으로 0을 주면 led 불이 꺼집니다.
+                    led_builtin.write(0)
 
         if touch.read():
             print(restart_msg)

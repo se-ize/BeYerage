@@ -80,18 +80,19 @@ class handDetector():
         
         length = math.hypot(x2 - x1, y2 - y1)
         return length, img, [x1, y1, x2, y2, cx, cy]
-
-    def main():
-        pTime = 0
-        cap = cv2.VideoCapture(0)
-        detector = handDetector()
-        while True:
-            success, img = cap.read()
-            img = detector.findHands(img)
-            lmList = detector.findPosition(img)
-            if len(lmList) != 0:
-                print(lmList[4])
-                
+'''
+def main():
+    pTime = 0
+    cap = cv2.VideoCapture(0)
+    detector = handDetector()
+    while True:
+        success, img = cap.read()
+        img = detector.findHands(img)
+        lmList, bbox = detector.findPosition(img)
+        if len(lmList) != 0:
+            #print(lmList[0])
+            length, img, lineInfo = detector.findDistance(5,17,img)
+            print(length)
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
@@ -101,5 +102,6 @@ class handDetector():
         cv2.imshow("Image", img)
         cv2.waitKey(1)
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
+'''
