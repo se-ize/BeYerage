@@ -43,6 +43,10 @@ Therefore, the BeYerage team developed **'CONVENIENCE STORE BEVERAGE GUIDANCE FO
 
 2. Web Site
 
+| main page                                                                                                                   | The sound of customers page                                                                                                 | beverage management page                                                                                                    | beverage adding page                                                                                                        | beverage arrangement page                                                                                                   |
+| --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://user-images.githubusercontent.com/59291066/139797106-0dac7bce-a265-449d-8cf2-8ff9e54d6395.jpg" width=200> | <img src="https://user-images.githubusercontent.com/59291066/139797213-a60b07eb-fd73-436f-8f3d-e91008a0f76a.jpg" width=200> | <img src="https://user-images.githubusercontent.com/59291066/139797141-6fc90f8a-7982-47b1-ad10-bc5be1c2f044.jpg" width=200> | <img src="https://user-images.githubusercontent.com/59291066/139797106-0dac7bce-a265-449d-8cf2-8ff9e54d6395.jpg" width=200> | <img src="https://user-images.githubusercontent.com/59291066/139797106-0dac7bce-a265-449d-8cf2-8ff9e54d6395.jpg" width=200> |
+
 3. Object recognition
 
 4. sensor detection
