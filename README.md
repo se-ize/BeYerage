@@ -33,6 +33,8 @@ Therefore, the BeYerage team developed **'CONVENIENCE STORE BEVERAGE GUIDANCE FO
 
 ## Details
 
+![1009_BEYERAGE_작품사진](https://user-images.githubusercontent.com/70623290/140671200-79d03f47-c810-46ef-ab99-527f6fb93af7.png)
+
 1. Mobile App (BeYerage)
 
 | splash screen                                                                                                               | main screen                                                                                                                 | service start                                                                                                               |
