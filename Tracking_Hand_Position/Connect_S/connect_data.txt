@@ -1,5 +1,5 @@
-"id":1,"name":"코카콜라","price":1400,"type":"CAN","size":240,"row":1,"column":1
-"id":3,"name":"펩시","price":1100,"type":"CAN","size":240,"row":1,"column":2
+"id":3,"name":"펩시","price":1100,"type":"CAN","size":240,"row":1,"column":1
+"id":1,"name":"코카콜라","price":1400,"type":"CAN","size":240,"row":1,"column":2
 "id":5,"name":"스프라이트","price":1200,"type":"CAN","size":240,"row":1,"column":3
 "id":7,"name":"웰치스","price":1500,"type":"CAN","size":355,"row":2,"column":1
 "id":9,"name":"코코팜","price":1400,"type":"CAN","size":355,"row":2,"column":2

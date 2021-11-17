@@ -13,7 +13,7 @@ from datetime import datetime
 def speak(text):
     tts = gTTS(text=text,lang='ko')
 
-    filename ='Voice'+ str(datetime.today().month) + str(datetime.today().day) +'.mp3'
+    filename ='Vo2ce' + str(datetime.today().day) + str(datetime.today().microsecond) +'.mp3'
 
     tts.save(filename)
     playsound.playsound('C:/Users/Woojin/Desktop/ProBono/Tracking_Hand_Position/Final_ForCS/' + filename)

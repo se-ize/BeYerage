@@ -13,10 +13,10 @@ from datetime import datetime
 def speak(text):
     tts = gTTS(text=text,lang='ko')
 
-    filename ='Voice'+ str(datetime.today().month) + str(datetime.today().day) +'.mp3'
+    filename ='Vo2ce' + str(datetime.today().day) + str(datetime.today().microsecond) +'.mp3'
 
     tts.save(filename)
-    playsound.playsound('C:/Users/Woojin/Desktop/ProBono/Tracking_Hand_Position/Other_Method/' + filename)
+    playsound.playsound('C:/Users/Woojin/Desktop/ProBono/Tracking_Hand_Position/Final_ForCS/' + filename)
     os.remove(filename)
     #playsound 는 리룩스에서는 작동하지않아요.
 
@@ -40,4 +40,4 @@ def speakend(filename):
 
 
 #speak(" 올해는 도시마다 다시 즐거움이 켜질거에요! 해당 제품은 코카콜라입니다. ")
-speak("선택하신 음료는 스프라이트 입니다. 해당 음료의 위치는 3 행 3 열 이며, 가격은 1100 원, 해당 음료의 크기는 355ml 입니다.")
+#speak(" 선택하신 음료는 레쓰비 입니다. 해당 음료의 위치는 1 행 1 열 이며, 가격은 1100 원, 해당 음료의 크기는 240ml 입니다.")

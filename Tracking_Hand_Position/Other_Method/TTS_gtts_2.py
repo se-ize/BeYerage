@@ -1,9 +1,11 @@
 from gtts import gTTS
 import pygame
+from datetime import datetime
 
 def speak(text):
+
     tts = gTTS(text=text,lang='ko')
-    filename ='voice0926.mp3'
+    filename ='Voice' + str(datetime.today().day) + str(datetime.today().microsecond) +'.mp3'
     tts.save(filename)
 
     #### vlc ########
@@ -36,4 +38,5 @@ def speak(text):
         clock.tick(30)
     pygame.mixer.quit()    
     
-#speak("선택하신 음료는 레쓰비 입니다. 또한 해당 음료의 가격은 900 원, 해당 음료의 크기는 250 ml 입니다.")
+#speak("선택하신 음료는 레쓰비 입니다. 또한 해당 음료의 가격은 1100 원, 해당 음료의 크기는 240 ml 입니다.")
+#speak("선택하신 음료는 콜롬비아나 입니다. 또한 해당 음료의 가격은 1200 원, 해당 음료의 크기는 240 ml 입니다.")

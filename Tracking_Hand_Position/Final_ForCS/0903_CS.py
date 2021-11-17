@@ -35,7 +35,7 @@ cv.namedWindow('img_result')
 
 videoname = 'RealCheck_' + str(datetime.today().month) + str(datetime.today().day) + '.avi'
 cam = cv.VideoWriter(videoname,cv.VideoWriter_fourcc('D', 'I', 'V', 'X'),25,(640,480))
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 # 카메라를 연결합니다.
 
 with open("connect_data.txt", 'r',encoding='UTF8') as f:

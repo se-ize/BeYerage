@@ -1,10 +1,11 @@
 from gtts import gTTS
 import pygame
+from datetime import datetime
 
 def speak(text):
 
     tts = gTTS(text=text,lang='ko')
-    filename ='voice_0907.mp3'
+    filename ='Voice' + str(datetime.today().day) + str(datetime.today().microsecond) +'.mp3'
     tts.save(filename)
 
     #### vlc ########
