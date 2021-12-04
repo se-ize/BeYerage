@@ -14,7 +14,7 @@ import pyfirmata
 videoname = 'RealCheck_' + str(datetime.today().month) + str(datetime.today().day) + '.avi'
 
 start_msg = '객체인식을 통한 음료 안내를 시작합니다.'
-restart_msg = '객체인식을 통한 음료 안내를 다시 시작합니다.'
+restart_msg = '객체인식을 통한 음료 안내를 시작합니다.'
 exit_msg = '객체인식을 통한 음료 안내를 종료합니다. 안내버튼을 다시 눌러주세요.'
 touch_msg = '객체인식 시작을 위한 터치센서를 눌러주세요'
 touch_start = 0 
@@ -67,8 +67,9 @@ start_time2 = time.time()
 
 # 시작시간 체크
 
-board = pyfirmata.Arduino('/COM6')
+board = pyfirmata.Arduino('COM6')
 #board = pyfirmata.Arduino('/dev/ttyACM0')
+
 led_builtin = board.get_pin('d:13:o')
 touch = board.get_pin('d:10:i')
 magnetic = board.get_pin('d:8:i')
@@ -245,7 +246,7 @@ class final:
                     x_name = list(x[i].split(','))
                     xy_name.extend(x_name)
         
-        if (time.time() - start_time) > 120:
+        if (time.time() - start_time) > 600:
             TTS_gtts.speak('서버로부터 데이터를 갱신 합니다.')
             start_time = time.time()
             Server_Connect.server_connect()

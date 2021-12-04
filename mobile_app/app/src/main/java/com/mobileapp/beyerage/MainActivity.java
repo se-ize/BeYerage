@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity{
     private String userVoice = "";
     //퍼미션 체크를 위한 변수
     private final int PERMISSION = 1;
+
     //STT를 사용할 intent 와 SpeechRecognizer 초기화
     private SpeechRecognizer sRecognizer;
     //HTTP API 호출 클래스
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity{
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
-        //음석을 번역할 언어 설정
+        //음성을 번역할 언어 설정
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
         return intent;
     }
